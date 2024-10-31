@@ -24,9 +24,9 @@ class SignUp extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black), // 아이콘 색상: 검정색
           onPressed: () {
-            Navigator.pushReplacement(
+            Navigator.pop(
               context,
-              MaterialPageRoute(builder: (context) => const SignIn()),
+
             );
           },
         ),

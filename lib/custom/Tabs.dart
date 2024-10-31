@@ -43,7 +43,7 @@ class _TabBarExampleState extends State<TabBarExample> {
                 child: Text(
                   'Item Two',
                   style: TextStyle(
-                    color: _selectedTab == 'two' ? const Color(0xFF5DDA6F) : Color(0xFF49454F),
+                    color: _selectedTab == 'two' ? const Color(0xFF5DDA6F) : const Color(0xFF49454F),
                   ),
                 ),
               ),

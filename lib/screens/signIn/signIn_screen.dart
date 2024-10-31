@@ -29,9 +29,9 @@ class SignIn extends StatelessWidget {
                 SignInButton(
                   label: '로그인',
                   onPressed: () {
-                    Navigator.pushReplacement(
+                    Navigator.pop(
                       context,
-                      MaterialPageRoute(builder: (context) => const Room()),
+
                     );
                   },
                 ),

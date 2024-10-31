@@ -14,8 +14,8 @@ class ChangePwd extends StatelessWidget {
         title: const Text(
           '비밀번호 재설정',
           style: TextStyle(
-            color: Colors.black, // 텍스트 색상: 검정색
-            fontWeight: FontWeight.bold, // 볼드체 설정
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,
@@ -23,9 +23,9 @@ class ChangePwd extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pushReplacement(
+            Navigator.pop(
               context,
-              MaterialPageRoute(builder: (context) => const SignIn()),
+
             );
           },
         ),
