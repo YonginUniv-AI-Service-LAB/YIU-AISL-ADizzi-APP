@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../screens/mypage/mypage.dart';
+
 class CustomSearchBar extends StatelessWidget {
   const CustomSearchBar({super.key});
 
@@ -26,7 +28,10 @@ class CustomSearchBar extends StatelessWidget {
             ),
             IconButton(
               onPressed: () {
-                // 사용자 아이콘 클릭 시 동작
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (contest) => const MyPage()),
+                );
               },
               icon: const Icon(Icons.account_circle),
             ),
