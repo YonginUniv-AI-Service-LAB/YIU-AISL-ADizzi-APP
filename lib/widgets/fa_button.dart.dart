@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yiu_aisl_adizzi_app/widgets/add_dialog.dart';
 
 class FAButton extends StatelessWidget {
   const FAButton({super.key});
@@ -23,6 +24,12 @@ class FAButton extends StatelessWidget {
         child: IconButton(
           icon: const Icon(Icons.add, color: Colors.white, size: 30),
           onPressed: (){
+            showDialog(
+              context: context,
+              builder: (BuildContext context){
+                return const AddDialog();
+              },
+            );
 
           }
         ),
