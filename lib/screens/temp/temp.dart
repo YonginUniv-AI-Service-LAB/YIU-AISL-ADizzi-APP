@@ -3,6 +3,7 @@ import 'package:yiu_aisl_adizzi_app/screens/changePwd/change_pwd_screen.dart';
 import 'package:yiu_aisl_adizzi_app/screens/mypage/mypage.dart';
 import 'package:yiu_aisl_adizzi_app/screens/signIn/signIn_screen.dart';
 import 'package:yiu_aisl_adizzi_app/screens/signUp/signUp_screen.dart';
+import '../container/container_screen.dart';
 import '../room/room_screen.dart';
 
 
@@ -87,7 +88,7 @@ class _TempStartScreenState extends State<TempStartScreen>
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Container()),
+                  MaterialPageRoute(builder: (context) => ContainerScreen()),
                 );
               },
               child: Text('Container 페이지'),
