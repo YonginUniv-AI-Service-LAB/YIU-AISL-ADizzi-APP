@@ -1,11 +1,9 @@
 
 import 'package:flutter/material.dart';
-import 'package:yiu_aisl_adizzi_app/screens/main/room_screen.dart';
 import '../../widgets/link_label.dart';
-import '../changePwd/change_pwd_screen.dart';
-import '../signUp/signUp_screen.dart';
 import '../../widgets/signIn_button.dart';
 import '../../widgets/signIn_text_input.dart';
+import '../room/room_screen.dart';
 
 class SignIn extends StatelessWidget {
   const SignIn({super.key});

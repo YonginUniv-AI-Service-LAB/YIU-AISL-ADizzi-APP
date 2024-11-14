@@ -3,8 +3,7 @@ import 'package:yiu_aisl_adizzi_app/screens/changePwd/change_pwd_screen.dart';
 import 'package:yiu_aisl_adizzi_app/screens/mypage/mypage.dart';
 import 'package:yiu_aisl_adizzi_app/screens/signIn/signIn_screen.dart';
 import 'package:yiu_aisl_adizzi_app/screens/signUp/signUp_screen.dart';
-
-import '../main/room_screen.dart';
+import '../room/room_screen.dart';
 
 
 class TempStartScreen extends StatefulWidget {
@@ -83,7 +82,15 @@ class _TempStartScreenState extends State<TempStartScreen>
                   MaterialPageRoute(builder: (context) => Room()),
                 );
               },
-              child: Text('메인페이지'),
+              child: Text('Room 페이지'),
+            ),ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Container()),
+                );
+              },
+              child: Text('Container 페이지'),
             ),
           ],
         ),

@@ -72,7 +72,7 @@ class BackgroundContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: double.infinity,
-      color: const Color(0xFFF0F0F0), // 배경색 설정
+      color: const Color(0xFFF0F0F0),
       child: child, // 자식 위젯 삽입
     );
   }

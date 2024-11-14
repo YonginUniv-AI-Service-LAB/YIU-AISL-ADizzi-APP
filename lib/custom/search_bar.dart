@@ -80,6 +80,9 @@ class StyledInputBase extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const TextField(
+      style: TextStyle(
+        fontSize: 15.0, // 폰트 크기 조절
+      ),
       decoration: InputDecoration(
         hintText: '검색어를 입력하세요',
         border: InputBorder.none,
