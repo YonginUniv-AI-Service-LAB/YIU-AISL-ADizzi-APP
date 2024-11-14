@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../custom/search_bar.dart';
 import '../../widgets/custom_container_add_button.dart';
+import '../../widgets/custom_search_bar.dart';
 import 'add_container.dart';
 
 class ContainerScreen extends StatefulWidget {
@@ -37,7 +37,7 @@ class _ContainerScreenState extends State<ContainerScreen> {
       ),
       body: Column(
         children: [
-          const CustomSearchBar(
+           CustomSearchBar(onTap: () {  },
 
           ),
           Padding(

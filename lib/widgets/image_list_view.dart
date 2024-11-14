@@ -31,15 +31,15 @@ class ImageListView extends StatelessWidget {
 
 final itemData = [
   {'img': 'assets/images/ADizziLogo.png'},
+  {'img': 'assets/images/a.jpg'},
+  {'img': 'assets/images/yongduMarketIcon.png'},
+  {'img': 'assets/images/a.jpg'},
   {'img': 'assets/images/ADizziLogo.png'},
   {'img': 'assets/images/ADizziLogo.png'},
+  {'img': 'assets/images/b.jpg'},
+  {'img': 'assets/images/e.jpg'},
   {'img': 'assets/images/ADizziLogo.png'},
+  {'img': 'assets/images/f.webp'},
   {'img': 'assets/images/ADizziLogo.png'},
-  {'img': 'assets/images/ADizziLogo.png'},
-  {'img': 'assets/images/ADizziLogo.png'},
-  {'img': 'assets/images/ADizziLogo.png'},
-  {'img': 'assets/images/ADizziLogo.png'},
-  {'img': 'assets/images/ADizziLogo.png'},
-  {'img': 'assets/images/ADizziLogo.png'},
-  {'img': 'assets/images/ADizziLogo.png'},
+  {'img': 'assets/images/c.jpg'},
 ];

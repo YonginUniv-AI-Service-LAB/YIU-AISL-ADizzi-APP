@@ -21,6 +21,10 @@ class AddDialog extends StatelessWidget {
         child: TextField(
           decoration: InputDecoration(
             hintText: '방 이름을 입력하세요',
+            hintStyle: TextStyle(
+              color: Colors.black38, // 글씨 색상 연하게
+              fontSize: 14, // 글씨 크기
+            ),
             contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0), // 패딩을 설정하여 텍스트 중앙 정렬
             // 경계 스타일 설정
             enabledBorder: OutlineInputBorder(
@@ -30,6 +34,7 @@ class AddDialog extends StatelessWidget {
           textAlignVertical: TextAlignVertical.center,
         ),
       ),
+
       actions: [
         Row(
           children: [

@@ -15,7 +15,8 @@ class SearchList extends StatelessWidget {
           leading: const Icon(Icons.restore),
           title: Text(
             searchData[index],
-            style: const TextStyle(color: Colors.black),
+            style: const TextStyle(color: Colors.black, fontSize: 16),
+
           ),
           trailing: const Icon(Icons.clear),
         );

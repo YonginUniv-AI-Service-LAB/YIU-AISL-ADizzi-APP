@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
-
-import '../../custom/search_bar.dart';
+import '../../custom/room_search_bar.dart';
 import '../../widgets/custom_divider.dart';
 import '../../widgets/fa_button.dart.dart';
 import '../../widgets/image_list_view.dart';
@@ -35,7 +33,7 @@ class _RoomState extends State<Room> with SingleTickerProviderStateMixin {
 
     return Scaffold(
       appBar: AppBar(
-        title: const CustomSearchBar(),
+        title:  const RoomCustomSearchBar(),
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         elevation: 0, // AppBar의 그림자 없애기
