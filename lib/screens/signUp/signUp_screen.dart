@@ -14,6 +14,7 @@ class SignUp extends StatelessWidget {
         title: const Text(
           '회원가입',
           style: TextStyle(
+            fontSize: 18,
             color: Colors.black, // 텍스트 색상: 검정색
             fontWeight: FontWeight.bold, // 볼드체 설정
           ),

@@ -10,6 +10,7 @@ class RoomCustomSearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return WholeContainer(
       child: SearchBarContainer(
+
         child: Row(
           children: [
             IconButton(
@@ -68,11 +69,11 @@ class SearchBarContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: const Color.fromRGBO(214, 214, 214, 0.5),
+        color: const Color(0x80D6D6D6),
         borderRadius: BorderRadius.circular(50),
       ),
-      width: MediaQuery.of(context).size.width * 0.9,
-      height: MediaQuery.of(context).size.width * 0.13,
+      width: MediaQuery.of(context).size.width * 1,
+      height: MediaQuery.of(context).size.width * 0.14,
       child: child,
     );
   }
@@ -88,7 +89,7 @@ class StyledInputBase extends StatelessWidget {
         fontSize: 15.0,
       ),
       decoration: InputDecoration(
-        hintText: '검색어를 입력하세요',
+        hintText: '검색어를 입력하세요.',
         border: InputBorder.none,
         contentPadding: EdgeInsets.symmetric(vertical: 6.0, horizontal: 5.0), // 패딩 조정
       ),
