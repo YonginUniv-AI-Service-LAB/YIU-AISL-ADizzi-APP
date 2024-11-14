@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yiu_aisl_adizzi_app/screens/searchDetail/search_detail.dart';
 
 import '../screens/mypage/mypage.dart';
 
@@ -22,7 +23,10 @@ class CustomSearchBar extends StatelessWidget {
             ),
             IconButton(
               onPressed: () {
-                // 검색 아이콘 클릭 시 동작
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (contest) =>  SearchDetail()),
+                );
               },
               icon: const Icon(Icons.search),
             ),
@@ -30,7 +34,7 @@ class CustomSearchBar extends StatelessWidget {
               onPressed: () {
                 Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (contest) => const MyPage()),
+                    MaterialPageRoute(builder: (contest) =>  MyPage()),
                 );
               },
               icon: const Icon(Icons.account_circle),
@@ -67,8 +71,8 @@ class SearchBarContainer extends StatelessWidget {
         color: const Color.fromRGBO(214, 214, 214, 0.5),
         borderRadius: BorderRadius.circular(50),
       ),
-      width: MediaQuery.of(context).size.width * 15,
-      height:MediaQuery.of(context).size.width * 0.1,
+      width: MediaQuery.of(context).size.width * 0.9,
+      height: MediaQuery.of(context).size.width * 0.13,
       child: child,
     );
   }
@@ -81,12 +85,12 @@ class StyledInputBase extends StatelessWidget {
   Widget build(BuildContext context) {
     return const TextField(
       style: TextStyle(
-        fontSize: 15.0, // 폰트 크기 조절
+        fontSize: 15.0,
       ),
       decoration: InputDecoration(
         hintText: '검색어를 입력하세요',
         border: InputBorder.none,
-        contentPadding: EdgeInsets.symmetric(vertical: 10.0),
+        contentPadding: EdgeInsets.symmetric(vertical: 6.0, horizontal: 5.0), // 패딩 조정
       ),
     );
   }

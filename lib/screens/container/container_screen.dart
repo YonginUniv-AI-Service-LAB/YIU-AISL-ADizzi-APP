@@ -17,7 +17,7 @@ class _ContainerScreenState extends State<ContainerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           '금쪽이의 방',
           style: TextStyle(fontSize: 18),
         ),
@@ -37,7 +37,7 @@ class _ContainerScreenState extends State<ContainerScreen> {
       ),
       body: Column(
         children: [
-          CustomSearchBar(
+          const CustomSearchBar(
 
           ),
           Padding(
@@ -78,7 +78,7 @@ class _ContainerScreenState extends State<ContainerScreen> {
               ],
             ),
           ),
-          Expanded(
+          const Expanded(
             child: Center(
               child: Text(
                 '추가된 아이템이 없습니다.',
