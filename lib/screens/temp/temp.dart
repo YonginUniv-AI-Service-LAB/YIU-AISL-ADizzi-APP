@@ -7,6 +7,7 @@ import 'package:yiu_aisl_adizzi_app/screens/signIn/signIn_screen.dart';
 import 'package:yiu_aisl_adizzi_app/screens/signUp/signUp_screen.dart';
 import '../container/container_screen.dart';
 import '../room/room_screen.dart';
+import 'package:yiu_aisl_adizzi_app/screens/slot/slot_screen.dart';
 
 
 class TempStartScreen extends StatefulWidget {
@@ -86,7 +87,8 @@ class _TempStartScreenState extends State<TempStartScreen>
                 );
               },
               child: Text('Room 페이지'),
-            ),ElevatedButton(
+            ),
+            ElevatedButton(
               onPressed: () {
                 Navigator.push(
                   context,
@@ -94,7 +96,8 @@ class _TempStartScreenState extends State<TempStartScreen>
                 );
               },
               child: Text('Container 페이지'),
-            ),ElevatedButton(
+            ),
+            ElevatedButton(
               onPressed: () {
                 Navigator.push(
                   context,
@@ -110,6 +113,15 @@ class _TempStartScreenState extends State<TempStartScreen>
                 );
               },
               child: Text('Item 페이지'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SlotScreen()),
+                );
+              },
+              child: Text('Slot 페이지'),
             ),
           ],
         ),
