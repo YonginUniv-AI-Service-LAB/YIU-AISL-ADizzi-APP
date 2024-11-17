@@ -17,6 +17,7 @@ class SignUp extends StatelessWidget {
         title: const Text(
           '회원가입',
           style: TextStyle(
+            fontSize: 18,
             color: Colors.black,
             fontWeight: FontWeight.bold,
           ),
