@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../widgets/custom_container_add_button.dart';
 import '../../widgets/custom_search_bar.dart';
 import 'add_container.dart';
+import 'package:yiu_aisl_adizzi_app/widgets/time_sort_seletor.dart';
 
 class ContainerScreen extends StatefulWidget {
   const ContainerScreen({super.key});
@@ -24,7 +25,7 @@ class _ContainerScreenState extends State<ContainerScreen> {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: Icon(Icons.grid_view),
+            icon: const Icon(Icons.grid_view),
             onPressed: () {
               // main item 페이지로 이동
               // Navigator.push(
@@ -37,47 +38,26 @@ class _ContainerScreenState extends State<ContainerScreen> {
       ),
       body: Column(
         children: [
+          // CustomSearchBar 사용
            CustomSearchBar(onTap: () {  },
 
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _isLatestSelected = true;
-                    });
-                  },
-                  child: Text(
-                    '최신등록순',
-                    style: TextStyle(
-                      color: _isLatestSelected ? Color(0xFF5DDA6F) : Colors.black,
-                    ),
-                  ),
-                ),
-                SizedBox(width: 10),
 
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _isLatestSelected = false;
-                    });
-                  },
-                  child: Text(
-                    '오래된순',
-                    style: TextStyle(
-                      color: !_isLatestSelected ? Color(0xFF5DDA6F) : Colors.black,
-                    ),
-                  ),
-                ),
-
-                Icon(Icons.swap_vert, color: Colors.black),
-              ],
-            ),
+          // TimeSortSelector 위젯 사용
+          TimeSortSelector(
+            isLatestSelected: _isLatestSelected,
+            onLatestTap: () {
+              setState(() {
+                _isLatestSelected = true;
+              });
+            },
+            onOldestTap: () {
+              setState(() {
+                _isLatestSelected = false;
+              });
+            },
           ),
+
           const Expanded(
             child: Center(
               child: Text(
@@ -88,6 +68,7 @@ class _ContainerScreenState extends State<ContainerScreen> {
           ),
         ],
       ),
+
       floatingActionButton: CustomContainerAddButton(
         onPressed: () {
           // add container 페이지로 이동
