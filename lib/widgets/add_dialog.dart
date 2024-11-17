@@ -17,16 +17,15 @@ class AddDialog extends StatelessWidget {
         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
       ),
       content: const SizedBox(
-        height: 35, // TextField 높이 설정
+        height: 35,
         child: TextField(
           decoration: InputDecoration(
             hintText: '방 이름을 입력하세요',
             hintStyle: TextStyle(
-              color: Colors.black38, // 글씨 색상 연하게
-              fontSize: 14, // 글씨 크기
+              color: Colors.black38,
+              fontSize: 14,
             ),
-            contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0), // 패딩을 설정하여 텍스트 중앙 정렬
-            // 경계 스타일 설정
+            contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.black12),
             ),

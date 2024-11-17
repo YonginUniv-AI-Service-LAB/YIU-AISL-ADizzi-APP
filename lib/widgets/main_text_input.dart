@@ -6,7 +6,6 @@ class MainTextInput extends StatefulWidget {
   final bool showRequest;
   final bool showCheck;
 
-
   const MainTextInput({
     super.key,
     required this.label,
@@ -30,73 +29,92 @@ class _MainTextInputState extends State<MainTextInput> {
 
   @override
   Widget build(BuildContext context) {
+
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+
+    double buttonWidth = width * 0.22;
+    double buttonHeight = height * 0.025;
+    double padding = width * 0.04;
+
     return Container(
-      width: MediaQuery.of(context).size.width * 0.9,
-      height: 50,
-      margin: const EdgeInsets.only(bottom: 20),
+      margin:  EdgeInsets.only(bottom: width* 0.05),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: const Color(0xFFD5D5D5)), // 테두리 색상
-        color: Colors.white, // 배경색
+        border: Border.all(color: const Color(0xFFD5D5D5)),
+        color: Colors.white,
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 15.0),
+            padding: EdgeInsets.only(left: padding),
             child: Text(
               widget.label,
               style: const TextStyle(
                 fontSize: 20,
-                color: Color(0xFF595959), // 글자 색상
+                color: Color(0xFF595959),
               ),
             ),
           ),
+          const Spacer(),
           if (widget.showRequest)
-            Container(
-              decoration: BoxDecoration(
-                color: const Color(0xFFD6D6D6), // 인증 요청 색상
-                borderRadius: BorderRadius.circular(50),
-              ),
-              width: 100,
-              height: 30,
-              alignment: Alignment.center,
-              margin: const EdgeInsets.only(right: 15),
-              child: const Text(
-                '인증요청',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                  color: Color(0xFF595959), // 글자 색상
+            Padding(
+              padding: EdgeInsets.only(right: padding),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFD6D6D6),
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  minimumSize: Size(buttonWidth,buttonHeight),
+                ),
+                onPressed: () {},
+                child: const Text(
+                  '인증요청',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                    color: Color(0xFF595959),
+                  ),
                 ),
               ),
             ),
           if (widget.showCheck)
-            Container(
-              decoration: BoxDecoration(
-                color: const Color(0xFFD6D6D6), // 인증 확인 색상
-                borderRadius: BorderRadius.circular(50),
-              ),
-              width: 100,
-              height: 30,
-              alignment: Alignment.center,
-              margin: const EdgeInsets.only(right: 15),
-              child: const Text(
-                '인증확인',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                  color: Color(0xFF595959), // 글자 색상
+            Padding(
+              padding: EdgeInsets.only(right: padding),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFD6D6D6),
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+
+                  minimumSize: Size(buttonWidth, buttonHeight),
+                ),
+                onPressed: () {},
+                child: const Text(
+                  '인증확인',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                    color: Color(0xFF595959),
+                  ),
                 ),
               ),
             ),
           if (widget.showIcon)
-            IconButton(
-              onPressed: toggleVisibility,
-              icon: isVisible
-                  ? const Icon(Icons.visibility) // 보이는 아이콘
-                  : const Icon(Icons.visibility_off), // 숨기는 아이콘
-              padding: const EdgeInsets.only(right: 15),
+            Padding(
+              padding: EdgeInsets.only(right: padding),
+              child: IconButton(
+                onPressed: toggleVisibility,
+                icon: isVisible
+                    ? const Icon(Icons.visibility)
+                    : const Icon(Icons.visibility_off),
+              ),
             ),
         ],
       ),

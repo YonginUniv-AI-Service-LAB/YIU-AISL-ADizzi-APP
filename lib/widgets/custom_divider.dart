@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'editDelete.dart';
 
 class CustomDivider extends StatelessWidget {
   const CustomDivider({super.key});
@@ -6,10 +7,10 @@ class CustomDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(50), // 전체 컨테이너의 둥근 모서리
+      borderRadius: BorderRadius.circular(50),
       child: Container(
-        color: Colors.white, // 전체 배경 색상
-        margin: const EdgeInsets.all(10), // 전체 여백 설정
+        color: Colors.white,
+        margin: const EdgeInsets.all(10),
         child: Column(
           children: roomData.map((room) {
             return Column(
@@ -19,9 +20,24 @@ class CustomDivider extends StatelessWidget {
                     room['text']!,
                     style: const TextStyle(color: Colors.black),
                   ),
-                  trailing: const Icon(Icons.more_vert),
+                  trailing: IconButton(
+                    icon: const Icon(Icons.more_vert, color: Colors.black),
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Dialog(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: const EditDelete(), // EditDelete 위젯
+                          );
+                        },
+                      );
+                    },
+                  ),
                   onTap: () {
-                    // 탭을 눌렀을 때의 액션
+
                   },
                 ),
                 const Divider(

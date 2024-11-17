@@ -8,19 +8,40 @@ class SearchList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: searchData.length,
-      itemBuilder: (context, index) {
-        return ListTile(
-          leading: const Icon(Icons.restore),
-          title: Text(
-            searchData[index],
-            style: const TextStyle(color: Colors.black, fontSize: 16),
+    return Container(
+      color: Colors.white,
+      child: ListView.builder(
+        itemCount: searchData.length,
+        itemBuilder: (context, index) {
+          return Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Icon(Icons.restore),
+                const SizedBox(width: 25.0),
+                Expanded(
+                  child: Text(
+                    searchData[index],
+                    style: const TextStyle(color: Colors.black, fontSize: 16),
+                  ),
+                ),
+                SizedBox(
+                  width: 40.0,
+                  height: 40.0,
+                  child: IconButton(
+                    icon: const Icon(Icons.clear),
+                    onPressed: () {
 
-          ),
-          trailing: const Icon(Icons.clear),
-        );
-      },
+                    },
+                    padding: EdgeInsets.zero,
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

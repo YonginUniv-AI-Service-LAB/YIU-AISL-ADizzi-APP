@@ -12,17 +12,22 @@ class SignInButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onPressed,
-      child: Container(
-        width: MediaQuery.of(context).size.width * 0.6, // 화면 너비의 60%
-        height: 43,
-        margin: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          color: const Color(0xFF5DDA6F), // 초록색 배경
+
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+
+
+
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: const Color(0xFF5DDA6F),
+        elevation: 4,
+        fixedSize: Size(width * 0.6, height * 0.035),
+        shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
-        alignment: Alignment.center,
+      ),
+      onPressed: onPressed,
         child: Text(
           label,
           style: const TextStyle(
@@ -31,7 +36,6 @@ class SignInButton extends StatelessWidget {
             fontSize: 18,
           ),
         ),
-      ),
-    );
+      );
   }
 }

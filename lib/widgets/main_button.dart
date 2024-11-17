@@ -7,27 +7,33 @@ class MainButton extends StatelessWidget {
   const MainButton({
     super.key,
     required this.label,
-    required this.onPressed});
+    required this.onPressed,
+  });
+
   @override
   Widget build(BuildContext context) {
-    return GestureDetector( // 클릭을 감지할 GestureDetector 사용
-      onTap: onPressed, // onPressed 콜백 호출
-      child: Container(
-        decoration: BoxDecoration(
-          color: const Color(0xFF5DDA6F), // 배경색
-          borderRadius: BorderRadius.circular(10), // 모서리 둥글게
+
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+
+
+
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: const Color(0xFF5DDA6F),
+        elevation: 4,
+        fixedSize: Size(width * 0.9, height * 0.04),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
         ),
-        width: MediaQuery.of(context).size.width * 0.9, // 너비를 화면의 90%로 설정
-        height: 50, // 높이 설정
-        child: Center(
-          child: Text(
-            label,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-              color: Colors.white, // 글자색
-            ),
-          ),
+      ),
+      onPressed: onPressed,
+      child: Text(
+        label,
+        style: const TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
+          color: Colors.white, // Text color
         ),
       ),
     );

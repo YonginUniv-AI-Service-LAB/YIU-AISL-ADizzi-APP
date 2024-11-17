@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../widgets/custom_save_button.dart';
 import '../../widgets/custom_textfield.dart';
+import '../../widgets/main_button.dart';
 
 
 class AddContainerPage extends StatefulWidget {
@@ -69,7 +70,8 @@ class _AddItemPageState extends State<AddContainerPage> {
               // Align으로 버튼 고정
               Align(
                 alignment: Alignment.bottomCenter,
-                child: CustomSaveButton(
+                child: MainButton(
+                  label: '저장',
                   onPressed: () {
                     widget.onAdd(_controller.text);
                     Navigator.pop(context);

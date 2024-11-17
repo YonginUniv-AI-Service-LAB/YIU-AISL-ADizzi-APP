@@ -14,10 +14,25 @@ class CustomContainerAddButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton(
+
+    double width = MediaQuery.of(context).size.width;
+
+
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor:backgroundColor,
+        fixedSize: Size(width * 0.15, width * 0.04),
+      ),
       onPressed: onPressed,
-      child: Icon(icon, color: Colors.white, size: 30),
-      backgroundColor: backgroundColor,
+      child: const Center(
+        child: Icon(
+          Icons.add,
+          size: 30,
+          color: Colors.white,
+        ),
+      )
+
+
     );
   }
 }
