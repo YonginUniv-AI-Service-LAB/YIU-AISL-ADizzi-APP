@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/custom_search_bar.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/time_sort_seletor.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/slot_add_button.dart'; // SlotAddButton 임포트
+import 'package:yiu_aisl_adizzi_app/widgets/slot_add_dialog.dart';
 
 class SlotScreen extends StatefulWidget {
   const SlotScreen({super.key});
@@ -15,10 +16,18 @@ class _SlotScreenState extends State<SlotScreen> {
 
   // 수납칸 추가 클릭 시 동작
   void _onAddShelf() {
-    setState(() {
-      // 수납칸 추가 로직
-      print("수납칸 추가 클릭됨");
-    });
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return SlotAddDialog(
+          onConfirm: (String shelfName) {
+            // 입력된 수납칸 이름 처리
+            print("입력된 수납칸 이름: $shelfName");
+
+          },
+        );
+      },
+    );
   }
 
   // 물건 추가 클릭 시 동작
@@ -55,6 +64,7 @@ class _SlotScreenState extends State<SlotScreen> {
               // 검색창 동작
             },
           ),
+
           // 정렬 섹션
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
@@ -83,6 +93,7 @@ class _SlotScreenState extends State<SlotScreen> {
           ),
         ],
       ),
+
       // 플로팅 버튼과 추가 버튼들
       floatingActionButton: SlotAddButton(
         onAddShelf: _onAddShelf,
