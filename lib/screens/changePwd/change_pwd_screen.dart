@@ -19,7 +19,8 @@ class ChangePwd extends StatelessWidget {
           '비밀번호 재설정',
           style: TextStyle(
             color: Colors.black,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w600,
+            fontSize: 18
           ),
         ),
         centerTitle: true,
@@ -31,7 +32,7 @@ class ChangePwd extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.only(bottom: height * 0.05),
+              padding: EdgeInsets.only(bottom: height * 0.05,top: 20),
               child: const Column(
                 children: [
                   MainTextInput(

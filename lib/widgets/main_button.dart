@@ -22,7 +22,7 @@ class MainButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         backgroundColor: const Color(0xFF5DDA6F),
         elevation: 4,
-        fixedSize: Size(width * 0.9, height * 0.04),
+        fixedSize: Size(width * 0.9, height * 0.05),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
@@ -31,8 +31,8 @@ class MainButton extends StatelessWidget {
       child: Text(
         label,
         style: const TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          fontSize: 16,
           color: Colors.white, // Text color
         ),
       ),

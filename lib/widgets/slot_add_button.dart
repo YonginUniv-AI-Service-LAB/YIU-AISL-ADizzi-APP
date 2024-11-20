@@ -82,6 +82,8 @@ class _SlotAddButtonState extends State<SlotAddButton> {
             });
           },
           child: Icon(_showFloatingButtons ? Icons.close : widget.icon, color: Colors.white), // 아이콘 변경
+
+
           backgroundColor: widget.backgroundColor, // 색상 변경
         ),
       ],

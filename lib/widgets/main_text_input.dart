@@ -38,12 +38,16 @@ class _MainTextInputState extends State<MainTextInput> {
     double padding = width * 0.04;
 
     return Container(
-      margin:  EdgeInsets.only(bottom: width* 0.05),
+      height: height * 0.055,
+      margin:  EdgeInsets.only(bottom: width* 0.06),
       decoration: BoxDecoration(
+
         borderRadius: BorderRadius.circular(10),
         border: Border.all(color: const Color(0xFFD5D5D5)),
         color: Colors.white,
+
       ),
+
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -52,11 +56,12 @@ class _MainTextInputState extends State<MainTextInput> {
             child: Text(
               widget.label,
               style: const TextStyle(
-                fontSize: 20,
+                fontSize: 15,
                 color: Color(0xFF595959),
               ),
             ),
           ),
+
           const Spacer(),
           if (widget.showRequest)
             Padding(
@@ -64,43 +69,44 @@ class _MainTextInputState extends State<MainTextInput> {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFD6D6D6),
-                  elevation: 4,
+                  elevation: 2,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(50),
                   ),
                   padding: const EdgeInsets.symmetric(horizontal: 15),
-                  minimumSize: Size(buttonWidth,buttonHeight),
+                  minimumSize: Size(buttonWidth,28),
                 ),
                 onPressed: () {},
                 child: const Text(
                   '인증요청',
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
                     color: Color(0xFF595959),
                   ),
                 ),
               ),
             ),
+
           if (widget.showCheck)
             Padding(
               padding: EdgeInsets.only(right: padding),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFD6D6D6),
-                  elevation: 4,
+                  elevation: 2,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(50),
                   ),
-
-                  minimumSize: Size(buttonWidth, buttonHeight),
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  minimumSize: Size(buttonWidth,28),
                 ),
                 onPressed: () {},
                 child: const Text(
                   '인증확인',
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
                     color: Color(0xFF595959),
                   ),
                 ),

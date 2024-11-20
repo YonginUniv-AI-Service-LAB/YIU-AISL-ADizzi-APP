@@ -16,7 +16,7 @@ class MyPage extends StatelessWidget {
 
         title: const Text(
           '마이 페이지',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
         ),
         centerTitle: true,
         leading: IconButton(
@@ -29,7 +29,7 @@ class MyPage extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(18.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -49,7 +49,7 @@ class MyPage extends StatelessWidget {
                 Text(
                   '아이디',
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFF595959),
                   ),
@@ -57,18 +57,20 @@ class MyPage extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 20),
-            const Divider(),
+
 
             // 계정 섹션
             const SizedBox(height: 16),
             const Text(
               '계정',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
             ListTile(
+              contentPadding: EdgeInsets.symmetric(horizontal: 7),
               leading: const Icon(Icons.lock_reset),
-              title: const Text('비밀번호 변경'),
+
+              title: const Text('비밀번호 변경',style: TextStyle(fontSize: 15),),
               onTap: () {
                 Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) => const ChangePwd(),
                 ));
@@ -81,20 +83,22 @@ class MyPage extends StatelessWidget {
             const SizedBox(height: 16),
             const Text(
               '기타',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
             ListTile(
+              contentPadding: EdgeInsets.symmetric(horizontal: 7),
               leading: const Icon(Icons.logout),
-              title: const Text('로그아웃'),
+              title: const Text('로그아웃',style: TextStyle(fontSize: 15),),
               onTap: () {
                 Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) => const SignIn(),
                 ));
               },
             ),
             ListTile(
+              contentPadding: EdgeInsets.symmetric(horizontal: 7),
               leading: const Icon(Icons.person_off),
-              title: const Text('회원탈퇴'),
+              title: const Text('회원탈퇴',style: TextStyle(fontSize: 15),),
               onTap: () {
                 showDialog(
                   context: context,

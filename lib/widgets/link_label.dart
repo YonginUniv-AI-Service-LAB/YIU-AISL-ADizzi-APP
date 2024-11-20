@@ -19,14 +19,14 @@ class LinkLabel extends StatelessWidget {
       child: Container(
         decoration: const BoxDecoration(
           border: Border(
-            bottom: BorderSide(color: Color(0xFF595959), width: 0.5),
+            bottom: BorderSide(color: Color(0xFF595959), width: 0.4),
           ),
         ),
         child: Text(
           text,
           style: const TextStyle(
             color: Color(0xFF595959),
-            fontSize: 18,
+            fontSize: 13,
           ),
         ),
       ),
@@ -43,7 +43,7 @@ class LinkLabel extends StatelessWidget {
           ' / ',
           style: TextStyle(
             color: Color(0xFF595959),
-            fontSize: 18,
+            fontSize: 13,
           ),
         ),
         _buildLink(context, '비밀번호 찾기', const ChangePwd()), // 비밀번호 찾기 링크
