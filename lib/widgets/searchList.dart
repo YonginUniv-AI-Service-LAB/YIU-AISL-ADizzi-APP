@@ -14,11 +14,11 @@ class SearchList extends StatelessWidget {
         itemCount: searchData.length,
         itemBuilder: (context, index) {
           return Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 3.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Icon(Icons.restore),
+                const Icon(Icons.restore,size: 18,),
                 const SizedBox(width: 25.0),
                 Expanded(
                   child: Text(
@@ -30,7 +30,7 @@ class SearchList extends StatelessWidget {
                   width: 40.0,
                   height: 40.0,
                   child: IconButton(
-                    icon: const Icon(Icons.clear),
+                    icon: const Icon(Icons.clear,size: 17,),
                     onPressed: () {
 
                     },

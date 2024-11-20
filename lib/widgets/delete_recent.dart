@@ -8,13 +8,13 @@ class DeleteRecent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const Text(
             '최근 검색어',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500,   color: Colors.black54,),
           ),
           InkWell(
             onTap: () {
@@ -24,7 +24,7 @@ class DeleteRecent extends StatelessWidget {
               '전체 삭제',
               style: TextStyle(
                 fontSize: 14,
-                fontWeight: FontWeight.normal,
+                fontWeight: FontWeight.w500,
                 color: Colors.black54,
               ),
             ),
