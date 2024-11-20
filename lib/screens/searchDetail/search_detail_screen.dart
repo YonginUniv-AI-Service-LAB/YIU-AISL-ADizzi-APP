@@ -29,7 +29,7 @@ class SearchDetail extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: const Text('검색어를 입력해주세요'),
-        titleTextStyle: const TextStyle(color: Colors.black54,fontSize: 17),
+        titleTextStyle: const TextStyle(color: Colors.black54,fontSize: 15),
 
         actions: [
           IconButton(

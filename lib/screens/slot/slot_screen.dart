@@ -44,7 +44,10 @@ class _SlotScreenState extends State<SlotScreen> {
       appBar: AppBar(
         title: const Text(
           '옷장',
-          style: TextStyle(fontSize: 18),
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+          ),
         ),
         centerTitle: true,
         actions: [
@@ -67,7 +70,7 @@ class _SlotScreenState extends State<SlotScreen> {
 
           // 정렬 섹션
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 3.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

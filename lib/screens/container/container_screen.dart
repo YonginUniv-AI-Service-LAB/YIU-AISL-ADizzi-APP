@@ -22,7 +22,7 @@ class _ContainerScreenState extends State<ContainerScreen> {
           '금쪽이의 방',
           style: TextStyle(
             fontSize: 18,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w600,
           ),
         ),
         centerTitle: true,

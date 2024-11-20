@@ -16,7 +16,7 @@ class SignUp extends StatelessWidget {
           style: TextStyle(
             color: Colors.black, // 텍스트 색상: 검정색
             fontSize: 18,
-            fontWeight: FontWeight.bold, // 볼드체 설정
+            fontWeight: FontWeight.w600, // 볼드체 설정
           ),
         ),
         centerTitle: true,

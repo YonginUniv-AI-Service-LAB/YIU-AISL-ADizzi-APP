@@ -18,7 +18,7 @@ class CustomDivider extends StatelessWidget {
                 ListTile(
                   title: Text(
                     room['text']!,
-                    style: const TextStyle(color: Colors.black),
+                    style: const TextStyle(color: Colors.black, fontSize: 15),
                   ),
                   trailing: IconButton(
                     icon: const Icon(Icons.more_vert, color: Colors.black),
@@ -41,8 +41,8 @@ class CustomDivider extends StatelessWidget {
                   },
                 ),
                 const Divider(
-                  color: Color(0xFFD6D6D6),
-                  thickness: 2,
+                  color: Color(0x80D6D6D6),
+                  thickness: 1.5,
                 ),
               ],
             );

@@ -34,7 +34,7 @@ class _RoomState extends State<Room> with SingleTickerProviderStateMixin {
         color: Colors.white,
         child: Column(
           children: [
-            const SizedBox(height: 40),
+            const SizedBox(height: 50),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 4.0),
               child: RoomCustomSearchBar(
@@ -43,7 +43,7 @@ class _RoomState extends State<Room> with SingleTickerProviderStateMixin {
                 },
               ),
             ),
-            const SizedBox(height: 8.0),
+            const SizedBox(height: 1.0),
             TabBar(
               controller: _tabController,
               indicatorColor: const Color(0xFF5DDA6F),

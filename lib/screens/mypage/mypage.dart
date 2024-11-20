@@ -50,7 +50,7 @@ class MyPage extends StatelessWidget {
                   '아이디',
                   style: TextStyle(
                     fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w600,
                     color: Color(0xFF595959),
                   ),
                 ),
@@ -63,7 +63,7 @@ class MyPage extends StatelessWidget {
             const SizedBox(height: 16),
             const Text(
               '계정',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600,),
             ),
             const SizedBox(height: 10),
             ListTile(
@@ -83,7 +83,7 @@ class MyPage extends StatelessWidget {
             const SizedBox(height: 16),
             const Text(
               '기타',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600,),
             ),
             const SizedBox(height: 10),
             ListTile(

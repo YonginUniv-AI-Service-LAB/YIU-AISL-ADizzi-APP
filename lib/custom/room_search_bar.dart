@@ -16,12 +16,10 @@ class RoomCustomSearchBar extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     return GestureDetector(
 
-
-
       onTap: onTap,
 
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(6.0),
 
         child: Container(
           decoration: BoxDecoration(
@@ -29,7 +27,7 @@ class RoomCustomSearchBar extends StatelessWidget {
             borderRadius: BorderRadius.circular(28),
 
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 4.0),
+          padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 3.0),
           child: Row(
             children: [
               IconButton(
@@ -41,7 +39,7 @@ class RoomCustomSearchBar extends StatelessWidget {
               const Expanded(
                 child: Text(
                   '검색',
-                  style: TextStyle(fontSize: 17),
+                  style: TextStyle(fontSize: 14),
                 ),
               ),
               IconButton(
