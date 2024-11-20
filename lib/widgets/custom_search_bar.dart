@@ -14,7 +14,7 @@ class CustomSearchBar extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             color: Color(0x80D6D6D6),
-            border: Border.all(color: Color(0xFFD6D6D6)), // 안까지 채우니까 오버플로우 떠서 못함 ㅠㅠ 0x80D6D6D6
+         
             borderRadius: BorderRadius.circular(28.0),
           ),
           child: Row(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/item_list_view.dart';
 import '../../widgets/custom_search_bar.dart';
-import '../../widgets/custom_container_add_button.dart';
+import '../../widgets/floating_add_button.dart';
 
 class Item extends StatefulWidget {
   const Item({super.key});
@@ -101,7 +101,7 @@ class _ItemState extends State<Item> {
           ],
         ),
       ),
-      floatingActionButton: CustomContainerAddButton(
+      floatingActionButton: FloatingAddButton(
         onPressed: () {},
       ),
     );

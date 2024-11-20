@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../widgets/custom_container_add_button.dart';
+import '../../widgets/floating_add_button.dart';
 import '../../widgets/custom_search_bar.dart';
 import 'add_container.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/time_sort_seletor.dart';
@@ -69,7 +69,7 @@ class _ContainerScreenState extends State<ContainerScreen> {
         ],
       ),
 
-      floatingActionButton: CustomContainerAddButton(
+      floatingActionButton: FloatingAddButton(
         onPressed: () {
           // add container 페이지로 이동
           Navigator.push(
