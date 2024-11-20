@@ -18,7 +18,7 @@ class SearchList extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Icon(Icons.restore,size: 18,),
+                const Icon(Icons.restore,size: 20,),
                 const SizedBox(width: 25.0),
                 Expanded(
                   child: Text(

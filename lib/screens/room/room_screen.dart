@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/add_dialog.dart';
 import '../../custom/room_search_bar.dart';
-import '../../widgets/custom_container_add_button.dart';
 import '../../widgets/custom_divider.dart';
+import '../../widgets/floating_add_button.dart';
 import '../../widgets/image_list_view.dart';
 
 class Room extends StatefulWidget {
@@ -36,7 +36,7 @@ class _RoomState extends State<Room> with SingleTickerProviderStateMixin {
           children: [
             const SizedBox(height: 40),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+              padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 4.0),
               child: RoomCustomSearchBar(
                 onTap: () {
 
@@ -70,7 +70,7 @@ class _RoomState extends State<Room> with SingleTickerProviderStateMixin {
           ],
         ),
       ),
-      floatingActionButton: CustomContainerAddButton(
+      floatingActionButton: FloatingAddButton(
         onPressed: () {
           showDialog(
             context: context,
@@ -83,3 +83,4 @@ class _RoomState extends State<Room> with SingleTickerProviderStateMixin {
     );
   }
 }
+
