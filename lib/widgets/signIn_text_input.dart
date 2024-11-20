@@ -11,14 +11,14 @@ class SignInTextInput extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
-    double containerWidth = width * 0.8;
-    double containerHeight = height * 0.04;
-    double padding = width * 0.05;
+    double containerWidth = width * 0.9;
+    double containerHeight = height * 0.05;
+    double padding = width * 0.04;
 
     return Container(
       width: containerWidth,
       height: containerHeight,
-      margin: const EdgeInsets.all(20),
+      margin: const EdgeInsets.all(13),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
@@ -32,7 +32,7 @@ class SignInTextInput extends StatelessWidget {
             child: Text(
               label,
               style: const TextStyle(
-                fontSize: 16,
+                fontSize: 15,
               ),
             ),
           ),

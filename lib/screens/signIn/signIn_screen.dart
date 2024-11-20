@@ -19,15 +19,16 @@ class SignIn extends StatelessWidget {
       backgroundColor: const Color(0xFFF0F0F0),
       body: Center(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: width * 0.04, vertical: height * 0.05),
+            padding: EdgeInsets.symmetric(horizontal: width * 0.05),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const LogoImage(),
-                const SizedBox(height: 24),
+                const SizedBox(height: 35),
                 const SignInTextInput(label: '이메일'),
                 const SignInTextInput(label: '비밀번호'),
+                const SizedBox(height: 30),
                 SignInButton(
                   label: '로그인',
                   onPressed: () {
@@ -37,7 +38,7 @@ class SignIn extends StatelessWidget {
                     );
                   },
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 10),
                 const LinkLabel(),
               ],
             ),
