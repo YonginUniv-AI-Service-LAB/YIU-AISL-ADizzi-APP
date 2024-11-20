@@ -63,7 +63,7 @@ class _SlotAddButtonState extends State<SlotAddButton> {
               onPressed: widget.onAddItem,
               icon: Icon(widget.icon, color: Color(0xFF595959)), // 아이콘 변경
               label: Text(
-                "물건 추가",
+                "물건 추가   ",
                 style: TextStyle(color: widget.textColor), // 텍스트 색상 설정
               ),
               backgroundColor: widget.itemButtonColor, // 색상 변경
