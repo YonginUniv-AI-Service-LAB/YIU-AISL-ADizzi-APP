@@ -1,53 +1,48 @@
 import 'package:flutter/material.dart';
-import 'editDelete.dart';
+import 'custo_popup_menu.dart';
 
 class CustomDivider extends StatelessWidget {
   const CustomDivider({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(50),
-      child: Container(
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
         color: Colors.white,
-        margin: const EdgeInsets.all(10),
-        child: Column(
-          children: roomData.map((room) {
-            return Column(
-              children: [
-                ListTile(
-                  title: Text(
+      ),
+      margin: const EdgeInsets.all(10),
+      child: Column(
+        children: roomData.map((room) {
+          return Column(
+            children: [
+              ListTile(
+                contentPadding: EdgeInsets.zero, // 기본 패딩 제거
+                title: Padding(
+                  padding: const EdgeInsets.only(left: 13.0),
+                  child: Text(
                     room['text']!,
-                    style: const TextStyle(color: Colors.black),
+                    style: const TextStyle(color: Colors.black, fontSize: 15),
                   ),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.more_vert, color: Colors.black),
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return Dialog(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: const EditDelete(), // EditDelete 위젯
-                          );
-                        },
-                      );
-                    },
-                  ),
-                  onTap: () {
-
+                ),
+                trailing: CustomPopupMenu(
+                  onSelected: (int result) {
+                    if (result == 0) {
+                      // 수정 선택
+                    } else if (result == 1) {
+                      // 삭제 선택
+                    }
                   },
                 ),
-                const Divider(
-                  color: Color(0xFFD6D6D6),
-                  thickness: 2,
-                ),
-              ],
-            );
-          }).toList(),
-        ),
+                onTap: () {},
+              ),
+              const Divider(
+                color: Color(0x80D6D6D6),
+                thickness: 1.5,
+              ),
+            ],
+          );
+        }).toList(),
       ),
     );
   }

@@ -14,7 +14,7 @@ class SearchList extends StatelessWidget {
         itemCount: searchData.length,
         itemBuilder: (context, index) {
           return Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 3.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 4.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -23,7 +23,7 @@ class SearchList extends StatelessWidget {
                 Expanded(
                   child: Text(
                     searchData[index],
-                    style: const TextStyle(color: Colors.black, fontSize: 16),
+                    style: const TextStyle(color: Colors.black, fontSize: 15),
                   ),
                 ),
                 SizedBox(

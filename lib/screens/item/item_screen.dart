@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/item_list_view.dart';
 import '../../widgets/custom_search_bar.dart';
 import '../../widgets/floating_add_button.dart';
+import '../../widgets/time_sort_seletor.dart';
 
 class Item extends StatefulWidget {
   const Item({super.key});
@@ -30,76 +31,39 @@ class _ItemState extends State<Item> {
           ),
         ],
       ),
-      body: SingleChildScrollView( // 스크롤 가능하도록 추가
-        child: Column(
-          children: [
-            Container(
-              color: Colors.white,
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    '금쪽이의 방 > 옷장 > 서랍1',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.black54,
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _isLatestSelected = true;
-                          });
-                        },
-                        child: Text(
-                          '최신등록순',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: _isLatestSelected
-                                ? const Color(0xFF5DDA6F)
-                                : Colors.black,
-                          ),
-                        ),
-                      ),
-                      const Text(
-                        ' / ',
-                        style: TextStyle(
-                          color: Color(0xFF595959),
-                          fontSize: 18,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _isLatestSelected = false;
-                          });
-                        },
-                        child: Text(
-                          '오래된순',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: !_isLatestSelected
-                                ? const Color(0xFF5DDA6F)
-                                : Colors.black,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      const Icon(Icons.swap_vert, color: Colors.black),
-                    ],
-                  ),
-                ],
-              ),
+      body: Column(
+        children: [
+          Container(
+            color: Colors.white,
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "금쪽이의 방 > 가나 > 서랍1",
+                  style: TextStyle(color: Colors.grey[600],fontSize: 12),
+                ),
+                TimeSortSelector(
+                  isLatestSelected: _isLatestSelected,
+                  onLatestTap: () {
+                    setState(() {
+                      _isLatestSelected = true;
+                    });
+                  },
+                  onOldestTap: () {
+                    setState(() {
+                      _isLatestSelected = false;
+                    });
+                  },
+                ),
+              ],
             ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.7,
-              child: ItemListView(),
-            ),
-          ],
-        ),
+          ),
+          SizedBox(
+
+            child: ItemListView(),
+          ),
+        ],
       ),
       floatingActionButton: FloatingAddButton(
         onPressed: () {},

@@ -24,7 +24,10 @@ class _AddItemPageState extends State<AddContainerPage> {
       appBar: AppBar(
         title: const Text(
           '금쪽이의 방',
-          style: TextStyle(fontSize: 18),
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         centerTitle: true,
       ),
@@ -57,7 +60,7 @@ class _AddItemPageState extends State<AddContainerPage> {
                 '수납장 이름',
                 style: TextStyle(
                   fontSize: 15,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
               SizedBox(height: 15),

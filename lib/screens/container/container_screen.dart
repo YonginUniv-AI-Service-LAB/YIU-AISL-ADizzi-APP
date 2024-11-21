@@ -20,7 +20,10 @@ class _ContainerScreenState extends State<ContainerScreen> {
       appBar: AppBar(
         title: const Text(
           '금쪽이의 방',
-          style: TextStyle(fontSize: 18),
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+          ),
         ),
         centerTitle: true,
         actions: [

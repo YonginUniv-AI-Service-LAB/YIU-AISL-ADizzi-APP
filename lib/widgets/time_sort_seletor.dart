@@ -15,7 +15,7 @@ class TimeSortSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 3.0, vertical: 0.5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
@@ -25,19 +25,20 @@ class TimeSortSelector extends StatelessWidget {
               '최신등록순',
               style: TextStyle(
                 color: isLatestSelected ? Color(0xFF5DDA6F) : Color(0xFF595959),
+                fontWeight: FontWeight.w500,
               ),
             ),
           ),
 
-          const SizedBox(width: 5),
+          const SizedBox(width: 3),
           const Text(
             '/',
             style: TextStyle(
               color: Color(0xFF595959),
-              fontWeight: FontWeight.w400,
+              fontWeight: FontWeight.w500,
             ),
           ),
-          const SizedBox(width: 5),
+          const SizedBox(width: 3),
 
           GestureDetector(
             onTap: onOldestTap,
@@ -45,6 +46,7 @@ class TimeSortSelector extends StatelessWidget {
               '오래된순',
               style: TextStyle(
                 color: !isLatestSelected ? Color(0xFF5DDA6F) : Color(0xFF595959),
+                fontWeight: FontWeight.w500,
               ),
             ),
           ),

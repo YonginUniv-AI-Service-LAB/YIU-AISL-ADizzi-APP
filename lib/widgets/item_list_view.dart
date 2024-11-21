@@ -15,10 +15,12 @@ class ItemListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
 
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
-      padding: const EdgeInsets.all(16.0),
+      height: height* 0.75,
+      margin: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 14.0),
+      padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
@@ -35,10 +37,11 @@ class ItemListView extends StatelessWidget {
                 children: [
                   // Checkbox Icon
                   IconButton(
+                    padding: EdgeInsets.zero,
                     icon: const Icon(Icons.check_box_outline_blank),
                     onPressed: () {},
                   ),
-                  const SizedBox(width: 10),
+
 
                   // Image
                   ClipRRect(
@@ -54,12 +57,14 @@ class ItemListView extends StatelessWidget {
 
                   // Text
                   Expanded(
-                    child: Text(
-                      item.text,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black87,
+                    child: ListTile(
+                      title: Text(
+                        item.text,  // item.text를 title에 넣기
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black87,
+                        ),
                       ),
                     ),
                   ),
@@ -71,13 +76,7 @@ class ItemListView extends StatelessWidget {
                   ),
                 ],
               ),
-              // Divider (밑줄)
-              if (index != itemData.length - 1) // 마지막 아이템에는 선 추가 X
-                const Divider(
-                  color: Colors.grey,
-                  thickness: 1,
-                  height: 16,
-                ),
+
             ],
           );
         }).toList(),

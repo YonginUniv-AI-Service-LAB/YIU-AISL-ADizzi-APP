@@ -28,9 +28,10 @@ class Search extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: const Text('검색어를 입력해주세요'),
+          title: const Text('검색어를 입력해주세요'),
         titleTextStyle: const TextStyle(color: Colors.black54,fontSize: 17),
           titleSpacing: 0,
+
           actions: [
           IconButton(
             icon: const Icon(Icons.search),
