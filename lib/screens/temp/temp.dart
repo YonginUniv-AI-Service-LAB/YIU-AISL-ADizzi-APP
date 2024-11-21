@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:yiu_aisl_adizzi_app/screens/changePwd/change_pwd_screen.dart';
 import 'package:yiu_aisl_adizzi_app/screens/item/item_screen.dart';
 import 'package:yiu_aisl_adizzi_app/screens/mypage/mypage.dart';
-import 'package:yiu_aisl_adizzi_app/screens/searchDetail/search_detail_screen.dart';
+import 'package:yiu_aisl_adizzi_app/screens/search/search_detail_screen.dart';
+
 import 'package:yiu_aisl_adizzi_app/screens/signIn/signIn_screen.dart';
 import 'package:yiu_aisl_adizzi_app/screens/signUp/signUp_screen.dart';
 import '../container/container_screen.dart';
 import '../room/room_screen.dart';
 import 'package:yiu_aisl_adizzi_app/screens/slot/slot_screen.dart';
+
+import '../search/search_screen.dart';
 
 
 class TempStartScreen extends StatefulWidget {
@@ -96,6 +99,15 @@ class _TempStartScreenState extends State<TempStartScreen>
                 );
               },
               child: Text('Container 페이지'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Search()),
+                );
+              },
+              child: Text('Search 페이지'),
             ),
             ElevatedButton(
               onPressed: () {

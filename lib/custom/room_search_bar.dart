@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:yiu_aisl_adizzi_app/screens/searchDetail/search_detail_screen.dart';
 
 import '../screens/mypage/mypage.dart';
+import '../screens/search/search_screen.dart';
 
 class RoomCustomSearchBar extends StatelessWidget {
   final VoidCallback onTap;
@@ -48,7 +48,7 @@ class RoomCustomSearchBar extends StatelessWidget {
                 onPressed: () {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => SearchDetail()),
+                    MaterialPageRoute(builder: (context) => Search()),
                   );
                 },
                 icon: const Icon(Icons.search),

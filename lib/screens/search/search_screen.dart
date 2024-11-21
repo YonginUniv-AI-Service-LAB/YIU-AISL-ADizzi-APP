@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import '../../widgets/delete_recent.dart';
 import '../../widgets/searchList.dart';
 
-class SearchDetail extends StatelessWidget {
-  SearchDetail({super.key});
+class Search extends StatelessWidget {
+  Search({super.key});
 
   List<String> searchData = [
     '용용인형',
@@ -30,8 +30,8 @@ class SearchDetail extends StatelessWidget {
         backgroundColor: Colors.white,
         title: const Text('검색어를 입력해주세요'),
         titleTextStyle: const TextStyle(color: Colors.black54,fontSize: 17),
-
-        actions: [
+          titleSpacing: 0,
+          actions: [
           IconButton(
             icon: const Icon(Icons.search),
             onPressed: () {
