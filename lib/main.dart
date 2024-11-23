@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:yiu_aisl_adizzi_app/screens/mypage/mypage.dart';
 import 'package:yiu_aisl_adizzi_app/screens/temp/temp.dart';
-//import 'package:yiu_aisl_adizzi_app/screens/changePwd/change_pwd_screen.dart';
-//import 'package:yiu_aisl_adizzi_app/screens/signUp/signUp_screen.dart';
-//import 'package:yiu_aisl_adizzi_app/screens/signIn/signIn_screen.dart';
+
 
 
 void main() {

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:yiu_aisl_adizzi_app/screens/changePwd/change_pwd_screen.dart';
 import 'package:yiu_aisl_adizzi_app/screens/item/item_screen.dart';
+import 'package:yiu_aisl_adizzi_app/screens/login/login_screen.dart';
 import 'package:yiu_aisl_adizzi_app/screens/mypage/mypage.dart';
 import 'package:yiu_aisl_adizzi_app/screens/search/search_detail_screen.dart';
-
-import 'package:yiu_aisl_adizzi_app/screens/signIn/signIn_screen.dart';
 import 'package:yiu_aisl_adizzi_app/screens/signUp/signUp_screen.dart';
 import '../container/container_screen.dart';
 import '../room/room_screen.dart';
@@ -60,7 +59,7 @@ class _TempStartScreenState extends State<TempStartScreen>
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SignIn()),
+                  MaterialPageRoute(builder: (context) => Login()),
                 );
               },
               child: Text('로그인'),
@@ -77,7 +76,7 @@ class _TempStartScreenState extends State<TempStartScreen>
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ChangePwd()),
+                  MaterialPageRoute(builder: (context) =>ChangePwd()),
                 );
               },
               child: Text('비밀번호 재설정'),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-
+import 'package:yiu_aisl_adizzi_app/screens/login/login_screen.dart';
 import '../../widgets/delete_confirmation_dialog.dart';
 import '../changePwd/change_pwd_screen.dart';
-import '../signIn/signIn_screen.dart';
+
 
 
 class MyPage extends StatelessWidget {
@@ -91,7 +91,7 @@ class MyPage extends StatelessWidget {
               leading: const Icon(Icons.logout),
               title: const Text('로그아웃',style: TextStyle(fontSize: 15),),
               onTap: () {
-                Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) => const SignIn(),
+                Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) =>  Login(),
                 ));
               },
             ),
