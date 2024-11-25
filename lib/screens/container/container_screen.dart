@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import '../../widgets/floating_add_button.dart';
-import '../../widgets/custom_search_bar.dart';
-import 'add_container.dart';
+import 'package:yiu_aisl_adizzi_app/widgets/custom_search_bar.dart';
+import 'package:yiu_aisl_adizzi_app/widgets/floating_add_button.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/time_sort_seletor.dart';
+import 'package:yiu_aisl_adizzi_app/widgets/container_list_view.dart';
+import 'add_container.dart';
 
 class ContainerScreen extends StatefulWidget {
   const ContainerScreen({super.key});
@@ -13,6 +14,7 @@ class ContainerScreen extends StatefulWidget {
 
 class _ContainerScreenState extends State<ContainerScreen> {
   bool _isLatestSelected = true; // 초기값은 '최신등록순'임
+  List<String> _items = []; // 리스트 데이터를 관리하는 변수
 
   @override
   Widget build(BuildContext context) {
@@ -42,9 +44,7 @@ class _ContainerScreenState extends State<ContainerScreen> {
       body: Column(
         children: [
           // CustomSearchBar 사용
-           CustomSearchBar(onTap: () {  },
-
-          ),
+          CustomSearchBar(onTap: () {}),
 
           // TimeSortSelector 위젯 사용
           TimeSortSelector(
@@ -61,23 +61,27 @@ class _ContainerScreenState extends State<ContainerScreen> {
             },
           ),
 
-          const Expanded(
-            child: Center(
-              child: Text(
-                '추가된 아이템이 없습니다.',
-                style: TextStyle(color: Colors.grey),
-              ),
-            ),
+          // 리스트 위젯
+          Expanded(
+            child: ContainerListView(items: _items),
           ),
         ],
       ),
 
       floatingActionButton: FloatingAddButton(
-        onPressed: () {
-          // add container 페이지로 이동
-          Navigator.push(
+        onPressed: () async {
+          // AddContainerPage로 이동 및 결과 받기
+          final result = await Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => AddContainerPage(onAdd: (item) {})),
+            MaterialPageRoute(
+              builder: (context) => AddContainerPage(
+                onAdd: (String item) {
+                  setState(() {
+                    _items.add(item); // 리스트에 새 아이템 추가
+                  });
+                },
+              ),
+            ),
           );
         },
       ),

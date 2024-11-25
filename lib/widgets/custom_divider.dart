@@ -19,7 +19,7 @@ class CustomDivider extends StatelessWidget {
               ListTile(
                 contentPadding: EdgeInsets.zero, // 기본 패딩 제거
                 title: Padding(
-                  padding: const EdgeInsets.only(left: 13.0),
+                  padding: const EdgeInsets.only(left: 30.0),
                   child: Text(
                     room['text']!,
                     style: const TextStyle(color: Colors.black, fontSize: 15),

@@ -37,7 +37,7 @@ class _RoomState extends State<Room> with SingleTickerProviderStateMixin {
           children: [
             const SizedBox(height: 50),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 4.0),
+              padding: const EdgeInsets.symmetric(horizontal: 3.0, vertical: 4.0),
               child: RoomCustomSearchBar(
                 onTap: () {
 
