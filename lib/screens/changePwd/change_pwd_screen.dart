@@ -1,15 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:yiu_aisl_adizzi_app/screens/login/login_screen.dart';
 import '../../widgets/main_button.dart';
 import '../../widgets/main_text_input.dart';
-import '../signIn/signIn_screen.dart';
+import '../../service/user/change_pwd.dart';
 
-
-class ChangePwd extends StatelessWidget {
+class ChangePwd extends StatefulWidget {
   const ChangePwd({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  _ChangePwdState createState() => _ChangePwdState();
+}
 
+class _ChangePwdState extends State<ChangePwd> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _codeController = TextEditingController();
+  final TextEditingController _newPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
+
+  // 비밀번호 변경 검증 함수 호출
+  void _changePwd() async {
+    final String email = _emailController.text;
+    final String password = _newPasswordController.text;
+
+    try {
+      final response = await changePwd(email, password);
+
+      if (response.statusCode == 200) {
+        print('비밀번호 변경 성공');
+        _navigateToSignIn();
+      } else {
+        print('문제가 발생했습니다.');
+
+      }
+    } catch (e) {
+      print('비밀번호 재설정 중 오류 발생');
+    }
+  }
+
+  // 비밀번호 변경 성공 시 화면 전환 함수
+  void _navigateToSignIn() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => Login()),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
@@ -20,7 +57,7 @@ class ChangePwd extends StatelessWidget {
           style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.w600,
-            fontSize: 18
+            fontSize: 18,
           ),
         ),
         centerTitle: true,
@@ -32,55 +69,76 @@ class ChangePwd extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.only(bottom: height * 0.05,top: 20),
-              child: const Column(
+              padding: EdgeInsets.only(bottom: height * 0.05, top: 20),
+              child: Column(
                 children: [
-                  MainTextInput(
-                    label: '이메일',
-                    showCheck: false,
-                    showRequest: true,
-                    showIcon: false,
-                  ),
-                  MainTextInput(
-                    label: '인증번호',
-                    showCheck: true,
-                    showRequest: false,
-                    showIcon: false,
-                  ),
+                  _buildEmailInput(),
+                  _buildCodeInput(),
                 ],
               ),
             ),
             Padding(
               padding: EdgeInsets.only(bottom: height * 0.05),
-              child: const Column(
+              child: Column(
                 children: [
-                  MainTextInput(
-                    label: '새 비밀번호',
-                    showCheck: false,
-                    showRequest: false,
-                    showIcon: true,
-                  ),
-                  MainTextInput(
-                    label: '새 비밀번호 재입력',
-                    showCheck: false,
-                    showRequest: false,
-                    showIcon: true,
-                  ),
+                  _buildNewPwdInput(),
+                  _buildNewConfirmPwdInput(),
                 ],
               ),
             ),
             MainButton(
-              label: '로그인',
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const SignIn()),
-                );
-              },
+              label: '비밀번호 재설정',
+              onPressed: _changePwd,
             ),
           ],
         ),
       ),
     );
   }
+
+  // 이메일 입력 필드 위젯
+  Widget _buildEmailInput(){
+    return MainTextInput(
+      label: '이메일',
+      controller: _emailController,
+      showCheck: false,
+      showRequest: true,
+      showIcon: false,
+    );
+  }
+
+  // 인증번호 입력 필드 위젯
+  Widget _buildCodeInput(){
+    return MainTextInput(
+      label: '인증번호',
+      controller: _codeController,
+      showCheck: true,
+      showRequest: false,
+      showIcon: false,
+    );
+  }
+
+  // 새 비밀번호 입력 필드 위젯
+  Widget _buildNewPwdInput(){
+    return MainTextInput(
+      label: '새 비밀번호 입력',
+      controller: _newPasswordController,
+      showCheck: false,
+      showRequest: false,
+      showIcon: true,
+    );
+  }
+
+  // 새 비밀번호 재입력 입력 필드 위젯
+  Widget _buildNewConfirmPwdInput(){
+    return MainTextInput(
+      label: '새 비밀번호 재입력',
+      controller: _confirmPasswordController,
+      showCheck: false,
+      showRequest: false,
+      showIcon: true,
+    );
+  }
 }
+
+

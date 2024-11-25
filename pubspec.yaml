@@ -32,6 +32,10 @@ dependencies:
     sdk: flutter
   http: ^0.13.5
   image_picker: ^0.8.7+5
+
+  shared_preferences: ^2.0.0
+  flutter_secure_storage: ^9.2.2
+#>>>>>>> 4ef9877d448f7d55824a419071d10c10c1ec21a4
   # The following adds the Cupertino Icons fonts to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8  # 최신 버전으로 수정

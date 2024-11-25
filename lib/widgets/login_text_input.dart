@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 
-class SignInTextInput extends StatelessWidget {
+class LoginTextInput extends StatelessWidget {
   final String label;
+  final TextEditingController controller;
 
-  const SignInTextInput({super.key, required this.label});
+  const LoginTextInput({
+    super.key,
+    required this.label,
+    required this.controller,
+  });
 
   @override
   Widget build(BuildContext context) {
-
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
@@ -22,17 +26,22 @@ class SignInTextInput extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
-
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Padding(
-            padding: EdgeInsets.only(left: padding),
-            child: Text(
-              label,
-              style: const TextStyle(
-                fontSize: 15,
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.only(left: padding),
+              child: TextField(
+                controller: controller,  // controller 전달
+                decoration: InputDecoration(
+                  labelText: label,  // 레이블 설정
+                  border: InputBorder.none,
+                ),
+                style: const TextStyle(
+                  fontSize: 15,
+                ),
               ),
             ),
           ),

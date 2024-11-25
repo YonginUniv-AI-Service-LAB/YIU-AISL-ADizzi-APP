@@ -84,4 +84,3 @@ class _RoomState extends State<Room> with SingleTickerProviderStateMixin {
     );
   }
 }
-

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class SignInButton extends StatelessWidget {
+class LoginButton extends StatelessWidget {
   final String label;
   final VoidCallback onPressed;
 
-  const SignInButton({
+  const LoginButton({
     super.key,
     required this.label,
     required this.onPressed

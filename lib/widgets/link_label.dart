@@ -38,7 +38,7 @@ class LinkLabel extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _buildLink(context, '회원 가입', const SignUp()), // 회원 가입 링크
+        _buildLink(context, '회원 가입', SignUp()), // 회원 가입 링크
         const Text(
           ' / ',
           style: TextStyle(
