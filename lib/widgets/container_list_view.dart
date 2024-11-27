@@ -13,6 +13,12 @@ class ContainerListView extends StatefulWidget {
 }
 
 class _ContainerListViewState extends State<ContainerListView> {
+  void _deleteItem(int index) {
+    setState(() {
+      widget.items.removeAt(index); // 리스트에서 항목 제거
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     if (widget.items.isEmpty) {
@@ -74,9 +80,7 @@ class _ContainerListViewState extends State<ContainerListView> {
                     );
                   } else if (result == 1) {
                     // 삭제
-                    setState(() {
-                      widget.items.removeAt(index);
-                    });
+                    _deleteItem(index); // 삭제 기능 호출
                   }
                 },
               ),
