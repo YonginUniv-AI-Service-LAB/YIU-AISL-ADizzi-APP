@@ -151,7 +151,7 @@ class _MainTextInputState extends State<MainTextInput> {
                     controller: widget.controller,
                     obscureText: widget.label == '비밀번호' || widget.label == '비밀번호 재입력' ? !isVisible : false,
                     decoration: InputDecoration(
-                      labelText: widget.label,
+                      hintText:  widget.label, // hintText로 레이블 대체
                       border: InputBorder.none,
                     ),
                     style: const TextStyle(
