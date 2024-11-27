@@ -151,16 +151,18 @@ class _MainTextInputState extends State<MainTextInput> {
                     controller: widget.controller,
                     obscureText: widget.label == '비밀번호' || widget.label == '비밀번호 재입력' ? !isVisible : false,
                     decoration: InputDecoration(
-                      labelText: widget.label,
+                      hintText:  widget.label, // hintText로 레이블 대체
                       border: InputBorder.none,
                     ),
                     style: const TextStyle(
                       fontSize: 15,
                       color: Color(0xFF595959),
                     ),
+                    maxLines: 1,
                   ),
                 ),
               ),
+
               if (widget.showRequest)
                 Padding(
                   padding: EdgeInsets.only(right: padding),

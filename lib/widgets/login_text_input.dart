@@ -36,12 +36,13 @@ class LoginTextInput extends StatelessWidget {
               child: TextField(
                 controller: controller,  // controller 전달
                 decoration: InputDecoration(
-                  labelText: label,  // 레이블 설정
-                  border: InputBorder.none,
+                  hintText: label, // hintText로 레이블 대체
+                  border: InputBorder.none,  // 테두리 없애기
                 ),
                 style: const TextStyle(
                   fontSize: 15,
                 ),
+                maxLines: 1,
               ),
             ),
           ),
