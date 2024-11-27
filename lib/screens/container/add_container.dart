@@ -7,8 +7,10 @@ import '../../widgets/main_button.dart';
 
 class AddContainerPage extends StatefulWidget {
   final Function(ContainerItem) onAdd;
+  final ContainerItem? initialItem;
 
-  const AddContainerPage({required this.onAdd, Key? key}) : super(key: key);
+  const AddContainerPage({required this.onAdd, this.initialItem, Key? key})
+      : super(key: key);
 
   @override
   _AddContainerPageState createState() => _AddContainerPageState();
@@ -17,6 +19,15 @@ class AddContainerPage extends StatefulWidget {
 class _AddContainerPageState extends State<AddContainerPage> {
   final TextEditingController _controller = TextEditingController();
   File? _selectedImage;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.initialItem != null) {
+      _controller.text = widget.initialItem!.name;
+      _selectedImage = widget.initialItem!.image;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,13 +48,13 @@ class _AddContainerPageState extends State<AddContainerPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Camera widget
               CameraWidget(
                 onImageSelected: (image) {
                   setState(() {
                     _selectedImage = image;
                   });
                 },
+                initialImage: _selectedImage,
               ),
               const SizedBox(height: 30),
               const Text(
@@ -69,13 +80,13 @@ class _AddContainerPageState extends State<AddContainerPage> {
                     }
 
                     final item = ContainerItem(
+                      id: widget.initialItem?.id,
                       name: _controller.text,
                       image: _selectedImage,
                     );
 
                     widget.onAdd(item);
-
-                    Navigator.pop(context); // 이전 화면으로 이동
+                    Navigator.pop(context);
                   },
                 ),
               ),

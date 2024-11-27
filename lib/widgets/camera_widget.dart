@@ -4,8 +4,10 @@ import 'package:image_picker/image_picker.dart';
 
 class CameraWidget extends StatefulWidget {
   final Function(File?) onImageSelected;
+  final File? initialImage;
 
-  const CameraWidget({required this.onImageSelected, Key? key}) : super(key: key);
+  const CameraWidget({required this.onImageSelected, this.initialImage, Key? key})
+      : super(key: key);
 
   @override
   _CameraWidgetState createState() => _CameraWidgetState();
@@ -14,6 +16,12 @@ class CameraWidget extends StatefulWidget {
 class _CameraWidgetState extends State<CameraWidget> {
   final ImagePicker _picker = ImagePicker();
   File? _selectedImage;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedImage = widget.initialImage;
+  }
 
   Future<void> _openCamera() async {
     try {
