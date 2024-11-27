@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../service/user/login.dart';
@@ -24,15 +26,22 @@ class _LoginState extends State<Login> {
     final String email = _emailController.text.trim();
     final String password = _passwordController.text.trim();
 
-    // 입력값 검증
+    // 이메일이 비어있는지 확인
     if (email.isEmpty) {
       _setError('이메일을 입력해주세요.');
       return;
     }
-    if (!email.contains('@')) {
+
+    // 이메일 형식 검증
+    RegExp emailRegExp = RegExp(
+      r"^(?!@)(?!.*@$)([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$",
+    );
+    if (!emailRegExp.hasMatch(email)) {
       _setError('이메일 형식이 올바르지 않습니다.');
       return;
     }
+
+    // 비밀번호가 비어있는지 확인
     if (password.isEmpty) {
       _setError('비밀번호를 입력해주세요.');
       return;
@@ -41,6 +50,7 @@ class _LoginState extends State<Login> {
     try {
       // 로그인 요청
       final response = await signIn(email, password);
+      final errorResponse = jsonDecode(utf8.decode(response.bodyBytes));
 
       if (response.statusCode == 200) {
         // 로그인 성공
@@ -50,12 +60,12 @@ class _LoginState extends State<Login> {
         print(" $data");
 
         _navigateToRoom();
-      } else if (response.statusCode == 400) {
-        _setError('비밀번호가 틀렸습니다.');
+      } else if (errorResponse['code'] == "E503") {
+        _setError('회원가입을 해주세요');
+      } else if (errorResponse['code'] == "E701") {
+        _setError('비밀번호가 일치하지 않습니다..');
       } else if (response.statusCode == 404) {
         _setError('이메일이 존재하지 않습니다.');
-      } else if (response.statusCode == 500) {
-        _setError('서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
       } else {
         _setError('로그인 실패. 다시 시도해주세요.');
       }
