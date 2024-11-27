@@ -42,6 +42,7 @@ class LoginTextInput extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 15,
                 ),
+                maxLines: 1,
               ),
             ),
           ),

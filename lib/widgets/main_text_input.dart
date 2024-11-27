@@ -158,9 +158,11 @@ class _MainTextInputState extends State<MainTextInput> {
                       fontSize: 15,
                       color: Color(0xFF595959),
                     ),
+                    maxLines: 1,
                   ),
                 ),
               ),
+
               if (widget.showRequest)
                 Padding(
                   padding: EdgeInsets.only(right: padding),

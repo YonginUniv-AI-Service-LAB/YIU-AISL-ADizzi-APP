@@ -58,6 +58,7 @@ class _SignUpState extends State<SignUp> {
             color: Colors.black,
             fontSize: 18,
             fontWeight: FontWeight.w600,
+
           ),
         ),
         centerTitle: true,
