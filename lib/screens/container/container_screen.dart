@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yiu_aisl_adizzi_app/models/container_items.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/custom_search_bar.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/floating_add_button.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/time_sort_seletor.dart';
@@ -14,7 +15,7 @@ class ContainerScreen extends StatefulWidget {
 
 class _ContainerScreenState extends State<ContainerScreen> {
   bool _isLatestSelected = true; // 초기값은 '최신등록순'임
-  List<String> _items = []; // 리스트 데이터를 관리하는 변수
+  List<ContainerItem> _items = []; // 리스트 데이터를 관리하는 변수
 
   @override
   Widget build(BuildContext context) {
@@ -70,14 +71,13 @@ class _ContainerScreenState extends State<ContainerScreen> {
 
       floatingActionButton: FloatingAddButton(
         onPressed: () async {
-          // AddContainerPage로 이동 및 결과 받기
-          final result = await Navigator.push(
+          await Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => AddContainerPage(
-                onAdd: (String item) {
+                onAdd: (ContainerItem item) {
                   setState(() {
-                    _items.add(item); // 리스트에 새 아이템 추가
+                    _items.add(item); // 전달받은 ContainerItem을 리스트에 추가
                   });
                 },
               ),

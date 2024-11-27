@@ -3,7 +3,6 @@ import 'package:http/http.dart' as http;
 import 'package:yiu_aisl_adizzi_app/utils/constants.dart';
 
 Future<http.Response> room(String title,String token, int roomId ) async{
-  final String baseUrl = 'http://52.78.164.15:8080/api';
   final String endpoint = '/room/$roomId';
   final String uri = '$BASE_URL$endpoint';
 
