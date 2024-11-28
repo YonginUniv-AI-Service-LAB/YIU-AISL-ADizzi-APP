@@ -26,9 +26,8 @@ class CustomDivider extends StatelessWidget {
         shrinkWrap: true,
         itemCount: roomList.length,
         itemBuilder: (context, index) {
-          final room = roomList[index];  // Access room name by index
-          final roomId = index + 1;  // Add +1 to the index for roomId (for DB)
-
+          final room = roomList[index];
+          final roomId = index + 1;
           return Column(
             children: [
               ListTile(
@@ -40,29 +39,30 @@ class CustomDivider extends StatelessWidget {
                     style: const TextStyle(color: Colors.black, fontSize: 15),
                   ),
                 ),
-                trailing: CustomPopupMenu(
-                  onSelected: (int result) async {
-                    if (result == 0) {
-                      // 수정 선택
-                      final updatedRoomName = await showDialog<String>(
-                        context: context,
-                        builder: (context) => AddDialog(
-                          isEdit: true,
-                          initialTitle: room,
-                          roomId: roomId, // Use roomId with +1 adjustment
-                        ),
-                      );
+               trailing: CustomPopupMenu(
+                onSelected: (int result) async {
+                  if (result == 0) {
+                    // 수정 선택
+                    final updatedRoomName = await showDialog<String>(
+                      context: context,
+                      builder: (context) => AddDialog(
+                        isEdit: true,
+                        initialTitle: room,
+                        roomId: roomId,
+                      ),
+                    );
 
-                      if (updatedRoomName != null && updatedRoomName.isNotEmpty) {
-                        roomProvider.updateRoom(roomId - 1, updatedRoomName); // Update in the provider, pass 0-based index
-                      }
-                    } else if (result == 1) {
-                      // 삭제 선택
-                      roomProvider.removeRoom(room);
+                    if (updatedRoomName != null && updatedRoomName.isNotEmpty) {
+                      roomProvider.updateRoom(roomId - 1, updatedRoomName);
                     }
-                  },
-                ),
-                onTap: () {
+                  } else if (result == 1) {
+                    // 삭제 선택
+                    await roomProvider.deleteRoom(context, roomId);  // deleteRoom 호출
+                  }
+                },
+              ),
+
+              onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(

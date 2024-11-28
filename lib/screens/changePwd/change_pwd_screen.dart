@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yiu_aisl_adizzi_app/screens/login/login_screen.dart';
+import 'package:yiu_aisl_adizzi_app/utils/token.dart';
 import '../../widgets/main_button.dart';
 import '../../widgets/main_text_input.dart';
 import '../../service/user/change_pwd.dart';
@@ -23,13 +24,15 @@ class _ChangePwdState extends State<ChangePwd> {
     final String password = _newPasswordController.text;
 
     try {
-      final response = await changePwd(email, password);
+      final token = await getToken();
+      final response = await changePwd(email, password, token!);
 
       if (response.statusCode == 200) {
         print('비밀번호 변경 성공');
         _navigateToSignIn();
       } else {
-        print('문제가 발생했습니다.');
+        print('문제가 발생했습니다. 상태 코드: ${response.statusCode}');
+        print('응답 본문: ${response.body}');
 
       }
     } catch (e) {

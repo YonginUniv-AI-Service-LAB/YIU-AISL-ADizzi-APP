@@ -50,7 +50,7 @@ class _AddDialogState extends State<AddDialog> {
 
       if (response.statusCode == 200) {
         _resetError();
-        Navigator.of(context).pop(title); // 성공 시 모달 닫기 및 제목 반환
+        Navigator.of(context).pop(title);
       } else {
         final responseBody = json.decode(decodedResponse);
         if (responseBody['code'] == 'E801') {
