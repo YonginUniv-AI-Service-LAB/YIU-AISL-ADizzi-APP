@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/add_dialog.dart';
 import '../../custom/room_search_bar.dart';
+import '../../provider/room_provider.dart';
 import '../../widgets/custom_divider.dart';
 import '../../widgets/floating_add_button.dart';
 import '../../widgets/image_list_view.dart';
@@ -19,6 +21,11 @@ class _RoomState extends State<Room> with SingleTickerProviderStateMixin {
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+
+    // 방 목록을 초기화할 때 서버에서 데이터를 가져옴
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<RoomProvider>(context, listen: false).fetchRooms();
+    });
   }
 
   @override
@@ -29,8 +36,10 @@ class _RoomState extends State<Room> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final roomProvider = Provider.of<RoomProvider>(context);
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,   //키보드 화면 밀지 않도록
       body: Container(
         color: Colors.white,
         child: Column(
@@ -44,7 +53,6 @@ class _RoomState extends State<Room> with SingleTickerProviderStateMixin {
                 },
               ),
             ),
-
             TabBar(
               controller: _tabController,
               indicatorColor: const Color(0xFF5DDA6F),
@@ -61,9 +69,13 @@ class _RoomState extends State<Room> with SingleTickerProviderStateMixin {
                 color: const Color(0xFFF0F0F0),
                 child: TabBarView(
                   controller: _tabController,
-                  children: const [
-                    Center(child: CustomDivider()),
-                    Center(child: ImageListView()),
+                  children: [
+                    Consumer<RoomProvider>(
+                      builder: (context, roomProvider, child) {
+                        return CustomDivider(roomList: roomProvider.rooms);
+                      },
+                    ),
+                    const Center(child: ImageListView()),
                   ],
                 ),
               ),
@@ -75,12 +87,15 @@ class _RoomState extends State<Room> with SingleTickerProviderStateMixin {
         onPressed: () {
           showDialog(
             context: context,
-            barrierDismissible: false, //뒷 배경 나타나게 하기
-            builder: (BuildContext context) => const AddDialog(),
-          );
+            barrierDismissible: false,
+            builder: (BuildContext context) => AddDialog(),
+          ).then((newRoom) {
+            if (newRoom != null && newRoom.isNotEmpty) {
+              roomProvider.addRoom(newRoom);
+            }
+          });
         },
       ),
-
     );
   }
 }

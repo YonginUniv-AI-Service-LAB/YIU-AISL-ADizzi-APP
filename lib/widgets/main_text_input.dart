@@ -125,8 +125,14 @@ class _MainTextInputState extends State<MainTextInput> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery
+        .of(context)
+        .size
+        .width;
+    double height = MediaQuery
+        .of(context)
+        .size
+        .height;
 
     double buttonWidth = width * 0.22;
     double padding = width * 0.04;
@@ -149,9 +155,10 @@ class _MainTextInputState extends State<MainTextInput> {
                   padding: EdgeInsets.only(left: padding),
                   child: TextField(
                     controller: widget.controller,
-                    obscureText: widget.label == '비밀번호' || widget.label == '비밀번호 재입력' ? !isVisible : false,
+                    obscureText: widget.label == '비밀번호' ||
+                        widget.label == '비밀번호 재입력' ? !isVisible : false,
                     decoration: InputDecoration(
-                      hintText:  widget.label, // hintText로 레이블 대체
+                      hintText: widget.label, // hintText로 레이블 대체
                       border: InputBorder.none,
                     ),
                     style: const TextStyle(
@@ -162,7 +169,6 @@ class _MainTextInputState extends State<MainTextInput> {
                   ),
                 ),
               ),
-
               if (widget.showRequest)
                 Padding(
                   padding: EdgeInsets.only(right: padding),

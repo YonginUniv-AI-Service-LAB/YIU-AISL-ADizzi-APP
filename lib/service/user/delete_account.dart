@@ -6,7 +6,6 @@ import 'package:yiu_aisl_adizzi_app/utils/constants.dart';
 import '../../screens/login/login_screen.dart';
 
 Future<http.Response> deleteAccount(BuildContext context, String token) async {
-  final String baseUrl = 'http://52.78.164.15:8080/api';
   final String endpoint = '/user';
   final String uri = '$BASE_URL$endpoint';
 

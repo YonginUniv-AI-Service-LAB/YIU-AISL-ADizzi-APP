@@ -58,50 +58,49 @@ class _SignUpState extends State<SignUp> {
             color: Colors.black,
             fontSize: 18,
             fontWeight: FontWeight.w600,
-
           ),
         ),
         centerTitle: true,
         backgroundColor: const Color(0xFFF0F0F0),
       ),
       body: Padding(
-          padding: const EdgeInsets.only(top: 30, left: 15, right: 15),
-          child: Column(
-            children: [
-              Expanded(
-                child: Column(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 40),
-                      child: Column(
-                        children: [
-                          _buildEmailInput(),
-                          _buildCodeInput(),
-                        ],
-                      ),
+        padding: const EdgeInsets.only(top: 30, left: 15, right: 15),
+        child: Column(
+          children: [
+            Expanded(
+              child: Column(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 40),
+                    child: Column(
+                      children: [
+                        _buildEmailInput(),
+                        _buildCodeInput(),
+                      ],
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 40),
-                      child: Column(
-                        children: [
-                          _buildPwdInput(),
-                          _buildConfirmPwdInput(),
-                        ],
-                      ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 40),
+                    child: Column(
+                      children: [
+                        _buildPwdInput(),
+                        _buildConfirmPwdInput(),
+                      ],
                     ),
-                    const SizedBox(height: 30),
-                    MainButton(
-                      label: '회원가입',
-                      onPressed: () {
-                        _signUp();
-                      },
-                    ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 30),
+                  MainButton(
+                    label: '회원가입',
+                    onPressed: () {
+                      _signUp();
+                    },
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
+      ),
     );
   }
 
@@ -141,13 +140,12 @@ class _SignUpState extends State<SignUp> {
   // 비밀번호 재입력 입력 필드 위젯
   Widget _buildConfirmPwdInput(){
     return MainTextInput(
-        label: '비밀번호 재입력',
-        controller: _confirmPasswordController,
-        showCheck: false,
-        showRequest: false,
-        showIcon: true,
+      label: '비밀번호 재입력',
+      controller: _confirmPasswordController,
+      showCheck: false,
+      showRequest: false,
+      showIcon: true,
     );
   }
 
 }
-
