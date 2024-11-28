@@ -2,17 +2,20 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:yiu_aisl_adizzi_app/utils/constants.dart';
 
-Future<http.Response> room(int roomId,String token ) async{
-  final String baseUrl = 'http://52.78.164.15:8080/api';
+Future<http.Response> roomDelete(int roomId,String token ) async{
+
   final String endpoint = '/room/$roomId';
   final String uri = '$BASE_URL$endpoint';
 
   try {
+    final Map<String, dynamic> tokenMap = json.decode(token);
+    final accessToken = tokenMap['accessToken']; //accessToken만 추출
     final response = await http.delete(
       Uri.parse(uri),
       headers: {
        'accept' : '*/*',
-        'Authorization': 'Bearer $token',
+        'Authorization' : 'Bearer $accessToken',
+        'Content-Type': 'application/json; charset=UTF-8',
       },
     );
 

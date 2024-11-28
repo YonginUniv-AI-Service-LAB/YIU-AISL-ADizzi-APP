@@ -6,13 +6,23 @@ import '../utils/token.dart';
 import '../service/main/room_post.dart';
 
 class AddDialog extends StatefulWidget {
+  final String? initialTitle; // 기존 방 이름을 받기 위한 매개변수 추가
+
+  const AddDialog({super.key, this.initialTitle});
+
   @override
   _AddDialogState createState() => _AddDialogState();
 }
 
 class _AddDialogState extends State<AddDialog> {
-  final TextEditingController _roomTitleController = TextEditingController();
+  late TextEditingController _roomTitleController;
   String _errorMessage = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _roomTitleController = TextEditingController(text: widget.initialTitle ?? '');
+  }
 
   void _roomAdd() async {
     final String title = _roomTitleController.text.trim();
@@ -32,7 +42,7 @@ class _AddDialogState extends State<AddDialog> {
       print('Response Body: $decodedResponse');
 
       if (response.statusCode == 200) {
-        Navigator.of(context).pop(title);
+        Navigator.of(context).pop(title); // 수정된 방 이름을 반환합니다.
       } else if (response.statusCode == 400) {
         final responseBody = json.decode(decodedResponse);
         if (responseBody['code'] == 'E801') {

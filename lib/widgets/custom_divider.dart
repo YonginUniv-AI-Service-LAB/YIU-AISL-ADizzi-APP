@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'package:yiu_aisl_adizzi_app/widgets/add_dialog.dart';
 import '../provider/room_provider.dart';
 import '../screens/container/container_screen.dart';
 import 'custom_popup_menu.dart';
@@ -37,9 +37,18 @@ class CustomDivider extends StatelessWidget {
                   ),
                 ),
                 trailing: CustomPopupMenu(
-                  onSelected: (int result) {
+                  onSelected: (int result) async {
                     if (result == 0) {
                       // 수정 선택
+                      String? newTitle = await showDialog<String>(
+                        context: context,
+                        builder: (context) => AddDialog(initialTitle: room),
+                      );
+
+                      if (newTitle != null && newTitle.isNotEmpty) {
+                        roomProvider.removeRoom(room);
+                        roomProvider.addRoom(newTitle);
+                      }
                     } else if (result == 1) {
                       // 삭제 선택
                       roomProvider.removeRoom(room);
