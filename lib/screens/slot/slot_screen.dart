@@ -45,8 +45,8 @@ class _SlotScreenState extends State<SlotScreen> {
         title: const Text(
           '옷장',
           style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w600
+              fontSize: 18,
+              fontWeight: FontWeight.w600
           ),
         ),
         centerTitle: true,
