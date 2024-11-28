@@ -26,68 +26,73 @@ class MainTextInput extends StatefulWidget {
 
 class _MainTextInputState extends State<MainTextInput> {
   final TextEditingController _emailController = TextEditingController();
-
   bool isVisible = true;
-  String _errorMessage = '';
 
-    void _mail() async {
-      final String email = widget.controller.text;
+  //메일 인증 검증 함수 호출
+  void _mail() async {
+    final String email = widget.controller.text;
 
-      if (email.isEmpty) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('이메일을 입력해주세요.')),
-        );
-        return;
-      }
+    if (email.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('이메일을 입력해주세요.')),
+      );
+      return;
+    }
 
-      try {
-        final response = await mail(email);
-        final errorResponse = jsonDecode(utf8.decode(response.bodyBytes));
+    try {
+      final response = await mail(email);
+      print('Response body: ${response.body}');
 
-        print('Response body: ${response.body}');
-
-        if (response.statusCode == 200) {
+      switch (response.statusCode) {
+        case 200:
+          print('코드 전송 성공');
           final code = response.body;
+          print('인증 코드: $code');
+
+          // 인증 코드를 SharedPreferences에 저장
           final prefs = await SharedPreferences.getInstance();
           await prefs.setString('auth_code', code);
 
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('인증 코드가 전송되었습니다.')),
           );
-        }  else if (errorResponse['code'] == "E502") {
-          _setError('이미 사용 중인 이메일입니다.');
-        } else if (errorResponse['code'] == "E701") {
-          _setError('비밀번호가 일치하지 않습니다..');
-        } else if (response.statusCode == 404) {
-          _setError('이메일이 존재하지 않습니다.');
-        } else {
-          _setError('로그인 실패. 다시 시도해주세요.');
-        }
-      }catch (e) {
-        print('예외 발생: $e');
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('서버와의 연결에 실패했습니다. 다시 시도해주세요.')),
-        );
+          break;
+        case 400:
+          print('입력된 이메일이 비어있습니다.');
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('이메일을 입력해주세요.')),
+          );
+          break;
+        case 404:
+          print('이메일 주소를 찾을 수 없습니다.');
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('등록된 이메일이 아닙니다.')),
+          );
+          break;
+        case 500:
+          print('서버 오류');
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('서버 오류가 발생했습니다. 다시 시도해주세요.')),
+          );
+          break;
+        default:
+          print('알 수 없는 오류: ${response.statusCode}');
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('알 수 없는 오류가 발생했습니다.')),
+          );
+          break;
       }
-    }
-
-  // 에러 메시지 설정
-  void _setError(String message) {
-    setState(() {
-      _errorMessage = message;
-    });
-  }
-// 인증 확인 함수
-  void _verifyCode() async {
-    final String code = widget.controller.text;
-
-    if (code.isEmpty) {
-      // 인증번호가 비어 있을 경우
+    } catch (e) {
+      print('예외 발생: $e');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('인증번호를 입력해주세요.')),
+        SnackBar(content: Text('서버와의 연결에 실패했습니다. 다시 시도해주세요.')),
       );
-      return;  // 코드 입력이 없으면 함수 종료
     }
+  }
+
+  // 인증 확인 함수
+  void _verifyCode() async {
+    final String inputCode = widget.controller.text;
 
     // 로컬 저장소에서 인증 코드 가져오기
     final prefs = await SharedPreferences.getInstance();
@@ -101,7 +106,7 @@ class _MainTextInputState extends State<MainTextInput> {
     }
 
     // 입력된 코드와 저장된 코드 비교
-    if (code == storedCode) {
+    if (inputCode == storedCode) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('인증 성공!')),
       );
@@ -112,7 +117,6 @@ class _MainTextInputState extends State<MainTextInput> {
     }
   }
 
-
   void toggleVisibility() {
     setState(() {
       isVisible = !isVisible;
@@ -121,8 +125,14 @@ class _MainTextInputState extends State<MainTextInput> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery
+        .of(context)
+        .size
+        .width;
+    double height = MediaQuery
+        .of(context)
+        .size
+        .height;
 
     double buttonWidth = width * 0.22;
     double padding = width * 0.04;
@@ -145,9 +155,10 @@ class _MainTextInputState extends State<MainTextInput> {
                   padding: EdgeInsets.only(left: padding),
                   child: TextField(
                     controller: widget.controller,
-                    obscureText: widget.label == '비밀번호' || widget.label == '비밀번호 재입력' ? !isVisible : false,
+                    obscureText: widget.label == '비밀번호' ||
+                        widget.label == '비밀번호 재입력' ? !isVisible : false,
                     decoration: InputDecoration(
-                      hintText:  widget.label, // hintText로 레이블 대체
+                      hintText: widget.label, // hintText로 레이블 대체
                       border: InputBorder.none,
                     ),
                     style: const TextStyle(
@@ -158,7 +169,6 @@ class _MainTextInputState extends State<MainTextInput> {
                   ),
                 ),
               ),
-
               if (widget.showRequest)
                 Padding(
                   padding: EdgeInsets.only(right: padding),
