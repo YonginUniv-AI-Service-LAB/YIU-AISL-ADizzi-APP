@@ -71,10 +71,11 @@ class _SignUpState extends State<SignUp> {
               child: Column(
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(bottom: 40),
+                    margin: const EdgeInsets.only(bottom: 50),
                     child: Column(
                       children: [
                         _buildEmailInput(),
+                        const SizedBox(height: 10),
                         _buildCodeInput(),
                       ],
                     ),
@@ -84,11 +85,12 @@ class _SignUpState extends State<SignUp> {
                     child: Column(
                       children: [
                         _buildPwdInput(),
+                        const SizedBox(height: 10),
                         _buildConfirmPwdInput(),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 50),
                   MainButton(
                     label: '회원가입',
                     onPressed: () {

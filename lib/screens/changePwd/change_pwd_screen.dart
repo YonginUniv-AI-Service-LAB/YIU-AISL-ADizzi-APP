@@ -69,10 +69,11 @@ class _ChangePwdState extends State<ChangePwd> {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.only(bottom: height * 0.05, top: 20),
+              padding: EdgeInsets.only(bottom: height * 0.05, top: 30),
               child: Column(
                 children: [
                   _buildEmailInput(),
+                  const SizedBox(height: 10),
                   _buildCodeInput(),
                 ],
               ),
@@ -82,10 +83,12 @@ class _ChangePwdState extends State<ChangePwd> {
               child: Column(
                 children: [
                   _buildNewPwdInput(),
+                  const SizedBox(height: 10),
                   _buildNewConfirmPwdInput(),
                 ],
               ),
             ),
+            const SizedBox(height: 50),
             MainButton(
               label: '비밀번호 재설정',
               onPressed: _changePwd,
