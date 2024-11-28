@@ -18,7 +18,7 @@ Future<http.Response> roomDelete(int roomId,String token ) async{
         'Content-Type': 'application/json; charset=UTF-8',
       },
     );
-
+  print('room delete');
     return response;
   } catch (e) {
     print('예외 발생: $e');

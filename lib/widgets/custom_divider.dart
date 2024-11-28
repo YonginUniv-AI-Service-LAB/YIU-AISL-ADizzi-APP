@@ -1,8 +1,10 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/add_dialog.dart';
 import '../provider/room_provider.dart';
 import '../screens/container/container_screen.dart';
+import '../utils/token.dart';
 import 'custom_popup_menu.dart';
 
 class CustomDivider extends StatelessWidget {
@@ -24,7 +26,9 @@ class CustomDivider extends StatelessWidget {
         shrinkWrap: true,
         itemCount: roomList.length,
         itemBuilder: (context, index) {
-          final room = roomList[index];
+          final room = roomList[index];  // Access room name by index
+          final roomId = index + 1;  // Add +1 to the index for roomId (for DB)
+
           return Column(
             children: [
               ListTile(
@@ -40,14 +44,17 @@ class CustomDivider extends StatelessWidget {
                   onSelected: (int result) async {
                     if (result == 0) {
                       // 수정 선택
-                      String? newTitle = await showDialog<String>(
+                      final updatedRoomName = await showDialog<String>(
                         context: context,
-                        builder: (context) => AddDialog(initialTitle: room),
+                        builder: (context) => AddDialog(
+                          isEdit: true,
+                          initialTitle: room,
+                          roomId: roomId, // Use roomId with +1 adjustment
+                        ),
                       );
 
-                      if (newTitle != null && newTitle.isNotEmpty) {
-                        roomProvider.removeRoom(room);
-                        roomProvider.addRoom(newTitle);
+                      if (updatedRoomName != null && updatedRoomName.isNotEmpty) {
+                        roomProvider.updateRoom(roomId - 1, updatedRoomName); // Update in the provider, pass 0-based index
                       }
                     } else if (result == 1) {
                       // 삭제 선택

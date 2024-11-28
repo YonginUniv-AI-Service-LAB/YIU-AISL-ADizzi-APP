@@ -23,6 +23,7 @@ Future<http.Response> roomUpdate(String title, String token, int roomId) async {
       body: jsonEncode(requestData),
     );
     print('API room update 호출 완료');
+
     return response;
   } catch (e) {
     print('예외 발생: $e');

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import '../service/main/room_get.dart'; // roomGet 함수를 가져옵니다.
+import '../service/main/room_get.dart';
 import '../utils/token.dart';
 
 class RoomProvider extends ChangeNotifier {
@@ -17,6 +17,13 @@ class RoomProvider extends ChangeNotifier {
   void removeRoom(String title) {
     _rooms.remove(title);
     notifyListeners();
+  }
+
+  void updateRoom(int index, String newTitle) {
+    if (index >= 0 && index < _rooms.length) {
+      _rooms[index] = newTitle;
+      notifyListeners();
+    }
   }
 
   Future<void> fetchRooms() async {

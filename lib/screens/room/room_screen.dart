@@ -88,7 +88,7 @@ class _RoomState extends State<Room> with SingleTickerProviderStateMixin {
           showDialog(
             context: context,
             barrierDismissible: false,
-            builder: (BuildContext context) => AddDialog(),
+            builder: (BuildContext context) => AddDialog(isEdit: false,),
           ).then((newRoom) {
             if (newRoom != null && newRoom.isNotEmpty) {
               roomProvider.addRoom(newRoom);

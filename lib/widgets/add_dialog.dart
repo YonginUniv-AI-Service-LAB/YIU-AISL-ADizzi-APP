@@ -1,14 +1,16 @@
 import 'dart:convert'; // UTF-8 인코딩을 위해 import합니다.
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../utils/token.dart';
 import '../service/main/room_post.dart';
+import '../service/main/room_update.dart'; // 수정 API 추가
 
 class AddDialog extends StatefulWidget {
-  final String? initialTitle; // 기존 방 이름을 받기 위한 매개변수 추가
+  final String? initialTitle; // 초기 방 이름
+  final int? roomId; // 방 ID (수정 시 필요)
+  final bool isEdit; // 등록/수정을 구분
 
-  const AddDialog({super.key, this.initialTitle});
+  const AddDialog({super.key, this.initialTitle, this.roomId, required this.isEdit});
 
   @override
   _AddDialogState createState() => _AddDialogState();
@@ -21,37 +23,41 @@ class _AddDialogState extends State<AddDialog> {
   @override
   void initState() {
     super.initState();
-    _roomTitleController = TextEditingController(text: widget.initialTitle ?? '');
+    _roomTitleController = TextEditingController(text: widget.initialTitle);
   }
 
-  void _roomAdd() async {
+  // 등록 및 수정 처리
+  void _handleRoomSubmit() async {
     final String title = _roomTitleController.text.trim();
 
     if (title.isEmpty) {
-      _setError("방을 입력해주세요");
+      _setError("방 이름을 입력해주세요");
       return;
     }
 
     try {
       final token = await getToken();
-      final response = await roomPost(title, token!);
 
-      // 상태 코드와 응답 본문 출력
+      // 등록 또는 수정 API 호출
+      final response = widget.isEdit
+          ? await roomUpdate(title, token!, widget.roomId!) // 수정
+          : await roomPost(title, token!); // 등록
+
       print('Status Code: ${response.statusCode}');
-      String decodedResponse = utf8.decode(response.bodyBytes); // UTF-8로 디코딩
+      String decodedResponse = utf8.decode(response.bodyBytes);
       print('Response Body: $decodedResponse');
+      print('Updating roomId: ${widget.roomId}, title: $title');
 
       if (response.statusCode == 200) {
-        Navigator.of(context).pop(title); // 수정된 방 이름을 반환합니다.
-      } else if (response.statusCode == 400) {
+        _resetError();
+        Navigator.of(context).pop(title); // 성공 시 모달 닫기 및 제목 반환
+      } else {
         final responseBody = json.decode(decodedResponse);
         if (responseBody['code'] == 'E801') {
-          _setError('이미 사용 중인 방 이름입니다. 다른 이름을 사용해 주세요.');
+          _setError('이미 사용 중인 방 이름입니다.');
         } else {
-          _setError('방 등록에 실패했습니다. 다시 시도해주세요. 상태 코드: ${response.statusCode}');
+          _setError('알 수 없는 오류가 발생했습니다.');
         }
-      } else {
-        _setError('방 등록에 실패했습니다. 다시 시도해주세요. 상태 코드: ${response.statusCode}');
       }
     } catch (e) {
       print('예외 발생: $e');
@@ -65,6 +71,12 @@ class _AddDialogState extends State<AddDialog> {
     });
   }
 
+  void _resetError() {
+    setState(() {
+      _errorMessage = '';
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -73,9 +85,9 @@ class _AddDialogState extends State<AddDialog> {
         side: const BorderSide(color: Colors.black12, width: 1),
       ),
       backgroundColor: Colors.white,
-      title: const Text(
-        '방 이름',
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+      title: Text(
+        widget.isEdit ? '방 수정' : '방 이름',
+        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
       ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -84,20 +96,25 @@ class _AddDialogState extends State<AddDialog> {
             controller: _roomTitleController,
             decoration: InputDecoration(
               hintText: '방 이름을 입력하세요',
-              hintStyle: TextStyle(color: Colors.black38, fontSize: 14),
-              contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-              enabledBorder: OutlineInputBorder(
+              hintStyle: const TextStyle(color: Colors.black38, fontSize: 14),
+              contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+              enabledBorder: const OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.black12),
               ),
             ),
             textAlignVertical: TextAlignVertical.center,
+            onChanged: (text) {
+              if (_errorMessage.isNotEmpty) {
+                _resetError();
+              }
+            },
           ),
           if (_errorMessage.isNotEmpty)
             Padding(
               padding: const EdgeInsets.only(top: 10),
               child: Text(
                 _errorMessage,
-                style: TextStyle(color: Colors.red),
+                style: const TextStyle(color: Colors.red),
               ),
             ),
         ],
@@ -108,6 +125,7 @@ class _AddDialogState extends State<AddDialog> {
             Expanded(
               child: OutlinedButton(
                 onPressed: () {
+                  _resetError();
                   Navigator.of(context).pop();
                 },
                 style: OutlinedButton.styleFrom(
@@ -126,16 +144,16 @@ class _AddDialogState extends State<AddDialog> {
             const SizedBox(width: 8),
             Expanded(
               child: ElevatedButton(
-                onPressed: _roomAdd,
+                onPressed: _handleRoomSubmit,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.black,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                child: const Text(
-                  '등록',
-                  style: TextStyle(color: Colors.white),
+                child: Text(
+                  widget.isEdit ? '수정' : '등록',
+                  style: const TextStyle(color: Colors.white),
                 ),
               ),
             ),
