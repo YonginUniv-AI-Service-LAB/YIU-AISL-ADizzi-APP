@@ -94,7 +94,7 @@ class _TempStartScreenState extends State<TempStartScreen>
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ContainerScreen()),
+                  MaterialPageRoute(builder: (context) => ContainerScreen(roomName: '',)),
                 );
               },
               child: Text('Container 페이지'),

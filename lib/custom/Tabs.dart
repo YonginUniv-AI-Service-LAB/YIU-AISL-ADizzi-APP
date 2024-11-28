@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
+import '../provider/room_provider.dart';
 import '../widgets/custom_divider.dart';
 import '../widgets/image_list_view.dart';
 
@@ -8,17 +9,26 @@ class CustomTabs extends StatefulWidget {
   _CustomTabsState createState() => _CustomTabsState();
 }
 
-class _CustomTabsState extends State<CustomTabs> {
+class _CustomTabsState extends State<CustomTabs> with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: ScaffoldState());
+    _tabController = TabController(length: 2, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    // RoomProvider를 구독합니다.
+    final roomProvider = Provider.of<RoomProvider>(context);
+
     return Column(
       children: [
         TabBar(
@@ -35,9 +45,9 @@ class _CustomTabsState extends State<CustomTabs> {
         Expanded(
           child: TabBarView(
             controller: _tabController,
-            children: const [
-              CustomDivider(),
-              ImageListView(),
+            children: [
+              CustomDivider(roomList: roomProvider.rooms), // 방 목록 전달
+              const ImageListView(),
             ],
           ),
         ),
@@ -45,4 +55,3 @@ class _CustomTabsState extends State<CustomTabs> {
     );
   }
 }
-

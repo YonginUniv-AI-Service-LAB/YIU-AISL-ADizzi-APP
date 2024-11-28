@@ -7,7 +7,9 @@ import 'package:yiu_aisl_adizzi_app/widgets/container_list_view.dart';
 import 'add_container.dart';
 
 class ContainerScreen extends StatefulWidget {
-  const ContainerScreen({super.key});
+  final String roomName; // 방 이름을 저장하는 변수 추가
+
+  const ContainerScreen({super.key, required this.roomName});
 
   @override
   _ContainerScreenState createState() => _ContainerScreenState();
@@ -21,9 +23,9 @@ class _ContainerScreenState extends State<ContainerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          '금쪽이의 방',
-          style: TextStyle(
+        title: Text(
+          widget.roomName, // 전달받은 방 이름을 사용하여 제목을 설정
+          style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),
@@ -34,10 +36,6 @@ class _ContainerScreenState extends State<ContainerScreen> {
             icon: const Icon(Icons.grid_view),
             onPressed: () {
               // main item 페이지로 이동
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => AnotherPage()),
-              // );
             },
           ),
         ],
