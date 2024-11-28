@@ -7,7 +7,7 @@ import 'package:yiu_aisl_adizzi_app/widgets/container_list_view.dart';
 import 'add_container.dart';
 
 class ContainerScreen extends StatefulWidget {
-  final String roomName; // 방 이름을 저장하는 변수 추가
+  final String roomName; // 방 이름을 저장하는 변수
 
   const ContainerScreen({super.key, required this.roomName});
 
@@ -16,7 +16,7 @@ class ContainerScreen extends StatefulWidget {
 }
 
 class _ContainerScreenState extends State<ContainerScreen> {
-  bool _isLatestSelected = true; // 초기값은 '최신등록순'임
+  bool _isLatestSelected = true; // 초기값은 '최신등록순'
   List<ContainerItem> _items = []; // 리스트 데이터를 관리하는 변수
 
   @override
@@ -24,7 +24,7 @@ class _ContainerScreenState extends State<ContainerScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          widget.roomName, // 전달받은 방 이름을 사용하여 제목을 설정
+          widget.roomName, // 전달받은 방 이름을 사용하여 제목 설정
           style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
@@ -43,7 +43,9 @@ class _ContainerScreenState extends State<ContainerScreen> {
       body: Column(
         children: [
           // CustomSearchBar 사용
-          CustomSearchBar(onTap: () {}),
+          CustomSearchBar(onTap: () {
+            // 검색 기능 (필요 시 구현)
+          }),
 
           // TimeSortSelector 위젯 사용
           TimeSortSelector(
@@ -62,17 +64,22 @@ class _ContainerScreenState extends State<ContainerScreen> {
 
           // 리스트 위젯
           Expanded(
-            child: ContainerListView(items: _items),
+            child: ContainerListView(
+              items: _items,
+              roomName: widget.roomName, // roomName 전달
+            ),
           ),
         ],
       ),
 
+      // 추가 버튼
       floatingActionButton: FloatingAddButton(
         onPressed: () async {
           await Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => AddContainerPage(
+                roomName: widget.roomName, // roomName 전달
                 onAdd: (ContainerItem item) {
                   setState(() {
                     _items.add(item); // 전달받은 ContainerItem을 리스트에 추가

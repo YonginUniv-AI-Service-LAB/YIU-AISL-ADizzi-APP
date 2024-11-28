@@ -3,9 +3,13 @@ import 'package:yiu_aisl_adizzi_app/widgets/custom_search_bar.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/time_sort_seletor.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/slot_add_button.dart'; // SlotAddButton 임포트
 import 'package:yiu_aisl_adizzi_app/widgets/slot_add_dialog.dart';
+import 'package:yiu_aisl_adizzi_app/models/container_items.dart';
 
 class SlotScreen extends StatefulWidget {
-  const SlotScreen({super.key});
+  final String roomName;
+  final ContainerItem containerItem; // 필드 이름 소문자로 변경
+
+  const SlotScreen({super.key, required this.containerItem, required this.roomName});
 
   @override
   State<SlotScreen> createState() => _SlotScreenState();
@@ -23,7 +27,6 @@ class _SlotScreenState extends State<SlotScreen> {
           onConfirm: (String shelfName) {
             // 입력된 수납칸 이름 처리
             print("입력된 수납칸 이름: $shelfName");
-
           },
         );
       },
@@ -42,11 +45,11 @@ class _SlotScreenState extends State<SlotScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          '옷장',
-          style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w600
+        title: Text(
+          widget.containerItem.name, // ContainerItem의 name 필드 사용
+          style: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
           ),
         ),
         centerTitle: true,
@@ -75,7 +78,7 @@ class _SlotScreenState extends State<SlotScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "금쪽이의 방 > 옷장",
+                  "${widget.roomName} > ${widget.containerItem.name}", // 동적 데이터 표시
                   style: TextStyle(color: Colors.grey[600]),
                 ),
                 TimeSortSelector(

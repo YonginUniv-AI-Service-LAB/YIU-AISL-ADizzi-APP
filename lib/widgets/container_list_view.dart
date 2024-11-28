@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:yiu_aisl_adizzi_app/models/container_items.dart';
+import 'package:yiu_aisl_adizzi_app/screens/slot/slot_screen.dart'; // Slot 화면 경로
 import 'package:yiu_aisl_adizzi_app/widgets/custom_popup_menu.dart';
 import 'package:yiu_aisl_adizzi_app/screens/container/add_container.dart';
 
 class ContainerListView extends StatefulWidget {
   final List<ContainerItem> items;
+  final String roomName; // roomName 추가
 
-  const ContainerListView({required this.items, Key? key}) : super(key: key);
+  const ContainerListView({required this.items, required this.roomName, Key? key}) : super(key: key);
 
   @override
   _ContainerListViewState createState() => _ContainerListViewState();
@@ -34,58 +36,73 @@ class _ContainerListViewState extends State<ContainerListView> {
       itemCount: widget.items.length,
       itemBuilder: (context, index) {
         final item = widget.items[index];
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 5.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(width: 16.0),
-              item.image != null
-                  ? ClipRRect(
-                borderRadius: BorderRadius.circular(2),
-                child: Image.file(
-                  item.image!,
-                  width: 80,
-                  height: 80,
-                  fit: BoxFit.cover,
+        return GestureDetector(
+          onTap: () {
+            // SlotScreen으로 이동 시 roomName도 전달
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => SlotScreen(
+                  containerItem: item,
+                  roomName: widget.roomName, // roomName 전달
                 ),
-              )
-                  : const Icon(Icons.storage, size: 80),
-              const SizedBox(width: 16.0),
-              Expanded(
-                child: Text(
-                  item.name,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
+              ),
+            );
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 5.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(width: 16.0),
+                item.image != null
+                    ? ClipRRect(
+                  borderRadius: BorderRadius.circular(2),
+                  child: Image.file(
+                    item.image!,
+                    width: 80,
+                    height: 80,
+                    fit: BoxFit.cover,
+                  ),
+                )
+                    : const Icon(Icons.storage, size: 80),
+                const SizedBox(width: 16.0),
+                Expanded(
+                  child: Text(
+                    item.name,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ),
-              ),
-              CustomPopupMenu(
-                onSelected: (int result) async {
-                  if (result == 0) {
-                    // 수정
-                    final updatedItem = await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => AddContainerPage(
-                          initialItem: item,
-                          onAdd: (updatedItem) {
-                            setState(() {
-                              widget.items[index] = updatedItem;
-                            });
-                          },
+                CustomPopupMenu(
+                  onSelected: (int result) async {
+                    if (result == 0) {
+                      // 수정
+                      final updatedItem = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AddContainerPage(
+                            initialItem: item,
+                            roomName: widget.roomName,
+                            onAdd: (updatedItem) {
+                              setState(() {
+                                widget.items[index] = updatedItem;
+                              });
+                            },
+                          ),
                         ),
-                      ),
-                    );
-                  } else if (result == 1) {
-                    // 삭제
-                    _deleteItem(index); // 삭제 기능 호출
-                  }
-                },
-              ),
-              const SizedBox(width: 10.0),
-            ],
+                      );
+                    } else if (result == 1) {
+                      // 삭제
+                      _deleteItem(index); // 삭제 기능 호출
+                    }
+                  },
+                ),
+                const SizedBox(width: 10.0),
+              ],
+            ),
           ),
         );
       },

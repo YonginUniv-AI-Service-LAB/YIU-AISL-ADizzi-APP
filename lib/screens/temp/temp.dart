@@ -125,15 +125,15 @@ class _TempStartScreenState extends State<TempStartScreen>
               },
               child: Text('Item 페이지'),
             ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SlotScreen()),
-                );
-              },
-              child: Text('Slot 페이지'),
-            ),
+            // ElevatedButton(
+            //   onPressed: () {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(builder: (context) => SlotScreen()),
+            //     );
+            //   },
+            //   child: Text('Slot 페이지'),
+            // ),
           ],
         ),
       ),

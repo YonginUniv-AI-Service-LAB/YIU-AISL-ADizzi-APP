@@ -8,8 +8,9 @@ import '../../widgets/main_button.dart';
 class AddContainerPage extends StatefulWidget {
   final Function(ContainerItem) onAdd;
   final ContainerItem? initialItem;
+  final String roomName; // 방 이름을 저장하는 변수
 
-  const AddContainerPage({required this.onAdd, this.initialItem, Key? key})
+  const AddContainerPage({required this.onAdd, this.initialItem, required this.roomName, Key? key})
       : super(key: key);
 
   @override
@@ -33,8 +34,8 @@ class _AddContainerPageState extends State<AddContainerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          '금쪽이의 방',
+        title: Text(
+          widget.roomName,
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
