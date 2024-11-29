@@ -39,30 +39,30 @@ class CustomDivider extends StatelessWidget {
                     style: const TextStyle(color: Colors.black, fontSize: 15),
                   ),
                 ),
-               trailing: CustomPopupMenu(
-                onSelected: (int result) async {
-                  if (result == 0) {
-                    // 수정 선택
-                    final updatedRoomName = await showDialog<String>(
-                      context: context,
-                      builder: (context) => AddDialog(
-                        isEdit: true,
-                        initialTitle: room,
-                        roomId: roomId,
-                      ),
-                    );
+                trailing: CustomPopupMenu(
+                  onSelected: (int result) async {
+                    if (result == 0) {
+                      // 수정 선택
+                      final updatedRoomName = await showDialog<String>(
+                        context: context,
+                        builder: (context) => AddDialog(
+                          isEdit: true,
+                          initialTitle: room,
+                          roomId: roomId,
+                        ),
+                      );
 
-                    if (updatedRoomName != null && updatedRoomName.isNotEmpty) {
-                      roomProvider.updateRoom(roomId - 1, updatedRoomName);
+                      if (updatedRoomName != null && updatedRoomName.isNotEmpty) {
+                        roomProvider.updateRoom(roomId - 1, updatedRoomName);
+                      }
+                    } else if (result == 1) {
+                      // 삭제 선택
+                      await roomProvider.deleteRoom(context, roomId);  // deleteRoom 호출
                     }
-                  } else if (result == 1) {
-                    // 삭제 선택
-                    await roomProvider.deleteRoom(context, roomId);  // deleteRoom 호출
-                  }
-                },
-              ),
+                  },
+                ),
 
-              onTap: () {
+                onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
