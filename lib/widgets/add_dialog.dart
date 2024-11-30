@@ -1,16 +1,19 @@
-import 'dart:convert'; // UTF-8 인코딩을 위해 import합니다.
+import 'dart:convert';
+import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+import 'package:yiu_aisl_adizzi_app/models/room.dart'; // Room 클래스 임포트
+import '../provider/room_provider.dart';
 import '../utils/token.dart';
 import '../service/main/room_post.dart';
-import '../service/main/room_update.dart'; // 수정 API 추가
 
 class AddDialog extends StatefulWidget {
-  final String? initialTitle; // 초기 방 이름
-  final int? roomId; // 방 ID (수정 시 필요)
-  final bool isEdit; // 등록/수정을 구분
+  final String? initialTitle;
+  final int? roomId;  // 수정할 방의 ID 추가
+  final bool isEdit;
 
-  const AddDialog({super.key, this.initialTitle, this.roomId, required this.isEdit});
+  AddDialog({this.initialTitle = '', this.roomId, required this.isEdit});
 
   @override
   _AddDialogState createState() => _AddDialogState();
@@ -26,42 +29,31 @@ class _AddDialogState extends State<AddDialog> {
     _roomTitleController = TextEditingController(text: widget.initialTitle);
   }
 
-  // 등록 및 수정 처리
   void _handleRoomSubmit() async {
-    final String title = _roomTitleController.text.trim();
+    String title = _roomTitleController.text.trim();
 
+    // Validate the title
     if (title.isEmpty) {
-      _setError("방 이름을 입력해주세요");
+      _setError('방 이름을 입력해주세요');
       return;
     }
 
     try {
-      final token = await getToken();
-
-      // 등록 또는 수정 API 호출
-      final response = widget.isEdit
-          ? await roomUpdate(title, token!, widget.roomId!) // 수정
-          : await roomPost(title, token!); // 등록
-
-      print('Status Code: ${response.statusCode}');
-      String decodedResponse = utf8.decode(response.bodyBytes);
-      print('Response Body: $decodedResponse');
-      print('Updating roomId: ${widget.roomId}, title: $title');
-
-      if (response.statusCode == 200) {
-        _resetError();
-        Navigator.of(context).pop(title);
+      if (widget.isEdit) {
+        // Edit existing room
+        RoomModel updatedRoom = RoomModel(title: title, roomId: widget.roomId);
+        await Provider.of<RoomProvider>(context, listen: false).updateRoom(updatedRoom);
       } else {
-        final responseBody = json.decode(decodedResponse);
-        if (responseBody['code'] == 'E801') {
-          _setError('이미 사용 중인 방 이름입니다.');
-        } else {
-          _setError('알 수 없는 오류가 발생했습니다.');
-        }
+        // Create new room
+        RoomModel newRoom = RoomModel(title: title, roomId: null); // roomId는 null로 시작
+        await Provider.of<RoomProvider>(context, listen: false).addRoom(newRoom);
       }
+
+      // If the room is added or edited successfully, close the dialog
+      Navigator.of(context).pop();
     } catch (e) {
-      print('예외 발생: $e');
-      _setError('서버와의 연결에 실패했습니다. 인터넷 연결을 확인해주세요.');
+      // If an error occurs, display the error message
+      _setError('방 등록/수정에 실패했습니다. 다시 시도해주세요.');
     }
   }
 

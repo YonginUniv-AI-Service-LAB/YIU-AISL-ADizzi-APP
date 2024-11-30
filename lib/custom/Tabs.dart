@@ -46,7 +46,7 @@ class _CustomTabsState extends State<CustomTabs> with SingleTickerProviderStateM
           child: TabBarView(
             controller: _tabController,
             children: [
-              CustomDivider(roomList: roomProvider.rooms), // 방 목록 전달
+              CustomDivider(roomList: roomProvider.roomList),
               const ImageListView(),
             ],
           ),

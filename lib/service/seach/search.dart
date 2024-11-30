@@ -2,32 +2,22 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:yiu_aisl_adizzi_app/utils/constants.dart';
 
-import '../../models/room.dart';
-
-Future<http.Response> roomPost(RoomModel room, String token ) async{
-
+Future<http.Response> searchGet(String token,String sortBy ) async{
   final String endpoint = '/room';
-  final String uri = '$BASE_URL$endpoint';
+  final String uri = '$BASE_URL$endpoint?sortBy=$sortBy';
 
   try {
-
     final Map<String, dynamic> tokenMap = json.decode(token);
     final accessToken = tokenMap['accessToken']; //accessToken만 추출
-    final Map<String, dynamic> requestData = {
-      'title': room.title,
-
-    };
-
-    final response = await http.post(
+    final response = await http.get(
       Uri.parse(uri),
       headers: {
-        'Authorization': 'Bearer $accessToken',
-        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization' : 'Bearer $accessToken',
         'accept': '*/*',
       },
-      body: jsonEncode(requestData),
+
     );
-    print('api room post');
+    print('api room get');
     return response;
   } catch (e) {
     print('예외 발생: $e');

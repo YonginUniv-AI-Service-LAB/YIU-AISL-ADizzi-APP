@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:yiu_aisl_adizzi_app/widgets/add_dialog.dart';
 import '../../custom/room_search_bar.dart';
 import '../../provider/room_provider.dart';
+import '../../widgets/add_dialog.dart';
 import '../../widgets/custom_divider.dart';
 import '../../widgets/floating_add_button.dart';
 import '../../widgets/image_list_view.dart';
+
 
 class Room extends StatefulWidget {
   const Room({super.key});
@@ -24,7 +25,7 @@ class _RoomState extends State<Room> with SingleTickerProviderStateMixin {
 
     // 방 목록을 초기화할 때 서버에서 데이터를 가져옴
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<RoomProvider>(context, listen: false).fetchRooms();
+      Provider.of<RoomProvider>(context, listen: false).getRoom();
     });
   }
 
@@ -48,9 +49,7 @@ class _RoomState extends State<Room> with SingleTickerProviderStateMixin {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 3.0, vertical: 4.0),
               child: RoomCustomSearchBar(
-                onTap: () {
-
-                },
+                onTap: () {},
               ),
             ),
             TabBar(
@@ -72,9 +71,14 @@ class _RoomState extends State<Room> with SingleTickerProviderStateMixin {
                   children: [
                     Consumer<RoomProvider>(
                       builder: (context, roomProvider, child) {
-                        return CustomDivider(roomList: roomProvider.rooms);
+                        return CustomDivider(
+                          roomList: roomProvider.roomList, // RoomProvider에서 가져온 List<RoomModel>을 전달
+                        );
                       },
+
                     ),
+
+
                     const Center(child: ImageListView()),
                   ],
                 ),
@@ -89,11 +93,7 @@ class _RoomState extends State<Room> with SingleTickerProviderStateMixin {
             context: context,
             barrierDismissible: false,
             builder: (BuildContext context) => AddDialog(isEdit: false,),
-          ).then((newRoom) {
-            if (newRoom != null && newRoom.isNotEmpty) {
-              roomProvider.addRoom(newRoom);
-            }
-          });
+          );
         },
       ),
     );

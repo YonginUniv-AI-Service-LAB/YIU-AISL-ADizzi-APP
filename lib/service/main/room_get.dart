@@ -18,6 +18,7 @@ Future<http.Response> roomGet(String token,String sortBy ) async{
 
     );
     print('api room get');
+    print(response.body);
     return response;
   } catch (e) {
     print('예외 발생: $e');
