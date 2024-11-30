@@ -53,7 +53,7 @@ class _AddDialogState extends State<AddDialog> {
       Navigator.of(context).pop();
     } catch (e) {
       // If an error occurs, display the error message
-      _setError('방 등록/수정에 실패했습니다. 다시 시도해주세요.');
+      _setError('이미 등록된 방입니다. 다시 입력해주세요. ');
     }
   }
 

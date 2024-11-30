@@ -100,11 +100,18 @@ class _AddItemsPageState extends State<AddItemsPage> {
                 ),
               ),
               const SizedBox(height: 10),
-              CustomTextField(
-                controller: _memoController,
-                maxLines: 3,
+              Container(
+                constraints: BoxConstraints(
+                  minHeight: 80, // 최소 높이 지정
+                  maxHeight: 200, // 최대 높이 지정
+                ),
+                child: CustomTextField(
+                  controller: _memoController,
+                  maxLines: 2,
+                ),
               ),
-              const SizedBox(height: 40),
+
+              const SizedBox(height: 30),
               // Save Button
               Align(
                 alignment: Alignment.bottomCenter,

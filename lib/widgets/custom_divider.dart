@@ -33,26 +33,27 @@ class CustomDivider extends StatelessWidget {
                 contentPadding: EdgeInsets.zero,
                 title: Padding(
                   padding: const EdgeInsets.only(left: 20.0),
-                  child: Row(children: [
+                  child:
                     Text(
                       room.title, // room.title로 제목을 표시
                       style: const TextStyle(color: Colors.black, fontSize: 15),
                     ),
-                    const SizedBox(width: 10),
-                    Text(
-                      roomId.toString(),
-                      style: const TextStyle(color: Colors.grey, fontSize: 15),
-                    ),
-                  ]), // Room 정보를 화면에 표시
                 ),
                 trailing: CustomPopupMenu(
                   onSelected: (int result) async {
                     if (result == 0) {
-                      // 수정 선택
-                      AddDialog(isEdit: true,);
-                      final roomProvider = Provider.of<RoomProvider>(context, listen: false);
-                      roomProvider.updateRoom(room); // deleteRoom 호출
-                    } else if (result == 1) {
+                      // 수정 선택 시 다이얼로그 표시
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AddDialog(
+                            isEdit: true,
+                            initialTitle: room.title,
+                            roomId: room.roomId,
+                          );
+                        },
+                      );
+                    }  else if (result == 1) {
                       // 삭제 선택
 
                       final roomProvider = Provider.of<RoomProvider>(context, listen: false);

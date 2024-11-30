@@ -87,9 +87,9 @@ class RoomProvider extends ChangeNotifier {
 
       // Get the token
       final token = await getToken();
-
-      // Call the API to update the room
       final response = await roomUpdate(room.title, token!, room.roomId!);
+
+      print('서버 응답: ${response.body}');
 
       // Check if the response status is successful
       if (response.statusCode == 200) {
