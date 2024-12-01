@@ -3,7 +3,7 @@ import 'dart:io';
 class ContainerModel {
   final int? containerId;
   final String title; // 수납장 이름
-  final int? imageId; // 이미지
+  final File? imageId; // 이미지
 
   ContainerModel({this.containerId, required this.title, this.imageId, });
 
@@ -14,7 +14,7 @@ class ContainerModel {
         imageId: json['imageId']
     );
   }
-  ContainerModel changeContainer({int? containerId, required String title, int? imageId}){
+  ContainerModel changeContainer({int? containerId, required String title, File? imageId}){
     return ContainerModel(
         containerId:  containerId ?? this.containerId,
         title: title ?? this.title,

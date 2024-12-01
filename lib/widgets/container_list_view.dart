@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:yiu_aisl_adizzi_app/models/container_items.dart';
 import 'package:yiu_aisl_adizzi_app/screens/slot/slot_screen.dart'; // Slot 화면 경로
@@ -5,7 +7,7 @@ import 'package:yiu_aisl_adizzi_app/widgets/custom_popup_menu.dart';
 import 'package:yiu_aisl_adizzi_app/screens/container/add_container.dart';
 
 class ContainerListView extends StatefulWidget {
-  final List<ContainerItem> items;
+  final List<ContainerModel> items;
   final String roomName; // roomName 추가
 
   const ContainerListView({required this.items, required this.roomName, Key? key}) : super(key: key);
@@ -43,7 +45,7 @@ class _ContainerListViewState extends State<ContainerListView> {
               context,
               MaterialPageRoute(
                 builder: (context) => SlotScreen(
-                  containerItem: item,
+                  containerModel: item,
                   roomName: widget.roomName, // roomName 전달
                 ),
               ),
@@ -55,11 +57,11 @@ class _ContainerListViewState extends State<ContainerListView> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(width: 16.0),
-                item.image != null
+                item.imageId != null
                     ? ClipRRect(
                   borderRadius: BorderRadius.circular(2),
                   child: Image.file(
-                    item.image!,
+                    item.imageId! as File,
                     width: 80,
                     height: 80,
                     fit: BoxFit.cover,
@@ -69,7 +71,7 @@ class _ContainerListViewState extends State<ContainerListView> {
                 const SizedBox(width: 16.0),
                 Expanded(
                   child: Text(
-                    item.name,
+                    item.title,
                     style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w400,

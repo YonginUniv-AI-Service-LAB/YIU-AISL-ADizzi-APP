@@ -17,7 +17,7 @@ class ContainerScreen extends StatefulWidget {
 
 class _ContainerScreenState extends State<ContainerScreen> {
   bool _isLatestSelected = true; // 초기값은 '최신등록순'
-  List<ContainerItem> _items = []; // 리스트 데이터를 관리하는 변수
+  List<ContainerModel> _items = []; // 리스트 데이터를 관리하는 변수
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +80,7 @@ class _ContainerScreenState extends State<ContainerScreen> {
             MaterialPageRoute(
               builder: (context) => AddContainerPage(
                 roomName: widget.roomName, // roomName 전달
-                onAdd: (ContainerItem item) {
+                onAdd: (ContainerModel item) {
                   setState(() {
                     _items.add(item); // 전달받은 ContainerItem을 리스트에 추가
                   });

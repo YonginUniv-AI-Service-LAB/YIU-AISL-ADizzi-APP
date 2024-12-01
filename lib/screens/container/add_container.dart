@@ -6,8 +6,8 @@ import '../../widgets/custom_textfield.dart';
 import '../../widgets/main_button.dart';
 
 class AddContainerPage extends StatefulWidget {
-  final Function(ContainerItem) onAdd;
-  final ContainerItem? initialItem;
+  final Function(ContainerModel) onAdd;
+  final ContainerModel? initialItem;
   final String roomName; // 방 이름을 저장하는 변수
 
   const AddContainerPage({required this.onAdd, this.initialItem, required this.roomName, Key? key})
@@ -25,8 +25,8 @@ class _AddContainerPageState extends State<AddContainerPage> {
   void initState() {
     super.initState();
     if (widget.initialItem != null) {
-      _controller.text = widget.initialItem!.name;
-      _selectedImage = widget.initialItem!.image;
+      _controller.text = widget.initialItem!.title;
+      _selectedImage = widget.initialItem!.imageId;
     }
   }
 
@@ -80,10 +80,10 @@ class _AddContainerPageState extends State<AddContainerPage> {
                       return;
                     }
 
-                    final item = ContainerItem(
-                      id: widget.initialItem?.id,
-                      name: _controller.text,
-                      image: _selectedImage,
+                    final item = ContainerModel(
+                      containerId: widget.initialItem?.containerId,
+                      title: _controller.text,
+                      imageId: _selectedImage,
                     );
 
                     widget.onAdd(item);

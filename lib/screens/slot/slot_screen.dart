@@ -7,9 +7,9 @@ import 'package:yiu_aisl_adizzi_app/models/container_items.dart';
 
 class SlotScreen extends StatefulWidget {
   final String roomName;
-  final ContainerItem containerItem; // 필드 이름 소문자로 변경
+  final ContainerModel containerModel; // 필드 이름 소문자로 변경
 
-  const SlotScreen({super.key, required this.containerItem, required this.roomName});
+  const SlotScreen({super.key, required this.containerModel, required this.roomName});
 
   @override
   State<SlotScreen> createState() => _SlotScreenState();
@@ -46,7 +46,7 @@ class _SlotScreenState extends State<SlotScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          widget.containerItem.name, // ContainerItem의 name 필드 사용
+          widget.containerModel.title, // ContainerItem의 name 필드 사용
           style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
@@ -78,7 +78,7 @@ class _SlotScreenState extends State<SlotScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "${widget.roomName} > ${widget.containerItem.name}", // 동적 데이터 표시
+                  "${widget.roomName} > ${widget.containerModel.title}", // 동적 데이터 표시
                   style: TextStyle(color: Colors.grey[600]),
                 ),
                 TimeSortSelector(
