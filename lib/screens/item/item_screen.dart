@@ -14,6 +14,31 @@ class _ItemScreenState extends State<ItemScreen> {
   bool isLatestSelected = true; // 최신순 선택 상태 관리
   List<ItemModel> items = []; // 아이템 목록을 관리하는 리스트
 
+  // 팝업 메뉴 선택 처리
+  void _handlePopupMenuSelected(int value) {
+    if (value == 0) {
+      // 수정 로직
+      print("수정 선택됨");
+    } else if (value == 1) {
+      // 삭제 로직
+      print("삭제 선택됨");
+    }
+  }
+
+  // 전체 선택 상태 계산
+  bool get isAllChecked {
+    return items.every((item) => item.isChecked); // 모든 아이템이 체크되었는지 확인
+  }
+
+  // 전체 선택/해제 처리
+  void _toggleSelectAll(bool? isChecked) {
+    setState(() {
+      for (var item in items) {
+        item.isChecked = isChecked ?? false;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +66,6 @@ class _ItemScreenState extends State<ItemScreen> {
           ),
         ],
       ),
-
       body: Column(
         children: [
           Padding(
@@ -72,7 +96,6 @@ class _ItemScreenState extends State<ItemScreen> {
               ],
             ),
           ),
-
           // 아이템 리스트를 감싸는 Container 추가
           Expanded(
             child: Container(
@@ -87,12 +110,14 @@ class _ItemScreenState extends State<ItemScreen> {
                     items[index].isChecked = isChecked;
                   });
                 },
+                onPopupMenuSelected: _handlePopupMenuSelected, // 팝업 메뉴 선택 처리
+                isAllChecked: isAllChecked, // 전체 선택 상태 전달
+                onSelectAllChanged: _toggleSelectAll, // 전체 선택/해제 처리
               ),
             ),
           ),
         ],
       ),
-
       floatingActionButton: FloatingAddButton(
         onPressed: () async {
           final newItem = await Navigator.push(
