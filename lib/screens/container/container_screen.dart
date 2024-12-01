@@ -40,6 +40,7 @@ class _ContainerScreenState extends State<ContainerScreen> {
           ),
         ],
       ),
+
       body: Column(
         children: [
           // CustomSearchBar 사용

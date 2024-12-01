@@ -117,11 +117,12 @@ class _TempStartScreenState extends State<TempStartScreen>
                 );
               },
               child: Text('SearchDetail 페이지'),
-            ),ElevatedButton(
+            ),
+            ElevatedButton(
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const Item()),
+                  MaterialPageRoute(builder: (context) => ItemScreen()),
                 );
               },
               child: Text('Item 페이지'),

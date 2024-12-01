@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../widgets/camera_widget.dart'; // CameraWidget이 정의된 경로
 import '../../widgets/custom_textfield.dart'; // CustomTextField 경로
 import '../../widgets/main_button.dart'; // MainButton 경로
-
+// import 'package:yiu_aisl_adizzi_app/models/item_model.dart';
 
 class AddItemsPage extends StatefulWidget {
   @override
@@ -68,29 +68,29 @@ class _AddItemsPageState extends State<AddItemsPage> {
               ),
               const SizedBox(height: 10),
 
-          DropdownButtonFormField<String>(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15), // 둥글게 설정
-                borderSide: BorderSide(color: Color(0x8049454F)), // 기본 테두리 색상
+              DropdownButtonFormField<String>(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15), // 둥글게 설정
+                    borderSide: BorderSide(color: Color(0x8049454F)), // 기본 테두리 색상
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15), // 둥글게 설정
+                    borderSide: BorderSide(color: Color(0x8049454F)), // 활성화 상태의 테두리 색상
+                  ),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 10), // 기존 패딩 유지
+                ),
+                items: [], // 빈 리스트로 설정
+                onChanged: (value) {
+                  setState(() {
+                    _selectedCategory = value;
+                  });
+                },
+                value: _selectedCategory,
               ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15), // 둥글게 설정
-                borderSide: BorderSide(color: Color(0x8049454F)), // 활성화 상태의 테두리 색상
-              ),
-              contentPadding: EdgeInsets.symmetric(horizontal: 10), // 기존 패딩 유지
-            ),
-            items: [], // 빈 리스트로 설정
-            onChanged: (value) {
-              setState(() {
-                _selectedCategory = value;
-              });
-            },
-            value: _selectedCategory,
-          ),
 
 
-          const SizedBox(height: 18),
+              const SizedBox(height: 18),
               // Memo Field
               const Text(
                 '메모',

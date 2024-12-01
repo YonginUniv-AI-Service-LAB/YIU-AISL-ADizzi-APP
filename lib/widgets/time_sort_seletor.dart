@@ -26,20 +26,20 @@ class TimeSortSelector extends StatelessWidget {
               style: TextStyle(
                 color: isLatestSelected ? Color(0xFF5DDA6F) : Color(0xFF595959),
                 fontWeight: FontWeight.w500,
+                fontSize: 13,  // 폰트 크기 설정
               ),
             ),
           ),
-
           const SizedBox(width: 3),
           const Text(
             '/',
             style: TextStyle(
               color: Color(0xFF595959),
               fontWeight: FontWeight.w500,
+              fontSize: 13,  // 폰트 크기 설정
             ),
           ),
           const SizedBox(width: 3),
-
           GestureDetector(
             onTap: onOldestTap,
             child: Text(
@@ -47,10 +47,15 @@ class TimeSortSelector extends StatelessWidget {
               style: TextStyle(
                 color: !isLatestSelected ? Color(0xFF5DDA6F) : Color(0xFF595959),
                 fontWeight: FontWeight.w500,
+                fontSize: 13,  // 폰트 크기 설정
               ),
             ),
           ),
-          const Icon(Icons.swap_vert, color: Color(0xFF595959),),
+          const Icon(
+            Icons.swap_vert,
+            color: Color(0xFF595959),
+            size: 18,  // 아이콘 크기 조정 (필요시)
+          ),
         ],
       ),
     );
