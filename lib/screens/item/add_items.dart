@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../widgets/camera_widget.dart'; // CameraWidget이 정의된 경로
 import '../../widgets/custom_textfield.dart'; // CustomTextField 경로
 import '../../widgets/main_button.dart'; // MainButton 경로
-import 'package:yiu_aisl_adizzi_app/models/item_model.dart';
+
 
 class AddItemsPage extends StatefulWidget {
   @override
