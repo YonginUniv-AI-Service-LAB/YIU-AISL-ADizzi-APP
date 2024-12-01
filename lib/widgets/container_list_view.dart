@@ -10,7 +10,11 @@ class ContainerListView extends StatefulWidget {
   final List<ContainerModel> items;
   final String roomName; // roomName 추가
 
-  const ContainerListView({required this.items, required this.roomName, Key? key}) : super(key: key);
+  const ContainerListView({
+    required this.items,
+    required this.roomName,
+    Key? key
+  }) : super(key: key);
 
   @override
   _ContainerListViewState createState() => _ContainerListViewState();
@@ -57,8 +61,8 @@ class _ContainerListViewState extends State<ContainerListView> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(width: 16.0),
-                item.imageId != null
-                    ? ClipRRect(
+                // item.imageId != null
+                ClipRRect(
                   borderRadius: BorderRadius.circular(2),
                   child: Image.file(
                     item.imageId! as File,
@@ -66,8 +70,8 @@ class _ContainerListViewState extends State<ContainerListView> {
                     height: 80,
                     fit: BoxFit.cover,
                   ),
-                )
-                    : const Icon(Icons.storage, size: 80),
+                ),
+
                 const SizedBox(width: 16.0),
                 Expanded(
                   child: Text(
@@ -78,6 +82,7 @@ class _ContainerListViewState extends State<ContainerListView> {
                     ),
                   ),
                 ),
+
                 CustomPopupMenu(
                   onSelected: (int result) async {
                     if (result == 0) {
