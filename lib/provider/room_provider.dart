@@ -15,7 +15,7 @@ class RoomProvider extends ChangeNotifier {
   Future<void> addRoom(RoomModel room) async {
     try {
       final token = await getToken();
-      final response = await roomPost(room, token!);
+      final response = await roomPost(room.title, token!);
       print('상태코드: ${response.statusCode}');
       String decodedResponse = response.body;
       print('응답바디: $decodedResponse');

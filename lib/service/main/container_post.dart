@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:yiu_aisl_adizzi_app/utils/constants.dart';
 
-Future<http.Response> roomPost(String title, String token ) async{
+Future<http.Response> roomPost(String title, String token , String img) async{
 
   final String endpoint = '/room';
   final String uri = '$BASE_URL$endpoint';
