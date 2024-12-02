@@ -4,18 +4,16 @@ import 'package:yiu_aisl_adizzi_app/models/item_model.dart';
 import '../../widgets/camera_widget.dart';
 import '../../widgets/custom_textfield.dart';
 import '../../widgets/main_button.dart';
-
+import 'package:yiu_aisl_adizzi_app/widgets/category_selector.dart';
 
 class AddItemsPage extends StatefulWidget {
   final ItemModel? item; // 기존 아이템을 받기 위해서
-
   // 생성자에서 아이템을 받을 수 있도록
   AddItemsPage({this.item});
 
   @override
   _AddItemsPageState createState() => _AddItemsPageState();
 }
-
 
 class _AddItemsPageState extends State<AddItemsPage> {
   final TextEditingController _nameController = TextEditingController();
@@ -44,8 +42,6 @@ class _AddItemsPageState extends State<AddItemsPage> {
     '카테고리 4',
     '카테고리 5',
   ];
-
-
 
   void _showCategoryBottomSheet() {
     showModalBottomSheet(
@@ -115,25 +111,10 @@ class _AddItemsPageState extends State<AddItemsPage> {
                 ),
               ),
               const SizedBox(height: 10),
-              TextButton(
+              // 분리된 CategorySelector 위젯 사용
+              CategorySelector(
+                selectedCategory: _selectedCategory,
                 onPressed: _showCategoryBottomSheet,
-                style: TextButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
-                  side: const BorderSide(color: Color(0x8049454F)),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      _selectedCategory ?? '카테고리 선택',
-                      style: const TextStyle(fontSize: 14),
-                    ),
-                    const Icon(Icons.arrow_drop_down),
-                  ],
-                ),
               ),
               const SizedBox(height: 18),
               const Text(

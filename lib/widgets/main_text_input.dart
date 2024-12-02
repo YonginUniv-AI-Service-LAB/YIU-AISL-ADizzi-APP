@@ -90,7 +90,7 @@ class _MainTextInputState extends State<MainTextInput> {
     final String inputCode = widget.controller.text;
 
     // 로컬 저장소에서 인증 코드 가져오기
-    final prefs = await SharedPreferences.getInstance()
+    final prefs = await SharedPreferences.getInstance();
     final storedCode = prefs.getString('auth_code');
 
     if (storedCode == null) {

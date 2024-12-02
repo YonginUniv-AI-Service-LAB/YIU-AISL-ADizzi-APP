@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:yiu_aisl_adizzi_app/models/item_model.dart';
 import 'package:yiu_aisl_adizzi_app/screens/item/add_items.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/custom_popup_menu.dart';
+import 'package:yiu_aisl_adizzi_app/widgets/select_all_bar.dart';
+import 'package:yiu_aisl_adizzi_app/widgets/item_row.dart';
 
 class ItemListView extends StatefulWidget {
   final List<ItemModel> items;
@@ -66,116 +68,30 @@ class _ItemListViewState extends State<ItemListView> {
 
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15), // 둥근 테두리
-        color: Colors.white, // 배경색 설정
+        borderRadius: BorderRadius.circular(15),
+        color: Colors.white,
       ),
-      margin: const EdgeInsets.all(10), // 컨테이너 외부 여백
+      margin: const EdgeInsets.all(10),
       child: Column(
         children: [
-          // 전체 선택 체크박스 및 선택 삭제 버튼 추가
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 3.0, vertical: 4.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Checkbox(
-                      value: widget.isAllChecked, // 전체 선택 상태
-                      onChanged: widget.onSelectAllChanged, // 전체 선택 상태 변경
-                      activeColor: const Color(0xFF5DDA6F),
-                      side: const BorderSide(
-                        color: Colors.grey, // 체크박스의 테두리 색상
-                        width: 1, // 테두리 두께
-                      ),
-                    ),
-                    const Text(
-                      '전체 선택',
-                      style: TextStyle(
-                        fontSize: 13,
-                        color: Colors.black87,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-                // 선택 삭제 버튼
-                TextButton(
-                  onPressed: widget.onDeleteSelected, // 선택 삭제 로직 호출
-                  child: const Text(
-                    '선택 삭제',
-                    style: TextStyle(
-                      color: Colors.black87,
-                      fontSize: 13,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+          // SelectAllBar 위젯
+          SelectAllBar(
+            isAllChecked: widget.isAllChecked,
+            onSelectAllChanged: widget.onSelectAllChanged,
+            onDeleteSelected: widget.onDeleteSelected,
           ),
-
-          // 아이템 리스트
+          // ListView.builder
           Expanded(
             child: ListView.builder(
               itemCount: widget.items.length,
               itemBuilder: (context, index) {
                 final item = widget.items[index];
-                return GestureDetector(
-                  onTap: () => widget.onItemTap(index), // 아이템 클릭 이벤트
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 5.0,
-                      horizontal: 3.0,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween, // 항목 간 간격을 최대로
-                      children: [
-                        // 체크박스 (왼쪽에 배치)
-                        Checkbox(
-                          value: item.isChecked, // 체크 여부
-                          onChanged: (bool? value) {
-                            // 체크박스 상태 변경 시 콜백 호출
-                            widget.onCheckboxChanged(index, value ?? false);
-                          },
-                          activeColor: const Color(0xFF5DDA6F),
-                          side: const BorderSide(
-                            color: Colors.grey, // 체크박스의 테두리 색상
-                            width: 1, // 테두리 두께
-                          ),
-                        ),
-
-                        // 이미지 표시 (이미지 경로가 항상 존재)
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(2),
-                          child: Image.file(
-                            File(item.imagePath!),
-                            width: 75,
-                            height: 75,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        const SizedBox(width: 16), // 이미지와 이름 간 간격
-                        // 아이템 이름 표시
-                        Expanded(
-                          child: Text(
-                            item.title,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                            ),
-                            overflow: TextOverflow.ellipsis, // 이름이 길어지면 생략 표시
-                          ),
-                        ),
-                        // CustomPopupMenu (오른쪽에 배치)
-                        CustomPopupMenu(
-                          onSelected: (value) {
-                            _handlePopupMenuAction(index, value); // 팝업 메뉴 처리
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
+                return ItemRow(
+                  item: item,
+                  index: index,
+                  onItemTap: widget.onItemTap,
+                  onCheckboxChanged: widget.onCheckboxChanged,
+                  onPopupMenuAction: _handlePopupMenuAction,
                 );
               },
             ),
