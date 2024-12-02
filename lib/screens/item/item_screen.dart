@@ -13,17 +13,7 @@ class ItemScreen extends StatefulWidget {
 class _ItemScreenState extends State<ItemScreen> {
   bool isLatestSelected = true; // 최신순 선택 상태 관리
   List<ItemModel> items = []; // 아이템 목록을 관리하는 리스트
-
-  // 팝업 메뉴 선택 처리
-  void _handlePopupMenuSelected(int value) {
-    if (value == 0) {
-      // 수정 로직
-      print("수정 선택됨");
-    } else if (value == 1) {
-      // 삭제 로직
-      print("삭제 선택됨");
-    }
-  }
+  ItemModel? selectedItem; // 수정할 아이템을 저장할 변수
 
   // 전체 선택 상태 계산
   bool get isAllChecked {
@@ -36,6 +26,13 @@ class _ItemScreenState extends State<ItemScreen> {
       for (var item in items) {
         item.isChecked = isChecked ?? false;
       }
+    });
+  }
+
+  // 선택 삭제 처리
+  void _deleteSelectedItems() {
+    setState(() {
+      items.removeWhere((item) => item.isChecked); // 체크된 항목 삭제
     });
   }
 
@@ -96,13 +93,15 @@ class _ItemScreenState extends State<ItemScreen> {
               ],
             ),
           ),
-          // 아이템 리스트를 감싸는 Container 추가
           Expanded(
             child: Container(
-              color: Color(0xFFF0F0F0), // 배경 색상 설정
+              color: const Color(0xFFF0F0F0), // 배경 색상 설정
               child: ItemListView(
                 items: items,
                 onItemTap: (index) {
+                  setState(() {
+                    selectedItem = items[index]; // 선택된 아이템을 selectedItem에 저장
+                  });
                   print('아이템 ${items[index].title} 클릭됨'); // 클릭 이벤트 처리
                 },
                 onCheckboxChanged: (index, isChecked) {
@@ -110,9 +109,9 @@ class _ItemScreenState extends State<ItemScreen> {
                     items[index].isChecked = isChecked;
                   });
                 },
-                onPopupMenuSelected: _handlePopupMenuSelected, // 팝업 메뉴 선택 처리
                 isAllChecked: isAllChecked, // 전체 선택 상태 전달
                 onSelectAllChanged: _toggleSelectAll, // 전체 선택/해제 처리
+                onDeleteSelected: _deleteSelectedItems, // 선택 삭제 처리
               ),
             ),
           ),
@@ -122,12 +121,21 @@ class _ItemScreenState extends State<ItemScreen> {
         onPressed: () async {
           final newItem = await Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => AddItemsPage()),
+            MaterialPageRoute(
+              builder: (context) => AddItemsPage(item: selectedItem), // 수정할 아이템을 넘겨줌
+            ),
           );
 
           if (newItem != null) {
             setState(() {
-              items.add(newItem);  // 새로 추가된 아이템 저장
+              if (selectedItem != null) {
+                // 아이템 수정 처리
+                int index = items.indexOf(selectedItem!);
+                items[index] = newItem; // 수정된 아이템으로 리스트 업데이트
+              } else {
+                // 새 아이템 추가 처리
+                items.add(newItem); // 새로 추가된 아이템 저장
+              }
             });
           }
         },
@@ -135,3 +143,4 @@ class _ItemScreenState extends State<ItemScreen> {
     );
   }
 }
+

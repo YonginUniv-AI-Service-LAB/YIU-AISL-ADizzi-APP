@@ -8,7 +8,7 @@ class CustomTextField extends StatelessWidget {
   CustomTextField({
     required this.controller,
     this.maxLines = 1, // 기본값 지정
-    this.fontSize = 14.5,
+    this.fontSize = 14,
   });
 
   @override
