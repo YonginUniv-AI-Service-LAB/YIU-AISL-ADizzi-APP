@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yiu_aisl_adizzi_app/models/container_items.dart';
 import 'package:yiu_aisl_adizzi_app/screens/changePwd/change_pwd_screen.dart';
 import 'package:yiu_aisl_adizzi_app/screens/item/item_screen.dart';
 import 'package:yiu_aisl_adizzi_app/screens/login/login_screen.dart';
@@ -116,24 +117,25 @@ class _TempStartScreenState extends State<TempStartScreen>
                 );
               },
               child: Text('SearchDetail 페이지'),
-            ),ElevatedButton(
+            ),
+            ElevatedButton(
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const Item()),
+                  MaterialPageRoute(builder: (context) => ItemScreen()),
                 );
               },
               child: Text('Item 페이지'),
             ),
-            // ElevatedButton(
-            //   onPressed: () {
-            //     Navigator.push(
-            //       context,
-            //       MaterialPageRoute(builder: (context) => SlotScreen()),
-            //     );
-            //   },
-            //   child: Text('Slot 페이지'),
-            // ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SlotScreen(containerModel: ContainerModel(title:''), roomName: '')),
+                );
+              },
+              child: Text('Slot 페이지'),
+            ),
           ],
         ),
       ),

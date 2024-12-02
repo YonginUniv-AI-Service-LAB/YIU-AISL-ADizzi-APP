@@ -1,15 +1,15 @@
-import 'dart:io';
-
 class ItemModel {
-  final String name;
-  final File image;
+  final String title;
   final String category;
-  final String memo;
+  final String detail;
+  final String? imagePath;
+  bool isChecked;
 
   ItemModel({
-    required this.name,
-    required this.image,
+    required this.title,
     required this.category,
-    required this.memo,
+    required this.detail,
+    this.imagePath,
+    this.isChecked = false,
   });
 }
