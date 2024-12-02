@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:yiu_aisl_adizzi_app/models/container_items.dart';
+import 'package:yiu_aisl_adizzi_app/models/container.dart';
 import 'package:yiu_aisl_adizzi_app/screens/slot/slot_screen.dart'; // Slot 화면 경로
 import 'package:yiu_aisl_adizzi_app/widgets/custom_popup_menu.dart';
 import 'package:yiu_aisl_adizzi_app/screens/container/add_container.dart';
