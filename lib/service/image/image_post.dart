@@ -30,6 +30,7 @@ Future<int> imagePost(String token, File imageFile) async {
     if (response.statusCode == 200) {
       // 응답 본문을 추출
       final responseBody = await response.stream.bytesToString();
+      print('이미지 등록');
 
       // 응답이 JSON 형식일 경우, imageId 추출
       final Map<String, dynamic> responseJson = json.decode(responseBody);
@@ -39,7 +40,8 @@ Future<int> imagePost(String token, File imageFile) async {
 
       return imageId; // imageId 반환
     } else {
-      print('이미지 업로드 실패: ${response.statusCode}');
+      print('응답 실패: ${response.statusCode}, 응답 내용: ${await response.stream.bytesToString()}');
+
       return -1; // 실패 시 -1 반환
     }
   } catch (e) {

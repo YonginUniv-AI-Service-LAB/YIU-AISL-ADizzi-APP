@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../service/user/signUp.dart';
 import '../../widgets/main_button.dart';
 import '../../widgets/main_text_input.dart';
@@ -19,25 +20,56 @@ class _SignUpState extends State<SignUp> {
   void _signUp() async {
     final String email = _emailController.text;
     final String password = _passwordController.text;
+    final String confirmPassword = _confirmPasswordController.text;
+    final String code = _codeController.text;
+
+    // 비밀번호와 비밀번호 재입력 체크
+    if (password != confirmPassword) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('비밀번호가 일치하지않습니다. 다시 입력해주세요.')),
+      );
+      return; // 비밀번호가 일치하지 않으면 함수 종료
+    }
+
+    // 인증 코드 확인
+    final prefs = await SharedPreferences.getInstance();
+    final storedCode = prefs.getString('auth_code');
+
+    if (storedCode == null || code.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('인증 코드를 입력해주세요.')),
+      );
+      return;
+    }
+
+    if (code != storedCode) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('인증 코드가 일치하지 않습니다.')),
+      );
+      return;
+    }
 
     try {
       final response = await signUp(email, password);
 
-      //이메일, 비밀번호 필수 입력 값
+      // 이메일, 비밀번호 필수 입력 값
       if (response.statusCode == 200) {
         print('회원가입 성공');
         _navigateToSignIn();
-      } else if(response.statusCode == 400){
-        print('이미 사용 중인 이메일입니다.');
-      } else if(response.statusCode == 500){
-        print('데이터 미입력');
-      } else{
-        print('문제가 발생했습니다.');
+      } else if (response.statusCode == 400) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('사용중인 이메일입니다.')),
+        );
+      } else if (response.statusCode == 500) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('필수 항목입니다. 모두 입력해주세요.')),
+        );
       }
     } catch (e) {
       print('회원가입 중 오류 발생: $e');
     }
   }
+
 
   // 회원가입 성공 시 화면 전환 함수
   void _navigateToSignIn() {
