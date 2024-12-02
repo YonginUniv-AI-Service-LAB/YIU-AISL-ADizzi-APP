@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/camera_widget.dart';
-import 'package:yiu_aisl_adizzi_app/models/container_items.dart';
+import 'package:yiu_aisl_adizzi_app/models/container.dart';
 import '../../widgets/custom_textfield.dart';
 import '../../widgets/main_button.dart';
 
@@ -19,14 +19,15 @@ class AddContainerPage extends StatefulWidget {
 
 class _AddContainerPageState extends State<AddContainerPage> {
   final TextEditingController _controller = TextEditingController();
-  File? _selectedImage;
+  late int _selectedImage;  //선택한 이미지
+  late File _selectedImageFile; // 이미지 파일을 저장할 변수
 
   @override
   void initState() {
     super.initState();
     if (widget.initialItem != null) {
       _controller.text = widget.initialItem!.title;
-      _selectedImage = widget.initialItem!.imageId;
+      _selectedImage = widget.initialItem!.imageId!;
     }
   }
 
@@ -52,10 +53,10 @@ class _AddContainerPageState extends State<AddContainerPage> {
               CameraWidget(
                 onImageSelected: (image) {
                   setState(() {
-                    _selectedImage = image;
+                    _selectedImageFile = image as File;
                   });
                 },
-                initialImage: _selectedImage,
+               // initialImage: _selectedImage,
               ),
               const SizedBox(height: 30),
               const Text(

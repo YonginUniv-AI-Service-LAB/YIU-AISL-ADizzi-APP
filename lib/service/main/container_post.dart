@@ -1,19 +1,19 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:yiu_aisl_adizzi_app/utils/constants.dart';
 
-Future<http.Response> roomPost(String title, String token , String img) async{
+import '../../utils/constants.dart';
 
-  final String endpoint = '/room';
+Future<http.Response> containerPost(String title, String token, int roomId, int imageId) async {
+
+  final String endpoint = '/room/$roomId/container';
   final String uri = '$BASE_URL$endpoint';
 
   try {
-
     final Map<String, dynamic> tokenMap = json.decode(token);
-    final accessToken = tokenMap['accessToken']; //accessToken만 추출
+    final String accessToken = tokenMap['accessToken']; // accessToken만 추출
     final Map<String, dynamic> requestData = {
       'title': title,
-
+      'imageId': imageId,
     };
 
     final response = await http.post(
@@ -25,7 +25,8 @@ Future<http.Response> roomPost(String title, String token , String img) async{
       },
       body: jsonEncode(requestData),
     );
-    print('api room post');
+
+    print('container post 성공');
     return response;
   } catch (e) {
     print('예외 발생: $e');
