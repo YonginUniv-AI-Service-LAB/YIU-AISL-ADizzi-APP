@@ -143,4 +143,3 @@ class _ItemScreenState extends State<ItemScreen> {
     );
   }
 }
-

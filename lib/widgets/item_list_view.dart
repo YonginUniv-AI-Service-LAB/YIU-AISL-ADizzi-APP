@@ -5,6 +5,7 @@ import 'package:yiu_aisl_adizzi_app/screens/item/add_items.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/custom_popup_menu.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/select_all_bar.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/item_row.dart';
+import 'package:yiu_aisl_adizzi_app/widgets/item_card.dart';
 
 class ItemListView extends StatefulWidget {
   final List<ItemModel> items;
@@ -36,9 +37,10 @@ class _ItemListViewState extends State<ItemListView> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => AddItemsPage(
-            item: widget.items[index], // 선택된 항목 정보 전달
-          ),
+          builder: (context) =>
+              AddItemsPage(
+                item: widget.items[index], // 선택된 항목 정보 전달
+              ),
         ),
       ).then((updatedItem) {
         if (updatedItem != null) {
@@ -74,13 +76,11 @@ class _ItemListViewState extends State<ItemListView> {
       margin: const EdgeInsets.all(10),
       child: Column(
         children: [
-          // SelectAllBar 위젯
           SelectAllBar(
             isAllChecked: widget.isAllChecked,
             onSelectAllChanged: widget.onSelectAllChanged,
             onDeleteSelected: widget.onDeleteSelected,
           ),
-          // ListView.builder
           Expanded(
             child: ListView.builder(
               itemCount: widget.items.length,
@@ -89,7 +89,23 @@ class _ItemListViewState extends State<ItemListView> {
                 return ItemRow(
                   item: item,
                   index: index,
-                  onItemTap: widget.onItemTap,
+                  onItemTap: (index) {
+                    // 팝업 창 띄우기
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return Dialog(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: ItemCard(item: item), // 팝업 창으로 띄움
+                          ),
+                        );
+                      },
+                    );
+                  },
                   onCheckboxChanged: widget.onCheckboxChanged,
                   onPopupMenuAction: _handlePopupMenuAction,
                 );
