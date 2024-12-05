@@ -22,11 +22,6 @@ class _RoomScreenState extends State<RoomScreen> with SingleTickerProviderStateM
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
-
-    // 방 목록을 초기화할 때 서버에서 데이터를 가져옴
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<RoomProvider>(context, listen: false).getRoom();
-    });
   }
 
   @override
@@ -37,8 +32,6 @@ class _RoomScreenState extends State<RoomScreen> with SingleTickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
-    final roomProvider = Provider.of<RoomProvider>(context);
-
     return Scaffold(
       resizeToAvoidBottomInset: false,   //키보드 화면 밀지 않도록
       body: Container(
@@ -75,10 +68,7 @@ class _RoomScreenState extends State<RoomScreen> with SingleTickerProviderStateM
                           roomList: roomProvider.roomList, // RoomProvider에서 가져온 List<RoomModel>을 전달
                         );
                       },
-
                     ),
-
-
                     const Center(child: ImageListView()),
                   ],
                 ),

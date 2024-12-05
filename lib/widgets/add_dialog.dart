@@ -3,7 +3,8 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-import 'package:yiu_aisl_adizzi_app/models/room.dart'; // Room 클래스 임포트
+import 'package:yiu_aisl_adizzi_app/service/room_service.dart';
+import 'package:yiu_aisl_adizzi_app/utils/model.dart';
 import '../provider/room_provider.dart';
 import '../utils/token.dart';
 import '../service/main/room_post.dart';
@@ -37,24 +38,13 @@ class _AddDialogState extends State<AddDialog> {
       _setError('방 이름을 입력해주세요');
       return;
     }
-
-    try {
-      if (widget.isEdit) {
-        // Edit existing room
-        RoomModel updatedRoom = RoomModel(title: title, roomId: widget.roomId);
-        await Provider.of<RoomProvider>(context, listen: false).updateRoom(updatedRoom);
-      } else {
-        // Create new room
-        RoomModel newRoom = RoomModel(title: title, roomId: null); // roomId는 null로 시작
-        await Provider.of<RoomProvider>(context, listen: false).addRoom(newRoom);
-      }
-
-      // If the room is added or edited successfully, close the dialog
-      Navigator.of(context).pop();
-    } catch (e) {
-      // If an error occurs, display the error message
-      _setError('이미 등록된 방입니다. 다시 입력해주세요. ');
+    if(widget.isEdit) {
+      await editRoom(context, roomId: widget.roomId!, title: title);
     }
+    else {
+      await createRoom(context, title: title);
+    }
+    Navigator.of(context).pop();
   }
 
   void _setError(String message) {
