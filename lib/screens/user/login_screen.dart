@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:yiu_aisl_adizzi_app/service/user_service.dart';
 import '../../service/user/login.dart';
 import '../../widgets/link_label.dart';
 import '../../widgets/logo_image.dart';
@@ -49,26 +50,28 @@ class _LoginScreenState extends State<LoginScreen> {
 
     try {
       // 로그인 요청
-      final response = await signIn(email, password);
-      final errorResponse = jsonDecode(utf8.decode(response.bodyBytes));
-
-      if (response.statusCode == 200) {
-        // 로그인 성공
-        print('로그인 성공');
-        final data = response.body; // 서버 응답 데이터 (예: 토큰)
-        await _storage.write(key: "user_token", value: data);
-        print(" $data");
-
-        _navigateToRoom();
-      } else if (errorResponse['code'] == "E503") {
-        _setError('회원가입을 해주세요');
-      } else if (errorResponse['code'] == "E701") {
-        _setError('비밀번호가 일치하지 않습니다..');
-      } else if (response.statusCode == 404) {
-        _setError('이메일이 존재하지 않습니다.');
-      } else {
-        _setError('로그인 실패. 다시 시도해주세요.');
-      }
+      await loginUser(context, email: email, password: password);
+    //   final response = await signIn(email, password);
+    //   final errorResponse = jsonDecode(utf8.decode(response.bodyBytes));
+    //
+    //   if (response.statusCode == 200) {
+    //     // 로그인 성공
+    //     print('로그인 성공');
+    //     final data = response.body; // 서버 응답 데이터 (예: 토큰)
+    //     await _storage.write(key: "user_token", value: data);
+    //     print(" $data");
+    //
+    //     _navigateToRoom();
+    //   } else if (errorResponse['code'] == "E503") {
+    //     _setError('회원가입을 해주세요');
+    //   } else if (errorResponse['code'] == "E701") {
+    //     _setError('비밀번호가 일치하지 않습니다..');
+    //   } else if (response.statusCode == 404) {
+    //     _setError('이메일이 존재하지 않습니다.');
+    //   } else {
+    //     _setError('로그인 실패. 다시 시도해주세요.');
+    //   }
+      _navigateToRoom();
     } catch (e) {
       print('서버 오류: $e');
       _setError('서버와의 연결에 실패했습니다. 인터넷 연결을 확인해주세요.');
