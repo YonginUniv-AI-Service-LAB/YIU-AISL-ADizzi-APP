@@ -86,7 +86,7 @@ class _CustomDividerState extends State<CustomDivider> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ContainerScreen(roomName: room.title!, roomId: 1,),
+                      builder: (context) => ContainerScreen(roomName: room.title!, roomId: roomId,),
                     ),
                   );
                 },

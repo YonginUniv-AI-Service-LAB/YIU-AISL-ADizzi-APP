@@ -26,6 +26,7 @@ class _CreateContainerScreenState extends State<CreateContainerScreen> {
   @override
   void initState() {
     super.initState();
+    Provider.of<TreeProvider>(context, listen: false).fetchTree(context);
   }
 
   @override

@@ -31,7 +31,7 @@ class _ContainerScreenState extends State<ContainerScreen> {
   Future<void> _loadData() async{
     // sortBy 매핑
     String sortBy = _isLatestSelected ? 'recent' : 'old';
-    _containers = await getContainers(context, roomId: 1, sortBy: sortBy);
+    _containers = await getContainers(context, roomId: widget.roomId, sortBy: sortBy);
     setState(() {});
   }
 
