@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:yiu_aisl_adizzi_app/screens/user/login_screen.dart';
-import 'package:yiu_aisl_adizzi_app/utils/token.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:yiu_aisl_adizzi_app/service/user_service.dart';
+import 'package:yiu_aisl_adizzi_app/widgets/mail_button.dart';
+import '../../service/user/signUp.dart';
+import '../../service/service.dart';
 import '../../widgets/main_button.dart';
 import '../../widgets/main_text_input.dart';
-import '../../service/user/change_pwd.dart';
+import 'login_screen.dart';
 
 class ChangePwdScreen extends StatefulWidget {
-  const ChangePwdScreen({super.key});
-
   @override
   _ChangePwdScreenState createState() => _ChangePwdScreenState();
 }
@@ -15,32 +16,38 @@ class ChangePwdScreen extends StatefulWidget {
 class _ChangePwdScreenState extends State<ChangePwdScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _codeController = TextEditingController();
-  final TextEditingController _newPasswordController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
+  late String authCode;
+  bool isConfirmedMail = false;
 
-  // 비밀번호 변경 검증 함수 호출
-  void _changePwd() async {
+  //회원가입 검증 함수 호출
+  void _signUp() async {
     final String email = _emailController.text;
-    final String password = _newPasswordController.text;
+    final String password = _passwordController.text;
+    final String confirmPassword = _confirmPasswordController.text;
 
-    try {
-      final token = await getToken();
-      final response = await changePwd(email, password, token!);
-
-      if (response.statusCode == 200) {
-        print('비밀번호 변경 성공');
-        _navigateToSignIn();
-      } else {
-        print('문제가 발생했습니다. 상태 코드: ${response.statusCode}');
-        print('응답 본문: ${response.body}');
-
-      }
-    } catch (e) {
-      print('비밀번호 재설정 중 오류 발생');
+    // 비밀번호와 비밀번호 재입력 체크
+    if (password != confirmPassword) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('비밀번호가 일치하지않습니다. 다시 입력해주세요.')),
+      );
+      return; // 비밀번호가 일치하지 않으면 함수 종료
     }
+
+    if (!isConfirmedMail){
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('인증된 이메일이 아닙니다. 이메일 인증을 해주세요')),
+      );
+      return;
+    }
+
+    await changePassword(context, email: email, password: password);
+    _navigateToSignIn();
   }
 
-  // 비밀번호 변경 성공 시 화면 전환 함수
+
+  // 회원가입 성공 시 화면 전환 함수
   void _navigateToSignIn() {
     Navigator.pushReplacement(
       context,
@@ -50,51 +57,99 @@ class _ChangePwdScreenState extends State<ChangePwdScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-
     return Scaffold(
+      backgroundColor: const Color(0xFFF0F0F0),
       appBar: AppBar(
         title: const Text(
           '비밀번호 재설정',
           style: TextStyle(
             color: Colors.black,
-            fontWeight: FontWeight.w600,
             fontSize: 18,
+            fontWeight: FontWeight.w600,
           ),
         ),
         centerTitle: true,
         backgroundColor: const Color(0xFFF0F0F0),
       ),
-      body: Container(
-        color: const Color(0xFFF0F0F0),
-        padding: EdgeInsets.all(width * 0.05),
+      body: Padding(
+        padding: const EdgeInsets.only(top: 30, left: 15, right: 15),
         child: Column(
           children: [
-            Padding(
-              padding: EdgeInsets.only(bottom: height * 0.05, top: 15),
+            Expanded(
               child: Column(
                 children: [
-                  _buildEmailInput(),
-                  const SizedBox(height: 5),
-                  _buildCodeInput(),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(bottom: height * 0.05),
-              child: Column(
-                children: [
-                  _buildNewPwdInput(),
-                  const SizedBox(height: 5),
-                  _buildNewConfirmPwdInput(),
-                ],
-              ),
-            ),
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 40),
+                    child: Column(
+                      children: [
+                        MainTextInput(
+                          label: '이메일',
+                          controller: _emailController,
+                          child: MailButton(
+                            title: '인증요청',
+                            onPressed: () async{
+                              authCode = await sendMail(context, email: _emailController.text);
+                            },
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        MainTextInput(
+                          label: '인증번호',
+                          controller: _codeController,
+                          child: MailButton(
+                            title: '인증요청',
+                            onPressed: () async{
+                              final String inputCode = _codeController.text;
 
-            MainButton(
-              label: '비밀번호 재설정',
-              onPressed: _changePwd,
+                              if (authCode == null) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('인증 코드가 저장되지 않았습니다.')),
+                                );
+                                return;
+                              }
+
+                              // 입력된 코드와 저장된 코드 비교
+                              if (inputCode == authCode) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('인증 성공!')),
+                                );
+                                isConfirmedMail = true;
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('인증 코드가 일치하지 않습니다.')),
+                                );
+                              }
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 40),
+                    child: Column(
+                      children: [
+                        MainTextInput(
+                          label: '비밀번호',
+                          controller: _passwordController,
+                        ),
+                        const SizedBox(height: 5),
+                        MainTextInput(
+                          label: '비밀번호 재입력',
+                          controller: _confirmPasswordController,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 25),
+                  MainButton(
+                    label: '비밀번호 재설정',
+                    onPressed: () {
+                      _signUp();
+                    },
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -102,47 +157,4 @@ class _ChangePwdScreenState extends State<ChangePwdScreen> {
     );
   }
 
-  // 이메일 입력 필드 위젯
-  Widget _buildEmailInput(){
-    return MainTextInput(
-      label: '이메일',
-      controller: _emailController,
-      showCheck: false,
-      showRequest: true,
-      showIcon: false,
-    );
-  }
-
-  // 인증번호 입력 필드 위젯
-  Widget _buildCodeInput(){
-    return MainTextInput(
-      label: '인증번호',
-      controller: _codeController,
-      showCheck: true,
-      showRequest: false,
-      showIcon: false,
-    );
-  }
-
-  // 새 비밀번호 입력 필드 위젯
-  Widget _buildNewPwdInput(){
-    return MainTextInput(
-      label: '새 비밀번호 입력',
-      controller: _newPasswordController,
-      showCheck: false,
-      showRequest: false,
-      showIcon: true,
-    );
-  }
-
-  // 새 비밀번호 재입력 입력 필드 위젯
-  Widget _buildNewConfirmPwdInput(){
-    return MainTextInput(
-      label: '새 비밀번호 재입력',
-      controller: _confirmPasswordController,
-      showCheck: false,
-      showRequest: false,
-      showIcon: true,
-    );
-  }
 }

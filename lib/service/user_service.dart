@@ -133,7 +133,10 @@ Future<void> signUp(BuildContext context, {
     } else {
       final errorResponse = jsonDecode(utf8.decode(response.bodyBytes));
       print('회원가입 실패: ${errorResponse['message']}');
-      showErrorDialog(context, errorResponse['message']);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(errorResponse['message'])),
+      );
+      // showErrorDialog(context, errorResponse['message']);
       throw Exception('회원가입 실패: ${errorResponse['message']}');
     }
   } catch (e) {

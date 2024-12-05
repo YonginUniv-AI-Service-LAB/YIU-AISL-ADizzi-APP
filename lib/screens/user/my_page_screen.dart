@@ -72,7 +72,7 @@ class MyPageScreen extends StatelessWidget {
 
               title: const Text('비밀번호 변경',style: TextStyle(fontSize: 15),),
               onTap: () {
-                Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) => const ChangePwdScreen(),
+                Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) => ChangePwdScreen(),
                 ));
                 // 비밀번호 재설정 화면으로 이동
               },

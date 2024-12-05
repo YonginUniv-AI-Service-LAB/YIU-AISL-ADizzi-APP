@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yiu_aisl_adizzi_app/service/user_service.dart';
+import 'package:yiu_aisl_adizzi_app/widgets/mail_button.dart';
 import '../../service/user/signUp.dart';
 import '../../service/service.dart';
 import '../../widgets/main_button.dart';
@@ -17,13 +18,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _codeController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
+  late String authCode;
+  bool isConfirmedMail = false;
 
   //회원가입 검증 함수 호출
   void _signUp() async {
     final String email = _emailController.text;
     final String password = _passwordController.text;
     final String confirmPassword = _confirmPasswordController.text;
-    final String code = _codeController.text;
 
     // 비밀번호와 비밀번호 재입력 체크
     if (password != confirmPassword) {
@@ -33,33 +35,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
       return; // 비밀번호가 일치하지 않으면 함수 종료
     }
 
-    // 인증 코드 확인
-    final prefs = await SharedPreferences.getInstance();
-    final storedCode = prefs.getString('auth_code');
-
-    if (storedCode == null || code.isEmpty) {
+    if (!isConfirmedMail){
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('인증 코드를 입력해주세요.')),
+        SnackBar(content: Text('인증된 이메일이 아닙니다. 이메일 인증을 해주세요')),
       );
       return;
     }
 
-    if (code != storedCode) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('인증 코드가 일치하지 않습니다.')),
-      );
-      return;
-    }
-
-    try {
-      await signUp(context, email: email, password: password);
-    } catch (e) {
-      print('회원가입 중 오류 발생: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('$e')),
-      );
-      return;
-    }
+    await signUp(context, email: email, password: password);
     _navigateToSignIn();
   }
 
@@ -99,9 +82,46 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     margin: const EdgeInsets.only(bottom: 40),
                     child: Column(
                       children: [
-                        _buildEmailInput(),
+                        MainTextInput(
+                          label: '이메일',
+                          controller: _emailController,
+                          child: MailButton(
+                            title: '인증요청',
+                            onPressed: () async{
+                              authCode = await sendMail(context, email: _emailController.text);
+                            },
+                          ),
+                        ),
                         const SizedBox(height: 5),
-                        _buildCodeInput(),
+                        MainTextInput(
+                          label: '인증번호',
+                          controller: _codeController,
+                          child: MailButton(
+                            title: '인증요청',
+                            onPressed: () async{
+                              final String inputCode = _codeController.text;
+
+                              if (authCode == null) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('인증 코드가 저장되지 않았습니다.')),
+                                );
+                                return;
+                              }
+
+                              // 입력된 코드와 저장된 코드 비교
+                              if (inputCode == authCode) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('인증 성공!')),
+                                );
+                                isConfirmedMail = true;
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('인증 코드가 일치하지 않습니다.')),
+                                );
+                              }
+                            },
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -109,9 +129,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     margin: const EdgeInsets.only(bottom: 40),
                     child: Column(
                       children: [
-                        _buildPwdInput(),
+                        MainTextInput(
+                          label: '비밀번호',
+                          controller: _passwordController,
+                        ),
                         const SizedBox(height: 5),
-                        _buildConfirmPwdInput(),
+                        MainTextInput(
+                          label: '비밀번호 재입력',
+                          controller: _confirmPasswordController,
+                        ),
                       ],
                     ),
                   ),
@@ -128,50 +154,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ],
         ),
       ),
-    );
-  }
-
-  // 이메일 입력 필드 위젯
-  Widget _buildEmailInput(){
-    return MainTextInput(
-      label: '이메일',
-      controller: _emailController,
-      showCheck: false,
-      showRequest: true,
-      showIcon: false,
-    );
-  }
-
-  // 인증번호 입력 필드 위젯
-  Widget _buildCodeInput(){
-    return MainTextInput(
-      label: '인증번호',
-      controller: _codeController,
-      showCheck: true,
-      showRequest: false,
-      showIcon: false,
-    );
-  }
-
-  // 비밀번호 입력 필드 위젯
-  Widget _buildPwdInput(){
-    return MainTextInput(
-      label: '비밀번호',
-      controller: _passwordController,
-      showCheck: false,
-      showRequest: false,
-      showIcon: true,
-    );
-  }
-
-  // 비밀번호 재입력 입력 필드 위젯
-  Widget _buildConfirmPwdInput(){
-    return MainTextInput(
-      label: '비밀번호 재입력',
-      controller: _confirmPasswordController,
-      showCheck: false,
-      showRequest: false,
-      showIcon: true,
     );
   }
 

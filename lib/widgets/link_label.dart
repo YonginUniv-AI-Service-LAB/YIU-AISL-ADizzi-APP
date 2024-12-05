@@ -46,7 +46,7 @@ class LinkLabel extends StatelessWidget {
             fontSize: 13,
           ),
         ),
-        _buildLink(context, '비밀번호 찾기', const ChangePwdScreen()), // 비밀번호 찾기 링크
+        _buildLink(context, '비밀번호 찾기', ChangePwdScreen()), // 비밀번호 찾기 링크
       ],
     );
   }

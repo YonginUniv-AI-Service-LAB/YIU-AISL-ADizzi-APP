@@ -6,18 +6,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class MainTextInput extends StatefulWidget {
   final String label;
-  final bool showIcon;
-  final bool showRequest;
-  final bool showCheck;
   final TextEditingController controller;
+  final Widget? child;
 
   const MainTextInput({
     super.key,
     required this.label,
-    required this.showIcon,
-    required this.showRequest,
-    required this.showCheck,
     required this.controller,
+    this.child,
   });
 
   @override
@@ -25,15 +21,17 @@ class MainTextInput extends StatefulWidget {
 }
 
 class _MainTextInputState extends State<MainTextInput> {
-  final TextEditingController _emailController = TextEditingController();
   bool isVisible = true;
+
+  @override
+  void initState() {
+    isVisible = widget.child == null ? true : false;
+    super.initState();
+  }
 
   //메일 인증 검증 함수 호출
   void _mail() async {
     final String email = widget.controller.text;
-
-
-
     try {
       final response = await mail(email);
       print('Response body: ${response.body}');
@@ -150,8 +148,7 @@ class _MainTextInputState extends State<MainTextInput> {
                   padding: EdgeInsets.only(left: padding),
                   child: TextField(
                     controller: widget.controller,
-                    obscureText: widget.label == '비밀번호' ||
-                        widget.label == '비밀번호 재입력' ? !isVisible : false,
+                    obscureText: isVisible,
                     decoration: InputDecoration(
                       hintText: widget.label, // hintText로 레이블 대체
                       border: InputBorder.none,
@@ -164,55 +161,7 @@ class _MainTextInputState extends State<MainTextInput> {
                   ),
                 ),
               ),
-              if (widget.showRequest)
-                Padding(
-                  padding: EdgeInsets.only(right: padding),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFD6D6D6),
-                      elevation: 2,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      minimumSize: Size(buttonWidth, 28),
-                    ),
-                    onPressed: _mail,
-                    child: const Text(
-                      '인증요청',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14,
-                        color: Color(0xFF595959),
-                      ),
-                    ),
-                  ),
-                ),
-              if (widget.showCheck)
-                Padding(
-                  padding: EdgeInsets.only(right: padding),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFD6D6D6),
-                      elevation: 2,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      minimumSize: Size(buttonWidth, 28),
-                    ),
-                    onPressed: _verifyCode, // 인증 확인 버튼에 함수 연결
-                    child: const Text(
-                      '인증확인',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14,
-                        color: Color(0xFF595959),
-                      ),
-                    ),
-                  ),
-                ),
-              if (widget.showIcon)
+              widget.child ??
                 Padding(
                   padding: EdgeInsets.only(right: padding),
                   child: IconButton(
