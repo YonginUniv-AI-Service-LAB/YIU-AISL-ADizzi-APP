@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:yiu_aisl_adizzi_app/models/container.dart';
 import 'package:yiu_aisl_adizzi_app/screens/slot/slot_screen.dart'; // Slot 화면 경로
+import 'package:yiu_aisl_adizzi_app/utils/model.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/custom_popup_menu.dart';
-import 'package:yiu_aisl_adizzi_app/screens/container/add_container.dart';
+import 'package:yiu_aisl_adizzi_app/screens/container/edit_container_screen.dart';
 
 class ContainerListView extends StatefulWidget {
   final List<ContainerModel> items;
@@ -44,16 +44,16 @@ class _ContainerListViewState extends State<ContainerListView> {
         final item = widget.items[index];
         return GestureDetector(
           onTap: () {
-            // SlotScreen으로 이동 시 roomName도 전달
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => SlotScreen(
-                  containerModel: item,
-                  roomName: widget.roomName, // roomName 전달
-                ),
-              ),
-            );
+            // // SlotScreen으로 이동 시 roomName도 전달
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(
+            //     builder: (context) => SlotScreen(
+            //       containerModel: item,
+            //       roomName: widget.roomName, // roomName 전달
+            //     ),
+            //   ),
+            // );
           },
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 5.0),
@@ -64,18 +64,24 @@ class _ContainerListViewState extends State<ContainerListView> {
                 // item.imageId != null
                 ClipRRect(
                   borderRadius: BorderRadius.circular(2),
-                  child: Image.file(
-                    item.imageId! as File,
+                  child: Image.network(
+                    item.imageUrl!,
                     width: 80,
                     height: 80,
-                    fit: BoxFit.cover,
+                    fit: BoxFit.cover
                   ),
+                  // child: Image.file(
+                  //   item.imageId! as File,
+                  //   width: 80,
+                  //   height: 80,
+                  //   fit: BoxFit.cover,
+                  // ),
                 ),
 
                 const SizedBox(width: 16.0),
                 Expanded(
                   child: Text(
-                    item.title,
+                    item.title!,
                     style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
@@ -90,15 +96,7 @@ class _ContainerListViewState extends State<ContainerListView> {
                       final updatedItem = await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => AddContainerPage(
-                            initialItem: item,
-                            roomName: widget.roomName,
-                            onAdd: (updatedItem) {
-                              setState(() {
-                                widget.items[index] = updatedItem;
-                              });
-                            },
-                          ),
+                          builder: (context) => EditContainerScreen(container: item,),
                         ),
                       );
                     } else if (result == 1) {

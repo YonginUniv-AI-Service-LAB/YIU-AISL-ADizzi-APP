@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-import 'package:yiu_aisl_adizzi_app/screens/changePwd/change_pwd_screen.dart';
+import 'package:yiu_aisl_adizzi_app/screens/user/change_pwd_screen.dart';
 import 'package:yiu_aisl_adizzi_app/screens/item/item_screen.dart';
-import 'package:yiu_aisl_adizzi_app/screens/login/login_screen.dart';
-import 'package:yiu_aisl_adizzi_app/screens/mypage/mypage.dart';
+import 'package:yiu_aisl_adizzi_app/screens/user/login_screen.dart';
+import 'package:yiu_aisl_adizzi_app/screens/user/my_page_screen.dart';
 import 'package:yiu_aisl_adizzi_app/screens/search/search_detail_screen.dart';
-import 'package:yiu_aisl_adizzi_app/screens/signUp/signUp_screen.dart';
-import '../../models/container.dart';
-import '../container/container_screen.dart';
-import '../room/room_screen.dart';
+import 'package:yiu_aisl_adizzi_app/screens/user/sign_up_screen.dart';
+import '../models/container.dart';
+import 'container/container_screen.dart';
+import 'room/room_screen.dart';
 import 'package:yiu_aisl_adizzi_app/screens/slot/slot_screen.dart';
 
-import '../search/search_screen.dart';
+import 'search/search_screen.dart';
 
 
 class TempStartScreen extends StatefulWidget {
@@ -52,7 +52,7 @@ class _TempStartScreenState extends State<TempStartScreen>
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SignUp()),
+                  MaterialPageRoute(builder: (context) => SignUpScreen()),
                 );
               },
               child: Text('회원가입'),
@@ -61,7 +61,7 @@ class _TempStartScreenState extends State<TempStartScreen>
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Login()),
+                  MaterialPageRoute(builder: (context) => LoginScreen()),
                 );
               },
               child: Text('로그인'),
@@ -70,7 +70,7 @@ class _TempStartScreenState extends State<TempStartScreen>
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => MyPage()),
+                  MaterialPageRoute(builder: (context) => MyPageScreen()),
                 );
               },
               child: Text('마이페이지'),
@@ -78,7 +78,7 @@ class _TempStartScreenState extends State<TempStartScreen>
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) =>ChangePwd()),
+                  MaterialPageRoute(builder: (context) =>ChangePwdScreen()),
                 );
               },
               child: Text('비밀번호 재설정'),
@@ -87,7 +87,7 @@ class _TempStartScreenState extends State<TempStartScreen>
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Room()),
+                  MaterialPageRoute(builder: (context) => RoomScreen()),
                 );
               },
               child: Text('Room 페이지'),
@@ -96,7 +96,7 @@ class _TempStartScreenState extends State<TempStartScreen>
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ContainerScreen(roomName: '',)),
+                  MaterialPageRoute(builder: (context) => ContainerScreen(roomId: 1, roomName: "임시 방이름",)),
                 );
               },
               child: Text('Container 페이지'),
@@ -105,7 +105,7 @@ class _TempStartScreenState extends State<TempStartScreen>
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Search()),
+                  MaterialPageRoute(builder: (context) => SearchScreen()),
                 );
               },
               child: Text('Search 페이지'),
@@ -114,7 +114,7 @@ class _TempStartScreenState extends State<TempStartScreen>
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SearchDetail()),
+                  MaterialPageRoute(builder: (context) => SearchDetailScreen()),
                 );
               },
               child: Text('SearchDetail 페이지'),

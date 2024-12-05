@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../widgets/search_detail_list.dart';
 
-class SearchDetail extends StatelessWidget {
+class SearchDetailScreen extends StatelessWidget {
 
 
 
@@ -21,7 +21,7 @@ class SearchDetail extends StatelessWidget {
     '금쪽이방>  > 옷장 > 서랍1',
   ];
 
-   SearchDetail({super.key});
+   SearchDetailScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

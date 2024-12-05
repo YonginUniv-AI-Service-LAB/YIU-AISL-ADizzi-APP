@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:yiu_aisl_adizzi_app/models/container.dart';
+import 'package:yiu_aisl_adizzi_app/screens/container/create_container_screen.dart';
+import 'package:yiu_aisl_adizzi_app/service/container_service.dart';
+import 'package:yiu_aisl_adizzi_app/utils/model.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/custom_search_bar.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/floating_add_button.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/time_sort_seletor.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/container_list_view.dart';
-import 'add_container.dart';
+import 'edit_container_screen.dart';
 
 class ContainerScreen extends StatefulWidget {
   final String roomName; // 방 이름을 저장하는 변수
+  final int roomId;
 
-  const ContainerScreen({super.key, required this.roomName});
+  const ContainerScreen({super.key, required this.roomName, required this.roomId});
 
   @override
   _ContainerScreenState createState() => _ContainerScreenState();
@@ -18,6 +21,19 @@ class ContainerScreen extends StatefulWidget {
 class _ContainerScreenState extends State<ContainerScreen> {
   bool _isLatestSelected = true; // 초기값은 '최신등록순'
   List<ContainerModel> _items = []; // 리스트 데이터를 관리하는 변수
+
+  @override
+  void initState() {
+    _loadData();
+    super.initState();
+  }
+
+  Future<void> _loadData() async{
+    // sortBy 매핑
+    String sortBy = _isLatestSelected ? 'recent' : 'old';
+    _items = await getContainers(context, roomId: 1, sortBy: sortBy);
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,14 +95,7 @@ class _ContainerScreenState extends State<ContainerScreen> {
           await Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AddContainerPage(
-                roomName: widget.roomName, // roomName 전달
-                onAdd: (ContainerModel item) {
-                  setState(() {
-                    _items.add(item); // 전달받은 ContainerItem을 리스트에 추가
-                  });
-                },
-              ),
+              builder: (context) => CreateContainerScreen(roomId: widget.roomId,),
             ),
           );
         },

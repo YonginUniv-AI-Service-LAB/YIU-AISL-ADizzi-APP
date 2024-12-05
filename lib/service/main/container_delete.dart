@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../../utils/constants.dart';
+import 'package:yiu_aisl_adizzi_app/service/service.dart';
 
 Future<http.Response> containerDelete(int roomId, int containerId, String token) async {
   final String endpoint = '/room/$roomId/container/$containerId';

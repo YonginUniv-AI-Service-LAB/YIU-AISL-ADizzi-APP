@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:yiu_aisl_adizzi_app/utils/constants.dart';
-import '../../screens/login/login_screen.dart';
+import '../../screens/user/login_screen.dart';
 
 Future<http.Response> deleteAccount(BuildContext context, String token) async {
   final String endpoint = '/user';
@@ -31,7 +31,7 @@ Future<http.Response> deleteAccount(BuildContext context, String token) async {
       print('회원탈퇴 성공하셨습니다. ');
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => Login()),
+        MaterialPageRoute(builder: (context) => LoginScreen()),
       );
     }
     return response;

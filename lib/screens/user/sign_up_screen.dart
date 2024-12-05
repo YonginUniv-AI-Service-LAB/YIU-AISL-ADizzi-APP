@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:yiu_aisl_adizzi_app/service/user_service.dart';
 import '../../service/user/signUp.dart';
+import '../../service/service.dart';
 import '../../widgets/main_button.dart';
 import '../../widgets/main_text_input.dart';
-import '../login/login_screen.dart';
+import 'login_screen.dart';
 
-class SignUp extends StatefulWidget {
+class SignUpScreen extends StatefulWidget {
   @override
-  _SignUpState createState() => _SignUpState();
+  _SignUpScreenState createState() => _SignUpScreenState();
 }
 
-class _SignUpState extends State<SignUp> {
+class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _codeController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -50,24 +52,15 @@ class _SignUpState extends State<SignUp> {
     }
 
     try {
-      final response = await signUp(email, password);
-
-      // 이메일, 비밀번호 필수 입력 값
-      if (response.statusCode == 200) {
-        print('회원가입 성공');
-        _navigateToSignIn();
-      } else if (response.statusCode == 400) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('사용중인 이메일입니다.')),
-        );
-      } else if (response.statusCode == 500) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('필수 항목입니다. 모두 입력해주세요.')),
-        );
-      }
+      await signUp(context, email: email, password: password);
     } catch (e) {
       print('회원가입 중 오류 발생: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('$e')),
+      );
+      return;
     }
+    _navigateToSignIn();
   }
 
 
@@ -75,7 +68,7 @@ class _SignUpState extends State<SignUp> {
   void _navigateToSignIn() {
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => Login()),
+      MaterialPageRoute(builder: (context) => LoginScreen()),
     );
   }
 

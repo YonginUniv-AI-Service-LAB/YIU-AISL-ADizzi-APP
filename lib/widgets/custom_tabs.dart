@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../provider/room_provider.dart';
-import '../widgets/custom_divider.dart';
-import '../widgets/image_list_view.dart';
+import 'custom_divider.dart';
+import 'image_list_view.dart';
 
 class CustomTabs extends StatefulWidget {
   @override

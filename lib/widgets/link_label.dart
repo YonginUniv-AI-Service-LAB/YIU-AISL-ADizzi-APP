@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../screens/changePwd/change_pwd_screen.dart';
-import '../screens/signUp/signUp_screen.dart';
+import '../screens/user/change_pwd_screen.dart';
+import '../screens/user/sign_up_screen.dart';
 
 class LinkLabel extends StatelessWidget {
   const LinkLabel({super.key});
@@ -38,7 +38,7 @@ class LinkLabel extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _buildLink(context, '회원 가입', SignUp()), // 회원 가입 링크
+        _buildLink(context, '회원 가입', SignUpScreen()), // 회원 가입 링크
         const Text(
           ' / ',
           style: TextStyle(
@@ -46,7 +46,7 @@ class LinkLabel extends StatelessWidget {
             fontSize: 13,
           ),
         ),
-        _buildLink(context, '비밀번호 찾기', const ChangePwd()), // 비밀번호 찾기 링크
+        _buildLink(context, '비밀번호 찾기', const ChangePwdScreen()), // 비밀번호 찾기 링크
       ],
     );
   }

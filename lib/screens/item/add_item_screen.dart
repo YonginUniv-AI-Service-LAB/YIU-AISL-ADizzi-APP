@@ -6,16 +6,16 @@ import '../../widgets/custom_textfield.dart';
 import '../../widgets/main_button.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/category_selector.dart';
 
-class AddItemsPage extends StatefulWidget {
+class AddItemScreen extends StatefulWidget {
   final ItemModel? item; // 기존 아이템을 받기 위해서
   // 생성자에서 아이템을 받을 수 있도록
-  AddItemsPage({this.item});
+  AddItemScreen({this.item});
 
   @override
-  _AddItemsPageState createState() => _AddItemsPageState();
+  _AddItemScreenState createState() => _AddItemScreenState();
 }
 
-class _AddItemsPageState extends State<AddItemsPage> {
+class _AddItemScreenState extends State<AddItemScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _memoController = TextEditingController();
   String? _selectedCategory;

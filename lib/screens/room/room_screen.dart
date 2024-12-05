@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../custom/room_search_bar.dart';
+import '../../widgets/room_search_bar.dart';
 import '../../provider/room_provider.dart';
 import '../../widgets/add_dialog.dart';
 import '../../widgets/custom_divider.dart';
@@ -8,14 +8,14 @@ import '../../widgets/floating_add_button.dart';
 import '../../widgets/image_list_view.dart';
 
 
-class Room extends StatefulWidget {
-  const Room({super.key});
+class RoomScreen extends StatefulWidget {
+  const RoomScreen({super.key});
 
   @override
-  _RoomState createState() => _RoomState();
+  _RoomScreenState createState() => _RoomScreenState();
 }
 
-class _RoomState extends State<Room> with SingleTickerProviderStateMixin {
+class _RoomScreenState extends State<RoomScreen> with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override

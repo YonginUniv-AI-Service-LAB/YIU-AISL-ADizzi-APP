@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../widgets/delete_recent.dart';
-import '../../widgets/searchList.dart';
+import '../../widgets/search_list.dart';
 
-class Search extends StatelessWidget {
-  Search({super.key});
+class SearchScreen extends StatelessWidget {
+  SearchScreen({super.key});
 
   List<String> searchData = [
     '용용인형',

@@ -1,23 +1,24 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:yiu_aisl_adizzi_app/provider/tree_provider.dart';
+import 'package:yiu_aisl_adizzi_app/service/container_service.dart';
+import 'package:yiu_aisl_adizzi_app/utils/model.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/camera_widget.dart';
-import 'package:yiu_aisl_adizzi_app/models/container.dart';
 import '../../widgets/custom_textfield.dart';
 import '../../widgets/main_button.dart';
 
-class AddContainerPage extends StatefulWidget {
-  final Function(ContainerModel) onAdd;
-  final ContainerModel? initialItem;
-  final String roomName; // 방 이름을 저장하는 변수
+class EditContainerScreen extends StatefulWidget {
+  final ContainerModel container;
 
-  const AddContainerPage({required this.onAdd, this.initialItem, required this.roomName, Key? key})
+  const EditContainerScreen({required this.container, Key? key})
       : super(key: key);
 
   @override
-  _AddContainerPageState createState() => _AddContainerPageState();
+  _EditContainerScreenState createState() => _EditContainerScreenState();
 }
 
-class _AddContainerPageState extends State<AddContainerPage> {
+class _EditContainerScreenState extends State<EditContainerScreen> {
   final TextEditingController _controller = TextEditingController();
   late int _selectedImage;  //선택한 이미지
   late File _selectedImageFile; // 이미지 파일을 저장할 변수
@@ -25,18 +26,18 @@ class _AddContainerPageState extends State<AddContainerPage> {
   @override
   void initState() {
     super.initState();
-    if (widget.initialItem != null) {
-      _controller.text = widget.initialItem!.title;
-      _selectedImage = widget.initialItem!.imageId!;
-    }
+    _controller.text = widget.container.title!;
+    _selectedImage = 1;
   }
 
   @override
   Widget build(BuildContext context) {
+    final room = Provider.of<TreeProvider>(context).getRoomByContainerId(widget.container.containerId);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          widget.roomName,
+          room?.title! ?? '방 이름 조회 오류',
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
@@ -73,21 +74,15 @@ class _AddContainerPageState extends State<AddContainerPage> {
                 alignment: Alignment.bottomCenter,
                 child: MainButton(
                   label: '저장',
-                  onPressed: () {
+                  onPressed: () async{
                     if (_controller.text.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text("수납장 이름을 입력해주세요.")),
                       );
                       return;
                     }
+                    await editContainer(context, containerId: widget.container.containerId, title: _controller.text, imageId: _selectedImage);
 
-                    final item = ContainerModel(
-                      containerId: widget.initialItem?.containerId,
-                      title: _controller.text,
-                      imageId: _selectedImage,
-                    );
-
-                    widget.onAdd(item);
                     Navigator.pop(context);
                   },
                 ),

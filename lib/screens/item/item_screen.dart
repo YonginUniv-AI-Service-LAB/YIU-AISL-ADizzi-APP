@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:yiu_aisl_adizzi_app/screens/item/add_items.dart';
+import 'package:yiu_aisl_adizzi_app/screens/item/add_item_screen.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/time_sort_seletor.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/floating_add_button.dart';
 import 'package:yiu_aisl_adizzi_app/models/item_model.dart';
@@ -122,7 +122,7 @@ class _ItemScreenState extends State<ItemScreen> {
           final newItem = await Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AddItemsPage(item: selectedItem), // 수정할 아이템을 넘겨줌
+              builder: (context) => AddItemScreen(item: selectedItem), // 수정할 아이템을 넘겨줌
             ),
           );
 

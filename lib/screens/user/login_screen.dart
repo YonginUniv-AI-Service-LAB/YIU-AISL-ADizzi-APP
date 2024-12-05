@@ -9,12 +9,12 @@ import '../../widgets/login_button.dart';
 import '../../widgets/login_text_input.dart';
 import '../room/room_screen.dart';
 
-class Login extends StatefulWidget {
+class LoginScreen extends StatefulWidget {
   @override
-  _LoginState createState() => _LoginState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginState extends State<Login> {
+class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final FlutterSecureStorage _storage = const FlutterSecureStorage();
@@ -86,7 +86,7 @@ class _LoginState extends State<Login> {
   void _navigateToRoom() {
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => const Room()),
+      MaterialPageRoute(builder: (context) => const RoomScreen()),
     );
   }
 

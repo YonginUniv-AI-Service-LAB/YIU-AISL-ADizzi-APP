@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:yiu_aisl_adizzi_app/models/item_model.dart';
-import 'package:yiu_aisl_adizzi_app/screens/item/add_items.dart';
+import 'package:yiu_aisl_adizzi_app/screens/item/add_item_screen.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/custom_popup_menu.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/select_all_bar.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/item_row.dart';
@@ -38,7 +38,7 @@ class _ItemListViewState extends State<ItemListView> {
         context,
         MaterialPageRoute(
           builder: (context) =>
-              AddItemsPage(
+              AddItemScreen(
                 item: widget.items[index], // 선택된 항목 정보 전달
               ),
         ),

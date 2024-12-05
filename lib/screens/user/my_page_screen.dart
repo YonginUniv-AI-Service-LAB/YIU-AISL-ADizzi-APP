@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:yiu_aisl_adizzi_app/screens/login/login_screen.dart';
+import 'package:yiu_aisl_adizzi_app/screens/user/login_screen.dart';
 import '../../widgets/delete_confirmation_dialog.dart';
-import '../changePwd/change_pwd_screen.dart';
+import 'change_pwd_screen.dart';
 
 
 
-class MyPage extends StatelessWidget {
-  const MyPage({super.key});
+class MyPageScreen extends StatelessWidget {
+  const MyPageScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +72,7 @@ class MyPage extends StatelessWidget {
 
               title: const Text('비밀번호 변경',style: TextStyle(fontSize: 15),),
               onTap: () {
-                Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) => const ChangePwd(),
+                Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) => const ChangePwdScreen(),
                 ));
                 // 비밀번호 재설정 화면으로 이동
               },
@@ -91,7 +91,7 @@ class MyPage extends StatelessWidget {
               leading: const Icon(Icons.logout),
               title: const Text('로그아웃',style: TextStyle(fontSize: 15),),
               onTap: () {
-                Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) =>  Login(),
+                Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) =>  LoginScreen(),
                 ));
               },
             ),

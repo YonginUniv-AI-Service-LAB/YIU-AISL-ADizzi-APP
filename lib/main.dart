@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yiu_aisl_adizzi_app/provider/room_provider.dart';
-import 'package:yiu_aisl_adizzi_app/screens/temp/temp.dart';
+import 'package:yiu_aisl_adizzi_app/screens/temp_start_screen.dart';
 
 void main() {
   runApp(const MyApp());

@@ -2,8 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
-
-import '../../utils/constants.dart'; // 파일 이름을 처리하는 라이브러리
+import 'package:yiu_aisl_adizzi_app/service/service.dart';
 
 Future<int> imagePost(String token, File imageFile) async {
   final String endpoint = '/api/image'; // 이미지 등록 API 엔드포인트

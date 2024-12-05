@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:yiu_aisl_adizzi_app/screens/login/login_screen.dart';
+import 'package:yiu_aisl_adizzi_app/screens/user/login_screen.dart';
 import 'package:yiu_aisl_adizzi_app/utils/token.dart';
 import '../../widgets/main_button.dart';
 import '../../widgets/main_text_input.dart';
 import '../../service/user/change_pwd.dart';
 
-class ChangePwd extends StatefulWidget {
-  const ChangePwd({super.key});
+class ChangePwdScreen extends StatefulWidget {
+  const ChangePwdScreen({super.key});
 
   @override
-  _ChangePwdState createState() => _ChangePwdState();
+  _ChangePwdScreenState createState() => _ChangePwdScreenState();
 }
 
-class _ChangePwdState extends State<ChangePwd> {
+class _ChangePwdScreenState extends State<ChangePwdScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _codeController = TextEditingController();
   final TextEditingController _newPasswordController = TextEditingController();
@@ -44,7 +44,7 @@ class _ChangePwdState extends State<ChangePwd> {
   void _navigateToSignIn() {
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => Login()),
+      MaterialPageRoute(builder: (context) => LoginScreen()),
     );
   }
 

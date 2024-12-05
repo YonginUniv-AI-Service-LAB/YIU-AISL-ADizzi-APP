@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../screens/mypage/mypage.dart';
+import '../screens/user/my_page_screen.dart';
 import '../screens/search/search_screen.dart';
 
 class RoomCustomSearchBar extends StatelessWidget {
@@ -46,7 +46,7 @@ class RoomCustomSearchBar extends StatelessWidget {
                 onPressed: () {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => Search()),
+                    MaterialPageRoute(builder: (context) => SearchScreen()),
                   );
                 },
                 icon: const Icon(Icons.search),
@@ -55,7 +55,7 @@ class RoomCustomSearchBar extends StatelessWidget {
                 onPressed: () {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => const MyPage()),
+                    MaterialPageRoute(builder: (context) => const MyPageScreen()),
                   );
                 },
                 icon: const Icon(Icons.account_circle),

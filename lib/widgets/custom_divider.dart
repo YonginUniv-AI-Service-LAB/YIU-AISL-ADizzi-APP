@@ -65,7 +65,7 @@ class CustomDivider extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ContainerScreen(roomName: room.title),
+                      builder: (context) => ContainerScreen(roomName: room.title, roomId: 1,),
                     ),
                   );
                 },

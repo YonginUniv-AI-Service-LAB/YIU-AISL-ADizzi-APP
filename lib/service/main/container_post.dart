@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
-import '../../utils/constants.dart';
+import 'package:yiu_aisl_adizzi_app/service/service.dart';
 
 Future<http.Response> containerPost(String title, String token, int roomId, int imageId) async {
 
