@@ -6,30 +6,30 @@ import 'package:yiu_aisl_adizzi_app/utils/model.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/custom_popup_menu.dart';
 import 'package:yiu_aisl_adizzi_app/screens/container/edit_container_screen.dart';
 
-class ContainerListView extends StatefulWidget {
-  final List<ContainerModel> containers;
+class SlotListView extends StatefulWidget {
+  final List<SlotModel> slots;
   final Function loadData;
 
-  const ContainerListView({
-    required this.containers,
+  const SlotListView({
+    required this.slots,
     required this.loadData,
     Key? key
   }) : super(key: key);
 
   @override
-  _ContainerListViewState createState() => _ContainerListViewState();
+  _SlotListViewState createState() => _SlotListViewState();
 }
 
-class _ContainerListViewState extends State<ContainerListView> {
+class _SlotListViewState extends State<SlotListView> {
   void _deleteItem(int index) {
     setState(() {
-      widget.containers.removeAt(index); // 리스트에서 항목 제거
+      widget.slots.removeAt(index); // 리스트에서 항목 제거
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (widget.containers.isEmpty) {
+    if (widget.slots.isEmpty) {
       return const Center(
         child: Text(
           '추가된 가구가 없습니다.',
@@ -39,20 +39,20 @@ class _ContainerListViewState extends State<ContainerListView> {
     }
 
     return ListView.builder(
-      itemCount: widget.containers.length,
+      itemCount: widget.slots.length,
       itemBuilder: (context, index) {
-        final container = widget.containers[index];
+        final slot = widget.slots[index];
         return GestureDetector(
           onTap: () {
             // SlotScreen으로 이동 시 roomName도 전달
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => SlotScreen(
-                  container: container,
-                ),
-              ),
-            );
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(
+            //     builder: (context) => SlotScreen(
+            //       container: slot,
+            //     ),
+            //   ),
+            // );
           },
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 5.0),
@@ -64,7 +64,7 @@ class _ContainerListViewState extends State<ContainerListView> {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(2),
                   child: Image.network(
-                    container.imageUrl!,
+                    slot.imageUrl!,
                     width: 80,
                     height: 80,
                     fit: BoxFit.cover,
@@ -80,7 +80,7 @@ class _ContainerListViewState extends State<ContainerListView> {
                 const SizedBox(width: 16.0),
                 Expanded(
                   child: Text(
-                    container.title!,
+                    slot.title!,
                     style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
@@ -92,12 +92,12 @@ class _ContainerListViewState extends State<ContainerListView> {
                   onSelected: (int result) {
                     if (result == 0) {
                       // 수정
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => EditContainerScreen(container: container,),
-                        ),
-                      ).then((_) {widget.loadData();});
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => EditContainerScreen(container: slot,),
+                      //   ),
+                      // ).then((_) {widget.loadData();});
                     } else if (result == 1) {
                       // 삭제
                       _deleteItem(index); // 삭제 기능 호출
