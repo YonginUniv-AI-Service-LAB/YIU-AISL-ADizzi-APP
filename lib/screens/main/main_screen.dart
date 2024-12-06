@@ -1,27 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:yiu_aisl_adizzi_app/screens/item/add_item_screen.dart';
+import 'package:yiu_aisl_adizzi_app/screens/main/main_item_tab_view.dart';
+import 'package:yiu_aisl_adizzi_app/screens/main/main_room_tab_view.dart';
+import 'package:yiu_aisl_adizzi_app/service/room_service.dart';
+import 'package:yiu_aisl_adizzi_app/utils/model.dart';
 import '../../widgets/room_search_bar.dart';
-import '../../provider/room_provider.dart';
 import '../../widgets/add_dialog.dart';
-import '../../widgets/custom_divider.dart';
 import '../../widgets/floating_add_button.dart';
 import '../../widgets/image_list_view.dart';
 
 
-class RoomScreen extends StatefulWidget {
-  const RoomScreen({super.key});
+class MainScreen extends StatefulWidget {
+  const MainScreen({super.key});
 
   @override
-  _RoomScreenState createState() => _RoomScreenState();
+  _MainScreenState createState() => _MainScreenState();
 }
 
-class _RoomScreenState extends State<RoomScreen> with SingleTickerProviderStateMixin {
+class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  List<RoomModel>? _rooms;
+  List<ItemModel>? _items;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    _loadRoomData();
+    _loadItemData();
+  }
+
+  Future<void> _loadRoomData() async{
+    _rooms = await getRooms(context, sortBy: 'recent');
+    setState(() {});
+  }
+
+  Future<void> _loadItemData() async{
+    // _items = await getItems(context, sortBy: 'recnet');
+    setState(() {});
   }
 
   @override
@@ -62,14 +79,10 @@ class _RoomScreenState extends State<RoomScreen> with SingleTickerProviderStateM
                 child: TabBarView(
                   controller: _tabController,
                   children: [
-                    Consumer<RoomProvider>(
-                      builder: (context, roomProvider, child) {
-                        return CustomDivider(
-                          roomList: roomProvider.roomList, // RoomProvider에서 가져온 List<RoomModel>을 전달
-                        );
-                      },
-                    ),
-                    const Center(child: ImageListView()),
+                    _rooms == null
+                        ? Center(child: CircularProgressIndicator())
+                        : MainRoomTabView(rooms: _rooms!, loadData: _loadRoomData,),
+                    MainItemTabView(),
                   ],
                 ),
               ),
@@ -79,11 +92,24 @@ class _RoomScreenState extends State<RoomScreen> with SingleTickerProviderStateM
       ),
       floatingActionButton: FloatingAddButton(
         onPressed: () {
-          showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (BuildContext context) => AddDialog(isEdit: false,),
-          );
+          if ( _tabController.index == 0 ) {
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext context) => AddDialog(isEdit: false,),
+            ).then((_) {
+              _loadRoomData();
+            });
+          }
+          if ( _tabController.index == 1) {
+            // TODO: 물건 저장 위치 먼저 선택 후 화면 전환하도록 수정
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AddItemScreen(), // 수정할 아이템을 넘겨줌
+              ),
+            );
+          }
         },
       ),
     );

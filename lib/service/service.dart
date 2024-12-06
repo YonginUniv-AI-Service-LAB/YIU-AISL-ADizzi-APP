@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:yiu_aisl_adizzi_app/screens/user/login_screen.dart';
-import 'package:yiu_aisl_adizzi_app/utils/show_dialog.dart';
 import 'package:yiu_aisl_adizzi_app/utils/model.dart';
 
 // API URL을 하나의 변수로 저장
@@ -50,7 +49,9 @@ Future<String?> refreshAccessToken(BuildContext context) async {
       // accessToken 만료 시 처리
       if (errorResponse['code'] == "E104") {
         // 로그아웃
-        showErrorDialog(context, '토큰이 만료되어 로그아웃됩니다.');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('토큰이 만료되어 로그아웃됩니다.')),
+        );
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => LoginScreen()),
               (Route<dynamic> route) => false, // 모든 기존 라우트를 제거
@@ -112,11 +113,15 @@ Future<void> actionObject(BuildContext context) async {
           // return await actionObject(context); // 재호출
           return;
         } else {
-          showErrorDialog(context, '토큰 갱신에 실패했습니다.');
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('토큰 갱신에 실패했습니다.')),
+          );
         }
       } else {
         // 토큰 이외의 오류
-        showErrorDialog(context, errorResponse['message']);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(errorResponse['message'])),
+        );
       }
       throw Exception(errorResponse['message']);
     }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:yiu_aisl_adizzi_app/provider/room_provider.dart';
 import 'package:yiu_aisl_adizzi_app/provider/tree_provider.dart';
 import 'package:yiu_aisl_adizzi_app/screens/temp_start_screen.dart';
 
@@ -15,7 +14,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => RoomProvider()),
         ChangeNotifierProvider(create: (_) => TreeProvider()),
       ],
       child: MaterialApp(

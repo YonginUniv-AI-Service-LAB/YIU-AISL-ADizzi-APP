@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:yiu_aisl_adizzi_app/service/service.dart';
 import 'package:http/http.dart' as http;
-import 'package:yiu_aisl_adizzi_app/utils/show_dialog.dart';
 
 // 로그인 응답을 저장하는 함수
 Future<void> _saveLoginResponse(String responseBody) async {
@@ -49,7 +48,9 @@ Future<void> loginUser(BuildContext context, {
     } else {
       final errorResponse = jsonDecode(utf8.decode(response.bodyBytes));
       print('로그인 실패: ${errorResponse['message']}');
-      showErrorDialog(context, errorResponse['message']);
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(errorResponse['message'])),
+        );
       throw Exception(errorResponse['message']);
     }
   } catch (e) {
@@ -91,10 +92,14 @@ Future<void> deleteUser(BuildContext context) async {
           await deleteUser(context); // 재호출
           return;
         } else {
-          showErrorDialog(context, '토큰 갱신에 실패했습니다.');
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('토큰 갱신에 실패했습니다.')),
+          );
         }
       } else {
-        showErrorDialog(context, errorResponse['message']);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(errorResponse['message'])),
+        );
       }
 
       throw Exception(errorResponse['message']);
@@ -136,7 +141,9 @@ Future<void> signUp(BuildContext context, {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(errorResponse['message'])),
       );
-      // showErrorDialog(context, errorResponse['message']);
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(errorResponse['message'])),
+        );
       throw Exception('회원가입 실패: ${errorResponse['message']}');
     }
   } catch (e) {
@@ -168,7 +175,9 @@ Future<String> sendMail(BuildContext context, {
     } else {
       final errorResponse = jsonDecode(utf8.decode(response.bodyBytes));
       print('인증메일 전송 실패: ${errorResponse['message']}');
-      showErrorDialog(context, errorResponse['message']);
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(errorResponse['message'])),
+        );
       throw Exception(errorResponse['message']);
     }
   } catch (e) {
@@ -205,7 +214,9 @@ Future<void> changePassword(BuildContext context, {
     } else {
       final errorResponse = jsonDecode(utf8.decode(response.bodyBytes));
       print('비밀번호 재설정 실패: ${errorResponse['message']}');
-      showErrorDialog(context, errorResponse['message']);
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(errorResponse['message'])),
+        );
       throw Exception('비밀번호 재설정 실패: ${errorResponse['message']}');
     }
   } catch (e) {

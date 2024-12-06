@@ -8,7 +8,7 @@ import '../../widgets/link_label.dart';
 import '../../widgets/logo_image.dart';
 import '../../widgets/login_button.dart';
 import '../../widgets/login_text_input.dart';
-import '../room/room_screen.dart';
+import '../main/main_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -89,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void _navigateToRoom() {
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => const RoomScreen()),
+      MaterialPageRoute(builder: (context) => const MainScreen()),
     );
   }
 

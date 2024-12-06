@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:yiu_aisl_adizzi_app/models/item_model.dart';
+import 'package:yiu_aisl_adizzi_app/utils/model.dart';
+// import 'package:yiu_aisl_adizzi_app/models/item_model.dart';
 
 class ItemCard extends StatelessWidget {
   final ItemModel item;
@@ -21,7 +22,7 @@ class ItemCard extends StatelessWidget {
             children: [
               // 이름
               Text(
-                item.title,
+                item.title!,
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 4),
@@ -46,14 +47,14 @@ class ItemCard extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   // 이미지 (정방형)
-                  if (item.imagePath != null)
+                  if (item.imageUrl != null)
                     ClipRRect(
                       borderRadius: BorderRadius.circular(8.0),
                       child: Container(
                         width: double.infinity,
                         height: MediaQuery.of(context).size.width * 0.5, // 정방형 크기
                         child: Image.file(
-                          File(item.imagePath!),
+                          File(item.imageUrl!),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -68,14 +69,14 @@ class ItemCard extends StatelessWidget {
                   SizedBox(height: 8),
                   // 카테고리
                   Text(
-                    item.category,
+                    item.category.toString(),
                     style: TextStyle(color: Colors.grey, fontSize: 14),
                   ),
-                  if (item.detail.isNotEmpty) ...[
+                  if (item.detail!.isNotEmpty) ...[
                     SizedBox(height: 16),
                     // 상세 내용
                     Text(
-                      item.detail,
+                      item.detail!,
                       style: TextStyle(fontSize: 14),
                     ),
                   ],

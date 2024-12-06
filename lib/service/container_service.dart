@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:yiu_aisl_adizzi_app/service/service.dart';
 import 'package:yiu_aisl_adizzi_app/utils/model.dart';
 import 'package:http/http.dart' as http;
-import 'package:yiu_aisl_adizzi_app/utils/show_dialog.dart';
 
 // 수납장 목록 요청
 Future<List<ContainerModel>> getContainers(BuildContext context, {required String sortBy, required int roomId}) async {
@@ -44,11 +43,15 @@ Future<List<ContainerModel>> getContainers(BuildContext context, {required Strin
           // 새로운 accessToken으로 다시 요청
           return await getContainers(context, sortBy: sortBy, roomId: roomId); // 재호출
         } else {
-          showErrorDialog(context, '토큰 갱신에 실패했습니다.');
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('토큰 갱신에 실패했습니다.')),
+          );
         }
       } else {
         // 토큰 이외의 오류
-        showErrorDialog(context, errorResponse['message']);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(errorResponse['message'])),
+        );
       }
       throw Exception(errorResponse['message']);
     }
@@ -98,11 +101,15 @@ Future<void> createContainer(BuildContext context, {required String title, requi
           // 새로운 accessToken으로 다시 요청
           return await createContainer(context, title: title, roomId: roomId, imageId: imageId); // 재호출
         } else {
-          showErrorDialog(context, '토큰 갱신에 실패했습니다.');
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('토큰 갱신에 실패했습니다.')),
+          );
         }
       } else {
         // 토큰 이외의 오류
-        showErrorDialog(context, errorResponse['message']);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(errorResponse['message'])),
+        );
       }
       throw Exception(errorResponse['message']);
     }
@@ -154,11 +161,15 @@ Future<void> editContainer(BuildContext context, {required int containerId, Stri
           // 새로운 accessToken으로 다시 요청
           return await editContainer(context, containerId: containerId, title: title, imageId: imageId, roomId: roomId); // 재호출
         } else {
-          showErrorDialog(context, '토큰 갱신에 실패했습니다.');
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('토큰 갱신에 실패했습니다.')),
+          );
         }
       } else {
         // 토큰 이외의 오류
-        showErrorDialog(context, errorResponse['message']);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(errorResponse['message'])),
+        );
       }
       throw Exception(errorResponse['message']);
     }
@@ -203,11 +214,15 @@ Future<void> deleteContainer(BuildContext context, {required int containerId, in
           // 새로운 accessToken으로 다시 요청
           return await deleteContainer(context, containerId: containerId, roomId: roomId); // 재호출
         } else {
-          showErrorDialog(context, '토큰 갱신에 실패했습니다.');
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('토큰 갱신에 실패했습니다.')),
+          );
         }
       } else {
         // 토큰 이외의 오류
-        showErrorDialog(context, errorResponse['message']);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(errorResponse['message'])),
+        );
       }
       throw Exception(errorResponse['message']);
     }

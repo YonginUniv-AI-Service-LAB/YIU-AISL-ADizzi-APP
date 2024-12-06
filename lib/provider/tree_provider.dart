@@ -4,7 +4,6 @@ import 'dart:convert';
 
 import 'package:yiu_aisl_adizzi_app/service/service.dart';
 import 'package:yiu_aisl_adizzi_app/utils/model.dart';
-import 'package:yiu_aisl_adizzi_app/utils/show_dialog.dart';
 
 class TreeProvider with ChangeNotifier {
   List<RoomModel> _rooms = [];
@@ -49,11 +48,15 @@ class TreeProvider with ChangeNotifier {
             // 새로운 accessToken으로 다시 요청
             return await fetchTree(context); // 재호출
           } else {
-            showErrorDialog(context, '토큰 갱신에 실패했습니다.');
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('토큰 갱신에 실패했습니다.')),
+            );
           }
         } else {
           // 토큰 이외의 오류
-          showErrorDialog(context, errorResponse['message']);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(errorResponse['message'])),
+          );
         }
         throw Exception(errorResponse['message']);
       }

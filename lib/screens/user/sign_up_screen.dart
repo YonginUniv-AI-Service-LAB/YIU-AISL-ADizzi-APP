@@ -97,7 +97,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           label: '인증번호',
                           controller: _codeController,
                           child: MailButton(
-                            title: '인증요청',
+                            title: '인증확인',
                             onPressed: () async{
                               final String inputCode = _codeController.text;
 

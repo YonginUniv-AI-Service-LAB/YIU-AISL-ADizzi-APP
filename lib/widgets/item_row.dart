@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:yiu_aisl_adizzi_app/models/item_model.dart';
+import 'package:yiu_aisl_adizzi_app/utils/model.dart';
+// import 'package:yiu_aisl_adizzi_app/models/item_model.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/custom_popup_menu.dart';
 
 class ItemRow extends StatelessWidget {
@@ -46,7 +47,7 @@ class ItemRow extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(2),
               child: Image.file(
-                File(item.imagePath!),
+                File(item.imageUrl!),
                 width: 75,
                 height: 75,
                 fit: BoxFit.cover,
@@ -56,7 +57,7 @@ class ItemRow extends StatelessWidget {
             // 제목
             Expanded(
               child: Text(
-                item.title,
+                item.title!,
                 style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w400,

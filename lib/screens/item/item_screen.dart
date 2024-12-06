@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:yiu_aisl_adizzi_app/screens/item/add_item_screen.dart';
+import 'package:yiu_aisl_adizzi_app/utils/model.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/time_sort_seletor.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/floating_add_button.dart';
-import 'package:yiu_aisl_adizzi_app/models/item_model.dart';
+// import 'package:yiu_aisl_adizzi_app/models/item_model.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/item_list_view.dart';
 
 class ItemScreen extends StatefulWidget {

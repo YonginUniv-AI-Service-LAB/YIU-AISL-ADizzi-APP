@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:yiu_aisl_adizzi_app/utils/model.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/custom_search_bar.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/time_sort_seletor.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/slot_add_button.dart'; // SlotAddButton 임포트
 import 'package:yiu_aisl_adizzi_app/widgets/slot_add_dialog.dart';
-import 'package:yiu_aisl_adizzi_app/models/container.dart';
+// import 'package:yiu_aisl_adizzi_app/models/container.dart';
 
 class SlotScreen extends StatefulWidget {
   final String roomName;
@@ -46,7 +47,7 @@ class _SlotScreenState extends State<SlotScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          widget.containerModel.title, // ContainerItem의 name 필드 사용
+          widget.containerModel.title!, // ContainerItem의 name 필드 사용
           style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,

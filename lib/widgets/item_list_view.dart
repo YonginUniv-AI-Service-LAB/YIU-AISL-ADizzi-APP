@@ -1,7 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:yiu_aisl_adizzi_app/models/item_model.dart';
+// import 'package:yiu_aisl_adizzi_app/models/item_model.dart';
 import 'package:yiu_aisl_adizzi_app/screens/item/add_item_screen.dart';
+import 'package:yiu_aisl_adizzi_app/utils/model.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/custom_popup_menu.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/select_all_bar.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/item_row.dart';

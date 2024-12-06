@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:yiu_aisl_adizzi_app/models/item_model.dart';
+import 'package:yiu_aisl_adizzi_app/utils/model.dart';
+// import 'package:yiu_aisl_adizzi_app/models/item_model.dart';
 import '../../widgets/camera_widget.dart';
 import '../../widgets/custom_textfield.dart';
 import '../../widgets/main_button.dart';
@@ -25,11 +26,11 @@ class _AddItemScreenState extends State<AddItemScreen> {
   void initState() {
     super.initState();
     if (widget.item != null) {
-      _nameController.text = widget.item!.title;
+      _nameController.text = widget.item!.title!;
       _memoController.text = widget.item!.detail ?? '';
-      _selectedCategory = widget.item!.category;
-      if (widget.item!.imagePath != null) {
-        _selectedImage = File(widget.item!.imagePath!);
+      _selectedCategory = widget.item!.category.toString();
+    if (widget.item!.imageUrl != null) {
+        _selectedImage = File(widget.item!.imageUrl!);
       }
     }
   }
@@ -156,10 +157,11 @@ class _AddItemScreenState extends State<AddItemScreen> {
                     }
 
                     final newItem = ItemModel(
+                      itemId: 1,
                       title: _nameController.text,
-                      category: _selectedCategory ?? '기본 카테고리',
+                      category: 1,
                       detail: _memoController.text.isEmpty ? '메모 없음' : _memoController.text,
-                      imagePath: _selectedImage?.path,
+                      imageUrl: _selectedImage?.path,
                     );
 
                     Navigator.pop(context, newItem);

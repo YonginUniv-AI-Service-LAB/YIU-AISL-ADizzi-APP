@@ -6,9 +6,9 @@ import 'package:yiu_aisl_adizzi_app/screens/user/login_screen.dart';
 import 'package:yiu_aisl_adizzi_app/screens/user/my_page_screen.dart';
 import 'package:yiu_aisl_adizzi_app/screens/search/search_detail_screen.dart';
 import 'package:yiu_aisl_adizzi_app/screens/user/sign_up_screen.dart';
-import '../models/container.dart';
+import 'package:yiu_aisl_adizzi_app/utils/model.dart';
 import 'container/container_screen.dart';
-import 'room/room_screen.dart';
+import 'package:yiu_aisl_adizzi_app/screens/main/main_screen.dart';
 import 'package:yiu_aisl_adizzi_app/screens/slot/slot_screen.dart';
 
 import 'search/search_screen.dart';
@@ -87,7 +87,7 @@ class _TempStartScreenState extends State<TempStartScreen>
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => RoomScreen()),
+                  MaterialPageRoute(builder: (context) => MainScreen()),
                 );
               },
               child: Text('Room 페이지'),
@@ -130,10 +130,10 @@ class _TempStartScreenState extends State<TempStartScreen>
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SlotScreen(containerModel: ContainerModel(title:''), roomName: '')),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => SlotScreen(containerModel: ContainerModel(title:''), roomName: '')),
+                // );
               },
               child: Text('Slot 페이지'),
             ),
