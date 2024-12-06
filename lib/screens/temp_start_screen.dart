@@ -4,7 +4,6 @@ import 'package:yiu_aisl_adizzi_app/screens/user/change_pwd_screen.dart';
 import 'package:yiu_aisl_adizzi_app/screens/item/item_screen.dart';
 import 'package:yiu_aisl_adizzi_app/screens/user/login_screen.dart';
 import 'package:yiu_aisl_adizzi_app/screens/user/my_page_screen.dart';
-import 'package:yiu_aisl_adizzi_app/screens/search/search_detail_screen.dart';
 import 'package:yiu_aisl_adizzi_app/screens/user/sign_up_screen.dart';
 import 'package:yiu_aisl_adizzi_app/utils/model.dart';
 import 'container/container_screen.dart';
@@ -110,15 +109,7 @@ class _TempStartScreenState extends State<TempStartScreen>
               },
               child: Text('Search 페이지'),
             ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SearchDetailScreen()),
-                );
-              },
-              child: Text('SearchDetail 페이지'),
-            ),
+
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
