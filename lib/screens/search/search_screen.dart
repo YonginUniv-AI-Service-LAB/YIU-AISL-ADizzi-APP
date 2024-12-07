@@ -101,7 +101,7 @@ class _SearchScreenState extends State<SearchScreen> {
       ),
       body: Column(
         children: [
-          // 검색어가 없고 최근 검색어가 있을 때 DeleteRecent 컴포넌트 표시
+
           if (_searchController.text.isEmpty)
             const DeleteRecent(),
 
@@ -117,37 +117,46 @@ class _SearchScreenState extends State<SearchScreen> {
                 itemCount: _searchedItems.length,
                 itemBuilder: (context, index) {
                   ItemModel item = _searchedItems[index];
-                  return Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      onTap: () {
-
-
-                      },
-
-                      child: ListTile(
-                        title: Text(item.title!),
-                        leading: item.imageUrl != null
-                            ? Image.network(item.imageUrl!)
-                            : null,
-                        contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 10),
-                        trailing: IconButton(
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: () {
+                                // 항목 클릭 시 동작
+                              },
+                              child: ListTile(
+                                title: Text(
+                                  item.title!,
+                                  style: TextStyle(fontSize: 17),
+                                ),
+                                leading: item.imageUrl != null
+                                    ? Image.network(item.imageUrl!)
+                                    : null,
+                              ),
+                            ),
+                          ),
+                        ),
+                        IconButton(
                           icon: const Icon(Icons.clear),
                           onPressed: () {
                             setState(() {
-                              _searchedItems.removeAt(index);  // 해당 아이템 삭제
+                              _searchedItems.removeAt(index); // 해당 아이템 삭제
                             });
                           },
                         ),
-                      ),
+                      ],
                     ),
                   );
                 },
               ),
+
+
             ),
           )
-
-
         ],
       ),
     );
