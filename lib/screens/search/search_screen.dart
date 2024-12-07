@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:yiu_aisl_adizzi_app/screens/search/search_result_screen.dart';
 import '../../service/item_service.dart';
-import '../../service/search.dart';
+import '../../service/search_service.dart';
 import '../../utils/model.dart';
 import '../../widgets/delete_recent.dart';  // 최근 검색어 삭제 위젯
 import '../../widgets/search_list.dart';   // 검색어 리스트 표시 위젯
+import '../../widgets/search_detail_list.dart'; // 최근 검색어 목록 위젯
 
 class SearchScreen extends StatefulWidget {
   final SlotModel slot;
@@ -12,13 +14,13 @@ class SearchScreen extends StatefulWidget {
   @override
   State<SearchScreen> createState() => _SearchScreenState();
 }
-
 class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController _searchController = TextEditingController();
   bool isLatestSelected = true; // 최신순 선택 상태 관리
   List<ItemModel>? items;
   List<ItemModel> _searchedItems = [];  // 검색된 아이템 리스트
   bool _isLoading = false;  // 로딩 상태를 관리
+  List<String> recentSearches = ['최근 검색어1', '최근 검색어2']; // 최근 검색어 리스트
 
   @override
   void dispose() {
@@ -57,6 +59,23 @@ class _SearchScreenState extends State<SearchScreen> {
     }
   }
 
+  // 최근 검색어 삭제 처리 함수
+  void _deleteRecentSearch(int index) {
+    setState(() {
+      recentSearches.removeAt(index);  // 최근 검색어 삭제
+    });
+  }
+
+  // 검색 결과 페이지로 네비게이션
+  void _navigateToSearchResults() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SearchResultsScreen(searchResults: _searchedItems),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,6 +108,7 @@ class _SearchScreenState extends State<SearchScreen> {
             onPressed: () {
               if (_searchController.text.isNotEmpty) {
                 _searchItems(_searchController.text);  // 검색어로 검색
+                _navigateToSearchResults();  // 결과 페이지로 이동
               }
             },
           ),
@@ -101,9 +121,16 @@ class _SearchScreenState extends State<SearchScreen> {
       ),
       body: Column(
         children: [
-
+          // 검색어 입력 전에는 최근 검색어 목록 표시
           if (_searchController.text.isEmpty)
             const DeleteRecent(),
+
+          if (_searchController.text.isEmpty)
+            SearchDetailList(
+              searchDetailData: recentSearches,  // 최근 검색어 리스트
+              searchPathData: ['path1', 'path2'], // 예시 데이터
+              onDelete: _deleteRecentSearch,  // 삭제 핸들러
+            ),
 
           // 로딩 중에는 CircularProgressIndicator 표시
           if (_isLoading)
@@ -127,11 +154,12 @@ class _SearchScreenState extends State<SearchScreen> {
                             child: InkWell(
                               onTap: () {
                                 // 항목 클릭 시 동작
+                                // 예를 들어, 아이템 상세 페이지로 이동
                               },
                               child: ListTile(
                                 title: Text(
                                   item.title!,
-                                  style: TextStyle(fontSize: 17),
+                                  style: const TextStyle(fontSize: 17),
                                 ),
                                 leading: item.imageUrl != null
                                     ? Image.network(item.imageUrl!)
@@ -140,21 +168,11 @@ class _SearchScreenState extends State<SearchScreen> {
                             ),
                           ),
                         ),
-                        IconButton(
-                          icon: const Icon(Icons.clear),
-                          onPressed: () {
-                            setState(() {
-                              _searchedItems.removeAt(index); // 해당 아이템 삭제
-                            });
-                          },
-                        ),
                       ],
                     ),
                   );
                 },
               ),
-
-
             ),
           )
         ],
@@ -162,3 +180,4 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 }
+

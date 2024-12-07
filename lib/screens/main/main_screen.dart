@@ -5,10 +5,11 @@ import 'package:yiu_aisl_adizzi_app/screens/main/main_item_tab_view.dart';
 import 'package:yiu_aisl_adizzi_app/screens/main/main_room_tab_view.dart';
 import 'package:yiu_aisl_adizzi_app/service/room_service.dart';
 import 'package:yiu_aisl_adizzi_app/utils/model.dart';
+import '../../provider/tree_provider.dart';
 import '../../widgets/room_search_bar.dart';
 import '../../widgets/add_dialog.dart';
 import '../../widgets/floating_add_button.dart';
-import '../../widgets/image_list_view.dart';
+import 'main_folder_tree.dart';
 
 
 class MainScreen extends StatefulWidget {
@@ -29,14 +30,18 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
     _tabController = TabController(length: 2, vsync: this);
     _loadRoomData();
     _loadItemData();
+
+    // TreeProvider에서 트리 데이터 로드
+    final treeProvider = Provider.of<TreeProvider>(context, listen: false);
+    treeProvider.fetchTree(context);
   }
 
-  Future<void> _loadRoomData() async{
+  Future<void> _loadRoomData() async {
     _rooms = await getRooms(context, sortBy: 'recent');
     setState(() {});
   }
 
-  Future<void> _loadItemData() async{
+  Future<void> _loadItemData() async {
     // _items = await getItems(context, sortBy: 'recnet');
     setState(() {});
   }
@@ -50,7 +55,9 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,   //키보드 화면 밀지 않도록
+      drawer: Drawer(
+        child: MainFolderTree(), // 여기에 폴더 트리 UI 삽입
+      ),
       body: Container(
         color: Colors.white,
         child: Column(
@@ -58,9 +65,7 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
             const SizedBox(height: 50),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 3.0, vertical: 4.0),
-              child: RoomCustomSearchBar(
-                onTap: () {},
-              ),
+              child: RoomCustomSearchBar(onTap: () {}),
             ),
             TabBar(
               controller: _tabController,
@@ -81,7 +86,7 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
                   children: [
                     _rooms == null
                         ? Center(child: CircularProgressIndicator())
-                        : MainRoomTabView(rooms: _rooms!, loadData: _loadRoomData,),
+                        : MainRoomTabView(rooms: _rooms!, loadData: _loadRoomData),
                     MainItemTabView(),
                   ],
                 ),
@@ -92,16 +97,16 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
       ),
       floatingActionButton: FloatingAddButton(
         onPressed: () {
-          if ( _tabController.index == 0 ) {
+          if (_tabController.index == 0) {
             showDialog(
               context: context,
               barrierDismissible: false,
-              builder: (BuildContext context) => AddDialog(isEdit: false,),
+              builder: (BuildContext context) => AddDialog(isEdit: false),
             ).then((_) {
               _loadRoomData();
             });
           }
-          if ( _tabController.index == 1) {
+          if (_tabController.index == 1) {
             // TODO: 물건 저장 위치 먼저 선택 후 화면 전환하도록 수정
             Navigator.push(
               context,

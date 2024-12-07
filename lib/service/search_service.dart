@@ -28,7 +28,6 @@ Future<List<ItemModel>> getSearch(BuildContext context, {required String query})
 
     // 서버 응답 판별부
     if (response.statusCode == 200) {
-
       // 응답 데이터 출력 (디버깅용)
       print('서치 요청 성공: ${utf8.decode(response.bodyBytes)}');
       print('쿼리스트링: $query');
@@ -38,14 +37,13 @@ Future<List<ItemModel>> getSearch(BuildContext context, {required String query})
       print('응답 본문: $responseBody');  // 응답 본문 출력
 
       if (responseBody is List) {
-        // 리스트 형태라면, 각 아이템을 ItemModel로 변환
         List<ItemModel> data = responseBody
             .map<ItemModel>((json) => ItemModel.fromJson(json))
             .toList();
         print('data:  $data');  // data 출력
         return data;
-
       } else {
+        print('응답이 리스트 형식이 아닙니다.');
         throw Exception('응답 데이터가 리스트 형식이 아닙니다.');
       }
     } else {
@@ -74,6 +72,7 @@ Future<List<ItemModel>> getSearch(BuildContext context, {required String query})
       }
       throw Exception(errorResponse['message']);
     }
+
   } catch (e) {
     print('예외 발생: $e');
     throw Exception('서버와의 연결에 실패했습니다.');
