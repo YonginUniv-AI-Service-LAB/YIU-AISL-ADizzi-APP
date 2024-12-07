@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:yiu_aisl_adizzi_app/service/search.dart';
-import '../../utils/model.dart';
 import '../../widgets/delete_recent.dart';
 import '../../widgets/search_list.dart';
 
@@ -8,26 +6,29 @@ class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
 
   @override
-  _SearchScreenState createState() => _SearchScreenState();
+  State<SearchScreen> createState() => _SearchScreenState();
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  List<ItemModel>? items;
-  String _query = '';
+  final TextEditingController _searchController = TextEditingController();
+  List<String> _searchedItems = [];  // 검색된 항목들을 저장할 배열
 
   @override
-  void initState() {
-    super.initState();
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 
-  // 비동기적으로 아이템 데이터 로드
-  Future<void> _loadItemData(String query) async {
-    // 검색어가 비어있지 않은 경우에만 검색
-    if (query.isNotEmpty) {
-      print('검색어: $_query');
-      items = await getSearch(context, query: query);
-      setState(() {});
-    }
+  void _addSearchItem(String item) {
+    setState(() {
+      _searchedItems.add(item);
+    });
+  }
+
+  void _removeSearchItem(String item) {
+    setState(() {
+      _searchedItems.remove(item);
+    });
   }
 
   @override
@@ -37,26 +38,23 @@ class _SearchScreenState extends State<SearchScreen> {
         scrolledUnderElevation: 0,
         backgroundColor: Colors.white,
         title: TextField(
+          controller: _searchController,
           autofocus: true,
-          onChanged: (value) {
-            setState(() {
-              _query = value;
-            });
-            _loadItemData(value); // 실시간으로 검색어에 맞는 데이터 로드
-          },
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             hintText: '검색어를 입력해주세요',
             border: InputBorder.none,
             hintStyle: TextStyle(color: Colors.black54, fontSize: 17),
           ),
-          style: TextStyle(color: Colors.black87),
+          style: const TextStyle(color: Colors.black87),
         ),
         titleSpacing: 0,
         actions: [
           IconButton(
             icon: const Icon(Icons.search),
             onPressed: () {
-              _loadItemData(_query); // 버튼을 눌렀을 때도 검색
+              if (_searchController.text.isNotEmpty) {
+                _addSearchItem(_searchController.text);  // 검색어 배열에 추가
+              }
             },
           ),
         ],
@@ -68,11 +66,12 @@ class _SearchScreenState extends State<SearchScreen> {
       ),
       body: Column(
         children: [
-          const DeleteRecent(),
+         const DeleteRecent(),
           Expanded(
-            child: items == null || items!.isEmpty
-                ? const Center(child: CircularProgressIndicator())
-                : SearchList(searchData: items!),
+            child: SearchList(
+              searchData: _searchedItems,
+              onRemove: _removeSearchItem,  // 삭제
+            ),
           ),
         ],
       ),
