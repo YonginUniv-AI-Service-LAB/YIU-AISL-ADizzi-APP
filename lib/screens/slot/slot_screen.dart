@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yiu_aisl_adizzi_app/provider/tree_provider.dart';
 import 'package:yiu_aisl_adizzi_app/screens/item/add_item_screen.dart';
+import 'package:yiu_aisl_adizzi_app/screens/slot/create_slot_screen.dart';
 import 'package:yiu_aisl_adizzi_app/service/slot_service.dart';
 import 'package:yiu_aisl_adizzi_app/utils/model.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/custom_search_bar.dart';
@@ -44,17 +45,23 @@ class _SlotScreenState extends State<SlotScreen> {
 
   // 수납칸 추가 클릭 시 동작
   void _onAddShelf() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return SlotAddDialog(
-          onConfirm: (String shelfName) {
-            // 입력된 수납칸 이름 처리
-            print("입력된 수납칸 이름: $shelfName");
-          },
-        );
-      },
-    );
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CreateSlotScreen(container: widget.container),
+      ),
+    ).then((_) {_loadData();});
+    // showDialog(
+    //   context: context,
+    //   builder: (BuildContext context) {
+    //     return SlotAddDialog(
+    //       onConfirm: (String shelfName) {
+    //         // 입력된 수납칸 이름 처리
+    //         print("입력된 수납칸 이름: $shelfName");
+    //       },
+    //     );
+    //   },
+    // );
   }
 
   // 물건 추가 클릭 시 동작

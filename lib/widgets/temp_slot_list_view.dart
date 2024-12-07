@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:yiu_aisl_adizzi_app/screens/item/add_item_screen.dart';
 import 'package:yiu_aisl_adizzi_app/screens/item/edit_item_screen.dart';
 import 'package:yiu_aisl_adizzi_app/screens/item/item_screen.dart';
+import 'package:yiu_aisl_adizzi_app/screens/slot/edit_slot_screen.dart';
 import 'package:yiu_aisl_adizzi_app/service/item_service.dart';
 import 'package:yiu_aisl_adizzi_app/service/slot_service.dart';
 import 'package:yiu_aisl_adizzi_app/utils/model.dart';
@@ -174,12 +175,12 @@ class _TempSlotListViewState extends State<TempSlotListView> {
                             onSelected: (int result) async{
                               if (result == 0) {
                                 // 수정
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //     builder: (context) => EditContainerScreen(container: slot,),
-                                //   ),
-                                // ).then((_) {widget.loadData();});
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => EditSlotScreen(slot: slot,),
+                                  ),
+                                ).then((_) {widget.loadData();});
                               } else if (result == 1) {
                                 // 삭제
                                 await deleteSlot(context, slotId: slot.slotId); // 삭제 기능 호출
