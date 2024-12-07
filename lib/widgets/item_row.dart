@@ -46,12 +46,18 @@ class ItemRow extends StatelessWidget {
             // 이미지
             ClipRRect(
               borderRadius: BorderRadius.circular(2),
-              child: Image.file(
-                File(item.imageUrl!),
+              child: Image.network(
+                item.imageUrl!,
                 width: 75,
                 height: 75,
                 fit: BoxFit.cover,
               ),
+              // Image.file(
+              //   File(item.imageUrl!),
+              //   width: 75,
+              //   height: 75,
+              //   fit: BoxFit.cover,
+              // ),
             ),
             const SizedBox(width: 16), // 간격
             // 제목

@@ -131,3 +131,21 @@ class ItemModel {
     );
   }
 }
+
+class SlotsResponse {
+  final List<SlotModel> slots;
+  final List<ItemModel> items;
+
+  SlotsResponse({required this.slots, required this.items});
+
+  factory SlotsResponse.fromJson(Map<String, dynamic> json) {
+    return SlotsResponse(
+      slots: (json['slots'] as List)
+          .map((slot) => SlotModel.fromJson(slot))
+          .toList(),
+      items: (json['items'] as List)
+          .map((item) => ItemModel.fromJson(item))
+          .toList(),
+    );
+  }
+}

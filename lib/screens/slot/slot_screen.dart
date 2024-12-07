@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:yiu_aisl_adizzi_app/provider/tree_provider.dart';
+import 'package:yiu_aisl_adizzi_app/service/slot_service.dart';
 import 'package:yiu_aisl_adizzi_app/utils/model.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/custom_search_bar.dart';
+import 'package:yiu_aisl_adizzi_app/widgets/slot_list_view.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/time_sort_seletor.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/slot_add_button.dart'; // SlotAddButton 임포트
 import 'package:yiu_aisl_adizzi_app/widgets/slot_add_dialog.dart';
 // import 'package:yiu_aisl_adizzi_app/models/container.dart';
 
 class SlotScreen extends StatefulWidget {
-  final String roomName;
-  final ContainerModel containerModel; // 필드 이름 소문자로 변경
+  final ContainerModel container; // 필드 이름 소문자로 변경
 
-  const SlotScreen({super.key, required this.containerModel, required this.roomName});
+  const SlotScreen({super.key, required this.container});
 
   @override
   State<SlotScreen> createState() => _SlotScreenState();
@@ -18,6 +21,23 @@ class SlotScreen extends StatefulWidget {
 
 class _SlotScreenState extends State<SlotScreen> {
   bool _isLatestSelected = true; // 초기값은 '최신등록순'
+  List<SlotModel>? slots;
+  List<ItemModel>? items;
+
+  @override
+  void initState() {
+    Provider.of<TreeProvider>(context, listen: false).fetchTree(context);
+    super.initState();
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    String sortBy = _isLatestSelected ? 'recent' : 'old';
+    SlotsResponse data = await getSlots(context, containerId: widget.container.containerId, sortBy: sortBy);
+    slots = data.slots;
+    items = data.items;
+    setState(() {});
+  }
 
   // 수납칸 추가 클릭 시 동작
   void _onAddShelf() {
@@ -44,10 +64,11 @@ class _SlotScreenState extends State<SlotScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final room = Provider.of<TreeProvider>(context).getRoomByContainerId(widget.container.containerId);
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          widget.containerModel.title!, // ContainerItem의 name 필드 사용
+          widget.container.title!, // ContainerItem의 name 필드 사용
           style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
@@ -79,7 +100,7 @@ class _SlotScreenState extends State<SlotScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "${widget.roomName} > ${widget.containerModel.title}", // 동적 데이터 표시
+                  "${room?.title ?? '방 이름 조회 오류'} > ${widget.container.title}", // 동적 데이터 표시
                   style: TextStyle(color: Colors.grey[600]),
                 ),
                 TimeSortSelector(
@@ -96,6 +117,14 @@ class _SlotScreenState extends State<SlotScreen> {
                   },
                 ),
               ],
+            ),
+          ),
+          Expanded(
+            child: slots == null
+                ? Center(child: CircularProgressIndicator())
+                : SlotListView(
+              slots: slots!,
+              loadData: _loadData,
             ),
           ),
         ],

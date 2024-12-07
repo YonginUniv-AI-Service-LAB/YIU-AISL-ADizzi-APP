@@ -28,6 +28,7 @@ class _EditContainerScreenState extends State<EditContainerScreen> {
     super.initState();
     _controller.text = widget.container.title!;
     _selectedImage = 1;
+    Provider.of<TreeProvider>(context, listen: false).fetchTree(context);
   }
 
   @override

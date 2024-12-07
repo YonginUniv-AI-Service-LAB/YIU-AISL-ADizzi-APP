@@ -20,7 +20,7 @@ class ContainerScreen extends StatefulWidget {
 
 class _ContainerScreenState extends State<ContainerScreen> {
   bool _isLatestSelected = true; // 초기값은 '최신등록순'
-  List<ContainerModel> _containers = []; // 리스트 데이터를 관리하는 변수
+  List<ContainerModel>? _containers; // 리스트 데이터를 관리하는 변수
 
   @override
   void initState() {
@@ -70,21 +70,25 @@ class _ContainerScreenState extends State<ContainerScreen> {
             onLatestTap: () {
               setState(() {
                 _isLatestSelected = true;
+                _loadData();
               });
             },
             onOldestTap: () {
               setState(() {
                 _isLatestSelected = false;
+                _loadData();
               });
             },
           ),
 
           // 리스트 위젯
           Expanded(
-            child: ContainerListView(
-              items: _containers,
-              roomName: widget.roomName, // roomName 전달
-            ),
+            child: _containers == null
+                ? Center(child: CircularProgressIndicator())
+                : ContainerListView(
+                    containers: _containers!,
+                    loadData: _loadData,
+                  ),
           ),
         ],
       ),
@@ -97,7 +101,7 @@ class _ContainerScreenState extends State<ContainerScreen> {
             MaterialPageRoute(
               builder: (context) => CreateContainerScreen(roomId: widget.roomId,),
             ),
-          );
+          ).then((_) {_loadData();});
         },
       ),
     );
