@@ -135,4 +135,31 @@ class TreeProvider with ChangeNotifier {
     }
     return null; // slotId에 해당하는 room이 없을 경우
   }
+  
+  String getPathBySlotId(int slotId) {
+    for (var room in _rooms) {
+      for (var container in room.containers) {
+        if (container.slotId == slotId) {
+          return "${room.title} > ${container.title}"; // 해당 slotId에 속한 room의 title 반환
+        }
+        for (var slot in container.slots) {
+          if (slot.slotId == slotId) {
+            return "${room.title} > ${container.title} > ${slot.title}"; // 해당 slotId에 속한 room의 title 반환
+          }
+        }
+      }
+    }
+    return "경로 조회 실패"; // slotId에 해당하는 room이 없을 경우
+  }
+
+  String getPathByContainerId(int containerId) {
+    for (var room in _rooms) {
+      for (var container in room.containers) {
+        if (container.containerId == containerId) {
+          return "${room.title} > ${container.title}"; // 해당 slotId에 속한 room의 title 반환
+        }
+      }
+    }
+    return "경로 조회 실패"; // slotId에 해당하는 room이 없을 경우
+  }
 }

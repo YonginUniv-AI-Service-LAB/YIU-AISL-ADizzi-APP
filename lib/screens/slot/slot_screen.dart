@@ -100,7 +100,7 @@ class _SlotScreenState extends State<SlotScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final room = Provider.of<TreeProvider>(context).getRoomByContainerId(widget.container.containerId);
+    final path = Provider.of<TreeProvider>(context).getPathByContainerId(widget.container.containerId);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -136,7 +136,7 @@ class _SlotScreenState extends State<SlotScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "${room?.title ?? '방 이름 조회 오류'} > ${widget.container.title}", // 동적 데이터 표시
+                  path, // 동적 데이터 표시
                   style: TextStyle(color: Colors.grey[600]),
                 ),
                 TimeSortSelector(

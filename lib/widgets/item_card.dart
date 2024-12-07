@@ -17,15 +17,13 @@ class _ItemCardState extends State<ItemCard> {
 
   @override
   void initState() {
-    Provider.of<TreeProvider>(context, listen: false).fetchTree(context);
     super.initState();
+    Provider.of<TreeProvider>(context, listen: false).fetchTree(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    final container = Provider.of<TreeProvider>(context).getSlotById(widget.item.slotId ?? 1);
-    final slot = Provider.of<TreeProvider>(context).getContainerBySlotId(widget.item.slotId ?? 1);
-    final room = Provider.of<TreeProvider>(context).getRoomBySlotId(widget.item.slotId ?? 1);
+    final path = Provider.of<TreeProvider>(context).getPathBySlotId(widget.item.slotId!);
 
     return Padding(
       padding: const EdgeInsets.all(5.0), // 카드와 동일한 외부 패딩
@@ -45,7 +43,7 @@ class _ItemCardState extends State<ItemCard> {
               SizedBox(height: 4),
               // 경로
               Text(
-                '${room?.title ?? '방 이름 조회 오류'} > ${container?.title ?? '수납장 이름 조회 오류'} > ${slot?.title ?? '수납칸 이름 조회 오류'}', // 경로 텍스트
+                path,
                 style: TextStyle(fontSize: 12, color: Colors.grey),
               ),
             ],

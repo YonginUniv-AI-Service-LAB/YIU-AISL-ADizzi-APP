@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yiu_aisl_adizzi_app/screens/item/add_item_screen.dart';
+import 'package:yiu_aisl_adizzi_app/screens/item/create_item_screen.dart';
 import 'package:yiu_aisl_adizzi_app/screens/main/main_item_tab_view.dart';
 import 'package:yiu_aisl_adizzi_app/screens/main/main_room_tab_view.dart';
+import 'package:yiu_aisl_adizzi_app/service/item_service.dart';
 import 'package:yiu_aisl_adizzi_app/service/room_service.dart';
 import 'package:yiu_aisl_adizzi_app/utils/model.dart';
 import '../../widgets/room_search_bar.dart';
@@ -37,7 +39,7 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
   }
 
   Future<void> _loadItemData() async{
-    // _items = await getItems(context, sortBy: 'recnet');
+    _items = await getAllItems(context, sortBy: 'recnet');
     setState(() {});
   }
 
@@ -82,7 +84,9 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
                     _rooms == null
                         ? Center(child: CircularProgressIndicator())
                         : MainRoomTabView(rooms: _rooms!, loadData: _loadRoomData,),
-                    MainItemTabView(),
+                    _items == null
+                        ? Center(child: CircularProgressIndicator())
+                        : MainItemTabView(items: _items!, loadData: _loadRoomData,),
                   ],
                 ),
               ),
@@ -102,14 +106,12 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
             });
           }
           if ( _tabController.index == 1) {
-            // TODO: 물건 저장 위치 먼저 선택 후 화면 전환하도록 수정
-
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (context) => AddItemScreen(), // 수정할 아이템을 넘겨줌
-            //   ),
-            // );
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CreateItemScreen(), // 수정할 아이템을 넘겨줌
+              ),
+            ).then((_) {_loadItemData();});
           }
         },
       ),

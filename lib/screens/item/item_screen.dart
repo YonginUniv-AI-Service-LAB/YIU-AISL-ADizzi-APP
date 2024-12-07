@@ -62,8 +62,7 @@ class _ItemScreenState extends State<ItemScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final room = Provider.of<TreeProvider>(context).getRoomBySlotId(widget.slot.slotId);
-    final container = Provider.of<TreeProvider>(context).getContainerBySlotId(widget.slot.slotId);
+    final path = Provider.of<TreeProvider>(context).getPathBySlotId(widget.slot.slotId);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -97,7 +96,7 @@ class _ItemScreenState extends State<ItemScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '${room?.title ?? '방 이름 조회 오류'} > ${container?.title ?? '수납장 이름 조회 오류'} > ${widget.slot.title ?? '수납칸 이름 조회 오류'}',
+                  path,
                   style: TextStyle(
                     color: Colors.grey[600],
                     fontSize: 12,
