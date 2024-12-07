@@ -103,12 +103,13 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
           }
           if ( _tabController.index == 1) {
             // TODO: 물건 저장 위치 먼저 선택 후 화면 전환하도록 수정
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => AddItemScreen(), // 수정할 아이템을 넘겨줌
-              ),
-            );
+
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(
+            //     builder: (context) => AddItemScreen(), // 수정할 아이템을 넘겨줌
+            //   ),
+            // );
           }
         },
       ),

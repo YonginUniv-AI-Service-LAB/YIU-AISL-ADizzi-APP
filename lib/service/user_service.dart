@@ -191,7 +191,7 @@ Future<void> changePassword(BuildContext context, {
   required String email,
   required String password,
 }) async {
-  final String url = '$BASE_URL/signUp'; // 기본 URL에 회원가입 엔드포인트 추가
+  final String url = '$BASE_URL/user'; // 기본 URL에 회원가입 엔드포인트 추가
   // 요청 데이터 생성
   final Map<String, dynamic> data = {
     "email": email,

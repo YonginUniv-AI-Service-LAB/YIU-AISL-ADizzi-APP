@@ -51,14 +51,19 @@ class _ItemScreenState extends State<ItemScreen> {
   }
 
   // 선택 삭제 처리
-  void _deleteSelectedItems() {
-    setState(() {
-      items!.removeWhere((item) => item.isChecked); // 체크된 항목 삭제
-    });
+  void _deleteSelectedItems() async{
+    for (var item in items!) {
+      if(item.isChecked) {
+        await deleteItem(context, itemId: item.itemId);
+      }
+    }
+    _loadData();
   }
 
   @override
   Widget build(BuildContext context) {
+    final room = Provider.of<TreeProvider>(context).getRoomBySlotId(widget.slot.slotId);
+    final container = Provider.of<TreeProvider>(context).getContainerBySlotId(widget.slot.slotId);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -68,7 +73,7 @@ class _ItemScreenState extends State<ItemScreen> {
           },
         ),
         title: Text(
-          '서랍1',
+          widget.slot.title ?? "수납칸 이름 조회 오류",
           style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
@@ -92,7 +97,7 @@ class _ItemScreenState extends State<ItemScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '금쪽이의 밤 > 옷장 > 서랍1',
+                  '${room?.title ?? '방 이름 조회 오류'} > ${container?.title ?? '수납장 이름 조회 오류'} > ${widget.slot.title ?? '수납칸 이름 조회 오류'}',
                   style: TextStyle(
                     color: Colors.grey[600],
                     fontSize: 12,
@@ -137,32 +142,20 @@ class _ItemScreenState extends State<ItemScreen> {
                       isAllChecked: isAllChecked, // 전체 선택 상태 전달
                       onSelectAllChanged: _toggleSelectAll, // 전체 선택/해제 처리
                       onDeleteSelected: _deleteSelectedItems, // 선택 삭제 처리
+                      loadData: _loadData,
                     ),
             ),
           ),
         ],
       ),
       floatingActionButton: FloatingAddButton(
-        onPressed: () async {
-          final newItem = await Navigator.push(
+        onPressed: () {
+          Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AddItemScreen(item: selectedItem), // 수정할 아이템을 넘겨줌
+              builder: (context) => AddItemScreen(slotId: widget.slot.slotId,), // 수정할 아이템을 넘겨줌
             ),
-          );
-
-          if (newItem != null) {
-            setState(() {
-              if (selectedItem != null) {
-                // 아이템 수정 처리
-                int index = items!.indexOf(selectedItem!);
-                items![index] = newItem; // 수정된 아이템으로 리스트 업데이트
-              } else {
-                // 새 아이템 추가 처리
-                items!.add(newItem); // 새로 추가된 아이템 저장
-              }
-            });
-          }
+          ).then((_) {_loadData();});
         },
       ),
     );
