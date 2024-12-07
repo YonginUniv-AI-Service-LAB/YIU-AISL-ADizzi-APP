@@ -31,7 +31,7 @@ class SearchList extends StatelessWidget {
                         // 해당 키워드 클릭시 페이지 이동
                       },
                       child: Text(
-                        item.title ?? '제목 없음',
+                        item.title!,
                         style: const TextStyle(color: Colors.black, fontSize: 15),
                       ),
                     ),
