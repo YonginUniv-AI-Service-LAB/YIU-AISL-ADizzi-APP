@@ -106,16 +106,12 @@ class _ItemScreenState extends State<ItemScreen> {
                 TimeSortSelector(
                   isLatestSelected: isLatestSelected,
                   onLatestTap: () {
-                    setState(() {
-                      isLatestSelected = true;
-                      _loadData();
-                    });
+                    isLatestSelected = true;
+                    _loadData();
                   },
                   onOldestTap: () {
-                    setState(() {
-                      isLatestSelected = false;
-                      _loadData();
-                    });
+                    isLatestSelected = false;
+                    _loadData();
                   },
                 ),
               ],

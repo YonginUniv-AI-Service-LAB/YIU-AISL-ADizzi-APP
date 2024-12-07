@@ -32,7 +32,7 @@ class _ContainerListViewState extends State<ContainerListView> {
     if (widget.containers.isEmpty) {
       return const Center(
         child: Text(
-          '추가된 가구가 없습니다.',
+          '추가된 수납장이 없습니다.',
           style: TextStyle(color: Colors.grey),
         ),
       );

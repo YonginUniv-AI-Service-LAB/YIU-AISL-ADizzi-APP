@@ -41,7 +41,13 @@ class _SlotAddButtonState extends State<SlotAddButton> {
             padding: const EdgeInsets.only(bottom: 65.0), // 플로팅 버튼 위에 위치
             child: FloatingActionButton.extended(
               heroTag: 'add_shelf',
-              onPressed: widget.onAddShelf,
+              onPressed: () {
+                widget.onAddShelf();
+                setState(() {
+                  _showFloatingButtons = false;
+                });
+              },
+              // onPressed: widget.onAddShelf,
               icon: Icon(widget.icon, color: Color(0xFF595959)), // 아이콘 변경
               label: Text(
                 "수납칸 추가",
@@ -60,7 +66,13 @@ class _SlotAddButtonState extends State<SlotAddButton> {
             padding: const EdgeInsets.only(bottom: 130.0), // '수납칸 추가' 위에 위치
             child: FloatingActionButton.extended(
               heroTag: 'add_item',
-              onPressed: widget.onAddItem,
+              onPressed: () {
+                widget.onAddItem();
+                setState(() {
+                  _showFloatingButtons = false;
+                });
+              },
+              // onPressed: widget.onAddItem,
               icon: Icon(widget.icon, color: Color(0xFF595959)), // 아이콘 변경
               label: Text(
                 "물건 추가   ",

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yiu_aisl_adizzi_app/provider/tree_provider.dart';
 import 'package:yiu_aisl_adizzi_app/service/container_service.dart';
+import 'package:yiu_aisl_adizzi_app/service/image_service.dart';
 import 'package:yiu_aisl_adizzi_app/utils/model.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/camera_widget.dart';
 import '../../widgets/custom_textfield.dart';
@@ -20,8 +21,7 @@ class CreateContainerScreen extends StatefulWidget {
 
 class _CreateContainerScreenState extends State<CreateContainerScreen> {
   final TextEditingController _controller = TextEditingController();
-  late int _selectedImage;  //선택한 이미지
-  late File _selectedImageFile; // 이미지 파일을 저장할 변수
+  File? _selectedImage;  //선택한 이미지
 
   @override
   void initState() {
@@ -52,10 +52,10 @@ class _CreateContainerScreenState extends State<CreateContainerScreen> {
               CameraWidget(
                 onImageSelected: (image) {
                   setState(() {
-                    _selectedImageFile = image as File;
+                    _selectedImage = image;
                   });
                 },
-                // initialImage: _selectedImage,
+                initialImage: _selectedImage,
               ),
               const SizedBox(height: 30),
               const Text(
@@ -79,7 +79,19 @@ class _CreateContainerScreenState extends State<CreateContainerScreen> {
                       );
                       return;
                     }
-                    await createContainer(context, title: _controller.text, roomId: widget.roomId, imageId: _selectedImage);
+                    if (_selectedImage == null) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text("사진을 등록해주세요.")),
+                      );
+                      return;
+                    }
+
+                    int? imageId = await uploadImage(_selectedImage!.path);
+
+                    await createContainer(context, roomId: widget.roomId,
+                      title: _controller.text,
+                      imageId: imageId,
+                    );
 
                     Navigator.pop(context);
                   },
