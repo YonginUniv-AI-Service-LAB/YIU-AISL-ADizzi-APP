@@ -5,8 +5,9 @@ import 'package:image_picker/image_picker.dart';
 class CameraWidget extends StatefulWidget {
   final Function(File?) onImageSelected;
   final File? initialImage;
+  final String? imageUrl;
 
-  const CameraWidget({required this.onImageSelected, this.initialImage, Key? key})
+  const CameraWidget({required this.onImageSelected, this.initialImage, this.imageUrl, Key? key})
       : super(key: key);
 
   @override
@@ -37,6 +38,25 @@ class _CameraWidgetState extends State<CameraWidget> {
     }
   }
 
+  Widget? _buildCameraModule() {
+    if (_selectedImage == null && widget.imageUrl == null) {
+      return Center(
+        child: Icon(
+          Icons.camera_alt,
+          size: 30,
+          color: Colors.white,
+        ),
+      );
+    }
+    else if (_selectedImage != null) {
+      return null;
+    }
+    else if (widget.imageUrl != null) {
+      return Image.network(widget.imageUrl!);
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -54,15 +74,16 @@ class _CameraWidgetState extends State<CameraWidget> {
           )
               : null,
         ),
-        child: _selectedImage == null
-            ? const Center(
-          child: Icon(
-            Icons.camera_alt,
-            size: 30,
-            color: Colors.white,
-          ),
-        )
-            : null,
+        child: _buildCameraModule()
+        // _selectedImage == null
+        //     ? const Center(
+        //         child: Icon(
+        //           Icons.camera_alt,
+        //           size: 30,
+        //           color: Colors.white,
+        //         ),
+        //       )
+        //     : null,
       ),
     );
   }

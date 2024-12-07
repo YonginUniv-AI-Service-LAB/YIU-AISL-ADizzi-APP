@@ -68,16 +68,12 @@ class _ContainerScreenState extends State<ContainerScreen> {
           TimeSortSelector(
             isLatestSelected: _isLatestSelected,
             onLatestTap: () {
-              setState(() {
-                _isLatestSelected = true;
-                _loadData();
-              });
+              _isLatestSelected = true;
+              _loadData();
             },
             onOldestTap: () {
-              setState(() {
-                _isLatestSelected = false;
-                _loadData();
-              });
+              _isLatestSelected = false;
+              _loadData();
             },
           ),
 

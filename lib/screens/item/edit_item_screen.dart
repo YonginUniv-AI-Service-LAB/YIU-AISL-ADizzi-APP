@@ -9,17 +9,16 @@ import '../../widgets/custom_textfield.dart';
 import '../../widgets/main_button.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/category_selector.dart';
 
-class AddItemScreen extends StatefulWidget {
-  final int slotId;
-  // final ItemModel? item; // 기존 아이템을 받기 위해서
+class EditItemScreen extends StatefulWidget {
+  final ItemModel item; // 기존 아이템을 받기 위해서
   // 생성자에서 아이템을 받을 수 있도록
-  AddItemScreen({required this.slotId});
+  EditItemScreen({required this.item});
 
   @override
-  _AddItemScreenState createState() => _AddItemScreenState();
+  _EditItemScreenState createState() => _EditItemScreenState();
 }
 
-class _AddItemScreenState extends State<AddItemScreen> {
+class _EditItemScreenState extends State<EditItemScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _memoController = TextEditingController();
   String? _selectedCategory;
@@ -28,6 +27,10 @@ class _AddItemScreenState extends State<AddItemScreen> {
   @override
   void initState() {
     super.initState();
+    _nameController.text = widget.item.title!;
+    _memoController.text = widget.item.detail ?? '';
+    // TODO: 카테고리 수정
+    _selectedCategory = widget.item.category.toString();
   }
 
   // 예시 카테고리 리스트
@@ -66,7 +69,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          '물건 등록',
+          '물건 수정',
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
@@ -86,7 +89,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                     _selectedImage = image;
                   });
                 },
-                initialImage: _selectedImage,
+                imageUrl: widget.item.imageUrl,
               ),
               const SizedBox(height: 18),
               const Text(
@@ -143,21 +146,13 @@ class _AddItemScreenState extends State<AddItemScreen> {
                       );
                       return;
                     }
+                    int? imageId = _selectedImage == null ? null : await uploadImage(_selectedImage!.path);
 
-                    if (_selectedImage == null) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text("사진을 등록해주세요.")),
-                      );
-                      return;
-                    }
-
-                    int? imageId = await uploadImage(_selectedImage!.path);
-
-                    await createItem(context, slotId: widget.slotId,
-                      title: _nameController.text,
+                    await editItem(context, itemId: widget.item.itemId,
+                      title: _nameController.text == widget.item.title ? null : _nameController.text,
                       // TODO: 카테고리 작업 필요
                       category: 1,
-                      detail: _memoController.text ?? '설명 없음',
+                      detail: _memoController.text == widget.item.detail ? null : _memoController.text,
                       imageId: imageId,
                     );
 

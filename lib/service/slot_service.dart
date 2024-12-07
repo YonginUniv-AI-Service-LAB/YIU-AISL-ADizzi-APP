@@ -7,11 +7,9 @@ import 'package:http/http.dart' as http;
 
 // 수납칸 목록 요청
 Future<SlotsResponse> getSlots(BuildContext context, {required String sortBy, required int containerId, int? roomId = 1}) async {
-  // TODO : 임시 토큰과 임시 수납장ID 사용함
-  final String url = '$BASE_URL/room/${roomId}/container/1/slot?sortBy=${sortBy}'; // 기본 URL에 로그인 엔드포인트 추가
-  // final String url = '$BASE_URL/room/${roomId}/container/${containerId}/slot?sortBy=${sortBy}'; // 기본 URL에 로그인 엔드포인트 추가
-  // String? accessToken = await storage.read(key: "accessToken");
-  String? accessToken = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzMzNDkxMzQ3LCJleHAiOjE3MzM0OTMxNDd9.7UHeKB94q2QCzxS541irxh5FeyBH7fB2qYVnLjwIDSjqmlxNN-9d-XirO9CzB45z1_eNnzf282JxeNu6gclmJA';
+  final String url = '$BASE_URL/room/${roomId}/container/${containerId}/slot?sortBy=${sortBy}'; // 기본 URL에 로그인 엔드포인트 추가
+  String? accessToken = await storage.read(key: "accessToken");
+
   // 요청 헤더 설정
   Map<String, String> headers = {
     "Content-Type": "application/json; charset=UTF-8",

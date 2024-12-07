@@ -9,17 +9,15 @@ import '../../widgets/custom_textfield.dart';
 import '../../widgets/main_button.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/category_selector.dart';
 
-class AddItemScreen extends StatefulWidget {
-  final int slotId;
-  // final ItemModel? item; // 기존 아이템을 받기 위해서
+class CreateItemScreen extends StatefulWidget {
   // 생성자에서 아이템을 받을 수 있도록
-  AddItemScreen({required this.slotId});
+  CreateItemScreen();
 
   @override
-  _AddItemScreenState createState() => _AddItemScreenState();
+  _CreateItemScreenState createState() => _CreateItemScreenState();
 }
 
-class _AddItemScreenState extends State<AddItemScreen> {
+class _CreateItemScreenState extends State<CreateItemScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _memoController = TextEditingController();
   String? _selectedCategory;
@@ -151,15 +149,17 @@ class _AddItemScreenState extends State<AddItemScreen> {
                       return;
                     }
 
-                    int? imageId = await uploadImage(_selectedImage!.path);
+                    // TODO: slotId 를 선택할 수 있는 tree UI 필요
 
-                    await createItem(context, slotId: widget.slotId,
-                      title: _nameController.text,
-                      // TODO: 카테고리 작업 필요
-                      category: 1,
-                      detail: _memoController.text ?? '설명 없음',
-                      imageId: imageId,
-                    );
+                    // int? imageId = await uploadImage(_selectedImage!.path);
+
+                    // await createItem(context, slotId: widget.slotId,
+                    //   title: _nameController.text,
+                    //   // TODO: 카테고리 작업 필요
+                    //   category: 1,
+                    //   detail: _memoController.text ?? '설명 없음',
+                    //   imageId: imageId,
+                    // );
 
                     Navigator.pop(context);
                   },
