@@ -24,12 +24,12 @@ class SearchList extends StatelessWidget {
                     color: Colors.transparent,
                     child: InkWell(
                       onTap: () {
-                        // 해당 키워드 클릭시 페이지 이동
+                        // 클릭 시 페이지 이동 등
                       },
                       child: Row(
                         children: [
                           const SizedBox(width: 10.0),
-                          const Icon(Icons.restore, size: 20, ),
+                          const Icon(Icons.restore, size: 20),
                           const SizedBox(width: 25.0),
                           Text(
                             searchData[index],
@@ -48,7 +48,6 @@ class SearchList extends StatelessWidget {
                     onPressed: () {
                       onRemove(searchData[index]);
                     },
-
                   ),
                 ),
               ],
@@ -59,3 +58,4 @@ class SearchList extends StatelessWidget {
     );
   }
 }
+
