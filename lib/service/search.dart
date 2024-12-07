@@ -5,10 +5,10 @@ import 'package:yiu_aisl_adizzi_app/service/service.dart';
 import 'package:yiu_aisl_adizzi_app/utils/model.dart';
 import 'package:http/http.dart' as http;
 
-
 // 물건 검색
-Future<List<ItemModel>> getSearch(BuildContext context,{required  String query}) async {
-  final String url = '$BASE_URL/search?query=$query';
+Future<List<ItemModel>> getSearch(BuildContext context, {required String query}) async {
+  final String url = '$BASE_URL/search?query=${Uri.encodeComponent(query)}';
+
   String? accessToken = await storage.read(key: "accessToken");
 
   Map<String, String> headers = {
@@ -28,12 +28,26 @@ Future<List<ItemModel>> getSearch(BuildContext context,{required  String query})
 
     // 서버 응답 판별부
     if (response.statusCode == 200) {
+
+      // 응답 데이터 출력 (디버깅용)
       print('서치 요청 성공: ${utf8.decode(response.bodyBytes)}');
-      // 성공 시 동작
-      List<ItemModel> data = (jsonDecode(utf8.decode(response.bodyBytes)) as List)
-          .map<ItemModel>((json) => ItemModel.fromJson(json))
-          .toList();
-      return data;
+      print('쿼리스트링: $query');
+
+      // 응답 데이터를 JSON으로 변환하고, ItemModel로 맵핑
+      List<dynamic> responseBody = jsonDecode(utf8.decode(response.bodyBytes)); // 응답 본문을 List로 파싱
+      print('응답 본문: $responseBody');  // 응답 본문 출력
+
+      if (responseBody is List) {
+        // 리스트 형태라면, 각 아이템을 ItemModel로 변환
+        List<ItemModel> data = responseBody
+            .map<ItemModel>((json) => ItemModel.fromJson(json))
+            .toList();
+        print('data:  $data');  // data 출력
+        return data;
+
+      } else {
+        throw Exception('응답 데이터가 리스트 형식이 아닙니다.');
+      }
     } else {
       // 에러 코드 출력
       final errorResponse = jsonDecode(utf8.decode(response.bodyBytes));

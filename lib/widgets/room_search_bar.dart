@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../screens/user/my_page_screen.dart';
 import '../screens/search/search_screen.dart';
+import '../utils/model.dart';
 
 class RoomCustomSearchBar extends StatelessWidget {
   final VoidCallback onTap;
@@ -46,7 +47,7 @@ class RoomCustomSearchBar extends StatelessWidget {
                 onPressed: () {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => SearchScreen()),
+                    MaterialPageRoute(builder: (context) => SearchScreen(slot: SlotModel(slotId: 6, title: "임시"))),
                   );
                 },
                 icon: const Icon(Icons.search),
