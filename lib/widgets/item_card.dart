@@ -28,7 +28,7 @@ class ItemCard extends StatelessWidget {
               SizedBox(height: 4),
               // 경로
               Text(
-                '금쪽이의 밤 > 옷장 > 서랍1', // 경로 텍스트
+                '금쪽이의 방 > 옷장 > 서랍1', // 경로 텍스트
                 style: TextStyle(fontSize: 12, color: Colors.grey),
               ),
             ],
@@ -67,13 +67,14 @@ class ItemCard extends StatelessWidget {
                       child: Icon(Icons.image, color: Colors.grey, size: 50),
                     ),
                   SizedBox(height: 8),
-                  // 카테고리
                   Text(
-                    item.category.toString(),
-                    style: TextStyle(color: Colors.grey, fontSize: 14),
+                    item.subCategory != null
+                        ? '${item.mainCategory.toString()} > ${item.subCategory}'
+                        : item.mainCategory.toString(),
+                    style: TextStyle(color: Colors.grey, fontSize: 13),
                   ),
                   if (item.detail!.isNotEmpty) ...[
-                    SizedBox(height: 16),
+                    SizedBox(height: 10),
                     // 상세 내용
                     Text(
                       item.detail!,
