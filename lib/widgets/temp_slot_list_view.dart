@@ -9,6 +9,7 @@ import 'package:yiu_aisl_adizzi_app/service/item_service.dart';
 import 'package:yiu_aisl_adizzi_app/service/slot_service.dart';
 import 'package:yiu_aisl_adizzi_app/utils/model.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/custom_popup_menu.dart';
+import 'package:yiu_aisl_adizzi_app/widgets/move_tree.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/select_all_bar.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/item_row.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/item_card.dart';
@@ -56,8 +57,28 @@ class _TempSlotListViewState extends State<TempSlotListView> {
     } else if (action == 1) {
       // 이동 동작
       // TODO: 이동할 위치 선택하는 트리 화면 보여주고 선택
-      print("아이템 이동 요청 itemId: ${widget.items[index].itemId}");
-      widget.loadData();
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              MoveTree(
+                  slotIdFunction: (slotId) async{
+                    try {
+                      await moveItem(context, itemId: widget.items[index].itemId, slotId: slotId);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('아이템이 이동되었습니다.')),
+                      );
+                      Navigator.pop(context);
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('아이템 이동 실패: $e')),
+                      );
+                    }
+                  }
+              ),
+        ),
+      ).then((_) {widget.loadData();});
+      // print("아이템 이동 요청 itemId: ${widget.items[index].itemId}");
     } else if (action == 2) {
       // TODO: 삭제 동작 (삭제여부 1회 더 물어볼 UI(Dialog) 필요)
       await deleteItem(context, itemId: widget.items[index].itemId);

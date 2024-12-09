@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:yiu_aisl_adizzi_app/service/image_service.dart';
 import 'package:yiu_aisl_adizzi_app/service/item_service.dart';
 import 'package:yiu_aisl_adizzi_app/utils/model.dart';
+import 'package:yiu_aisl_adizzi_app/widgets/move_tree.dart';
 // import 'package:yiu_aisl_adizzi_app/models/item_model.dart';
 import '../../widgets/camera_widget.dart';
 import '../../widgets/custom_textfield.dart';
@@ -134,7 +135,7 @@ class _CreateItemScreenState extends State<CreateItemScreen> {
                 alignment: Alignment.bottomCenter,
                 child: MainButton(
                   label: '저장',
-                  onPressed: () async{
+                  onPressed: () {
                     if (_nameController.text.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text("아이템 이름을 입력해주세요.")),
@@ -149,19 +150,45 @@ class _CreateItemScreenState extends State<CreateItemScreen> {
                       return;
                     }
 
-                    // TODO: slotId 를 선택할 수 있는 tree UI 필요
+                    print("네비게이터 전");
 
-                    // int? imageId = await uploadImage(_selectedImage!.path);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            MoveTree(
+                              isCreate: true,
+                              slotIdFunction: (slotId) async{
+                                try {
+                                  int? imageId = await uploadImage(_selectedImage!.path);
 
-                    // await createItem(context, slotId: widget.slotId,
-                    //   title: _nameController.text,
-                    //   // TODO: 카테고리 작업 필요
-                    //   category: 1,
-                    //   detail: _memoController.text ?? '설명 없음',
-                    //   imageId: imageId,
-                    // );
+                                  await createItem(context, slotId: slotId,
+                                    title: _nameController.text,
+                                    // TODO: 카테고리 작업 필요
+                                    category: 1,
+                                    detail: _memoController.text ?? '설명 없음',
+                                    imageId: imageId,
+                                  );
+                                  // await moveItem(context, itemId: widget.items[index].itemId, slotId: slotId);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text('아이템이 생성되었습니다.')),
+                                  );
+                                  Navigator.pop(context);
+                                } catch (e) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text('아이템 생성 실패: $e')),
+                                  );
+                                }
+                              }
+                            ),
+                      ),
+                    ).then((_) {
+                      Navigator.pop(context);
+                    });
 
-                    Navigator.pop(context);
+                    print("네비게이터 후");
+
+                    // Navigator.pop(context);
                   },
                 ),
               ),

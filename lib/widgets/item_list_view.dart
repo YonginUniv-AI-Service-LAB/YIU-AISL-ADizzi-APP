@@ -57,12 +57,23 @@ class _ItemListViewState extends State<ItemListView> {
         MaterialPageRoute(
           builder: (context) =>
               MoveTree(
-                item: widget.items[index], // 선택된 항목 정보 전달
+                 slotIdFunction: (slotId) async{
+                   try {
+                     await moveItem(context, itemId: widget.items[index].itemId, slotId: slotId);
+                     ScaffoldMessenger.of(context).showSnackBar(
+                       SnackBar(content: Text('아이템이 이동되었습니다.')),
+                     );
+                     Navigator.pop(context);
+                   } catch (e) {
+                         ScaffoldMessenger.of(context).showSnackBar(
+                           SnackBar(content: Text('아이템 이동 실패: $e')),
+                         );
+                   }
+                 }
               ),
         ),
       ).then((_) {widget.loadData();});
-      print("아이템 이동 요청 itemId: ${widget.items[index].itemId}");
-      widget.loadData();
+      // print("아이템 이동 요청 itemId: ${widget.items[index].itemId}");
     } else if (action == 2) {
       // TODO: 삭제 동작 (삭제여부 1회 더 물어볼 UI(Dialog) 필요)
       await deleteItem(context, itemId: widget.items[index].itemId);

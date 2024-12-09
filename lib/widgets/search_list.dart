@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 class SearchList extends StatelessWidget {
   final List<String> searchData;
   final Function(String) onRemove;
+  final TextEditingController controller;
 
-  const SearchList({super.key, required this.searchData, required this.onRemove});
+  const SearchList({super.key, required this.searchData, required this.onRemove, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class SearchList extends StatelessWidget {
                   child: InkWell(
                     onTap: () {
                       // 클릭 시 페이지 이동 등
-                      print("Tapped on:");
+                      controller.text = searchData[index];
                     },
                     child: Row(
                       children: [

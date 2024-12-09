@@ -8,7 +8,7 @@ import 'package:yiu_aisl_adizzi_app/service/item_service.dart';
 import 'package:yiu_aisl_adizzi_app/service/room_service.dart';
 import 'package:yiu_aisl_adizzi_app/utils/model.dart';
 import '../../provider/tree_provider.dart';
-import '../../widgets/room_search_bar.dart';
+import '../../widgets/main_search_bar.dart';
 import '../../widgets/add_dialog.dart';
 import '../../widgets/floating_add_button.dart';
 import '../../widgets/image_list_view.dart';
@@ -68,7 +68,7 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
             const SizedBox(height: 50),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 3.0, vertical: 4.0),
-              child: RoomCustomSearchBar(
+              child: MainSearchBar(
                 onTap: () {},
               ),
             ),

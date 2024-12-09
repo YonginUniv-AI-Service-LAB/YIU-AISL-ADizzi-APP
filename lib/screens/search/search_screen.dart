@@ -102,12 +102,112 @@ class _SearchScreenState extends State<SearchScreen> {
 
   // 검색 결과 페이지로 네비게이션
   void _navigateToSearchResults() {
-    Navigator.push(
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(
         builder: (context) =>
             SearchResultsScreen(searchResults: _searchedItems),
       ),
+    );
+  }
+
+  Widget _buildSearchArea() {
+    if (_searchController.text.isEmpty){
+      return Column(
+        children: [
+          const DeleteRecent(),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Container(
+                color: Colors.white,
+                height: MediaQuery.of(context).size.height,
+                child: ListView.builder(
+                  itemCount: recentSearches.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap: () {
+                            _searchController.text = recentSearches[index];
+                          },
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const Icon(Icons.restore, size: 22),
+                              const SizedBox(width: 20),
+                              Text(
+                                recentSearches[index],
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 17,
+                                ),
+                                textAlign: TextAlign.left,
+                              ),
+                              const Spacer(),
+                              IconButton(
+                                icon: const Icon(Icons.clear, size: 20),
+                                onPressed: () {
+                                  _deleteRecentSearch(index);
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+          )
+        ],
+      );
+    }
+    else if (_isLoading){
+      return const Center(child: CircularProgressIndicator());
+    }
+    return Column(
+      children: [
+        Expanded(
+          child: Container(
+            color: Colors.white,
+            child: ListView.builder(
+              itemCount: _searchedItems.length,
+              itemBuilder: (context, index) {
+                ItemModel item = _searchedItems[index];
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            onTap: () {
+                              // 항목 클릭 시 동작
+                              // 예를 들어, 아이템 상세 페이지로 이동
+                              _searchController.text = _searchedItems[index].title!;
+                            },
+                            child: ListTile(
+                              title: Text(
+                                item.title!,
+                                style: const TextStyle(fontSize: 17),
+                              ),
+
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -155,64 +255,66 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
         ),
       ),
-      body: Column(
-        children: [
-          // 검색어 입력 전에는 최근 검색어 목록 표시
-          if (_searchController.text.isEmpty)
-            const DeleteRecent(),
-
-          if (_searchController.text.isEmpty)
-            SearchDetailList(
-              searchDetailData: recentSearches, // 최근 검색어 리스트
-              onDelete: _deleteRecentSearch, // 삭제 핸들러
-            ),
-
-          // 로딩 중에는 CircularProgressIndicator 표시
-          if (_isLoading)
-            const Center(child: CircularProgressIndicator()),
-
-          // 검색된 아이템 목록을 표시
-          if (_searchController.text.isNotEmpty) // 검색어가 있을 때만 cyan 색 적용
-            Expanded(
-              child: Container(
-                color: Colors.white,
-                child: ListView.builder(
-                  itemCount: _searchedItems.length,
-                  itemBuilder: (context, index) {
-                    ItemModel item = _searchedItems[index];
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 15),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                onTap: () {
-                                  // 항목 클릭 시 동작
-                                  // 예를 들어, 아이템 상세 페이지로 이동
-                                },
-                                child: ListTile(
-                                  title: Text(
-                                    item.title!,
-                                    style: const TextStyle(fontSize: 17),
-                                  ),
-                                  leading: item.imageUrl != null
-                                      ? Image.network(item.imageUrl!)
-                                      : null,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-              ),
-            )
-        ],
-      ),
+      body: _buildSearchArea()
+      // Column(
+      //   children: [
+      //     // 검색어 입력 전에는 최근 검색어 목록 표시
+      //     if (_searchController.text.isEmpty)
+      //       const DeleteRecent(),
+      //
+      //     if (_searchController.text.isEmpty)
+      //       SearchDetailList(
+      //         searchDetailData: recentSearches, // 최근 검색어 리스트
+      //         onDelete: _deleteRecentSearch, // 삭제 핸들러
+      //         controller: _searchController,
+      //         setState: () {setState(() {});},
+      //       ),
+      //
+      //     // 로딩 중에는 CircularProgressIndicator 표시
+      //     if (_isLoading)
+      //       const Center(child: CircularProgressIndicator()),
+      //
+      //     // 검색된 아이템 목록을 표시
+      //     if (_searchController.text.isNotEmpty) // 검색어가 있을 때만 cyan 색 적용
+      //       Expanded(
+      //         child: Container(
+      //           color: Colors.white,
+      //           child: ListView.builder(
+      //             itemCount: _searchedItems.length,
+      //             itemBuilder: (context, index) {
+      //               ItemModel item = _searchedItems[index];
+      //               return Padding(
+      //                 padding: const EdgeInsets.symmetric(vertical: 15),
+      //                 child: Row(
+      //                   children: [
+      //                     Expanded(
+      //                       child: Material(
+      //                         color: Colors.transparent,
+      //                         child: InkWell(
+      //                           onTap: () {
+      //                             // 항목 클릭 시 동작
+      //                             // 예를 들어, 아이템 상세 페이지로 이동
+      //                             _searchController.text = _searchedItems[index].title!;
+      //                           },
+      //                           child: ListTile(
+      //                             title: Text(
+      //                               item.title!,
+      //                               style: const TextStyle(fontSize: 17),
+      //                             ),
+      //
+      //                           ),
+      //                         ),
+      //                       ),
+      //                     ),
+      //                   ],
+      //                 ),
+      //               );
+      //             },
+      //           ),
+      //         ),
+      //       )
+      //   ],
+      // ),
     );
   }
 }

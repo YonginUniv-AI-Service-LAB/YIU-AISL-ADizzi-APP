@@ -3,11 +3,15 @@ import 'package:flutter/material.dart';
 class SearchDetailList extends StatelessWidget {
   final List<String> searchDetailData;
   final Function(int) onDelete;
+  final TextEditingController controller;
+  final VoidCallback setState;
 
   const SearchDetailList({
     super.key,
     required this.searchDetailData,
     required this.onDelete,
+    required this.controller,
+    required this.setState,
   });
 
   @override
@@ -26,7 +30,8 @@ class SearchDetailList extends StatelessWidget {
                   color: Colors.transparent,
                   child: InkWell(
                     onTap: () {
-
+                      controller.text = searchDetailData[index];
+                      setState();
                     },
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
