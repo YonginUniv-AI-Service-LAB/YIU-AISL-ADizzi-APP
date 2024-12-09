@@ -106,7 +106,7 @@ class _SearchScreenState extends State<SearchScreen> {
       context,
       MaterialPageRoute(
         builder: (context) =>
-            SearchResultsScreen(searchResults: _searchedItems),
+            SearchResultsScreen(searchResults: _searchedItems, query:  _searchController.text,) ,
       ),
     );
   }
@@ -256,65 +256,7 @@ class _SearchScreenState extends State<SearchScreen> {
         ),
       ),
       body: _buildSearchArea()
-      // Column(
-      //   children: [
-      //     // 검색어 입력 전에는 최근 검색어 목록 표시
-      //     if (_searchController.text.isEmpty)
-      //       const DeleteRecent(),
-      //
-      //     if (_searchController.text.isEmpty)
-      //       SearchDetailList(
-      //         searchDetailData: recentSearches, // 최근 검색어 리스트
-      //         onDelete: _deleteRecentSearch, // 삭제 핸들러
-      //         controller: _searchController,
-      //         setState: () {setState(() {});},
-      //       ),
-      //
-      //     // 로딩 중에는 CircularProgressIndicator 표시
-      //     if (_isLoading)
-      //       const Center(child: CircularProgressIndicator()),
-      //
-      //     // 검색된 아이템 목록을 표시
-      //     if (_searchController.text.isNotEmpty) // 검색어가 있을 때만 cyan 색 적용
-      //       Expanded(
-      //         child: Container(
-      //           color: Colors.white,
-      //           child: ListView.builder(
-      //             itemCount: _searchedItems.length,
-      //             itemBuilder: (context, index) {
-      //               ItemModel item = _searchedItems[index];
-      //               return Padding(
-      //                 padding: const EdgeInsets.symmetric(vertical: 15),
-      //                 child: Row(
-      //                   children: [
-      //                     Expanded(
-      //                       child: Material(
-      //                         color: Colors.transparent,
-      //                         child: InkWell(
-      //                           onTap: () {
-      //                             // 항목 클릭 시 동작
-      //                             // 예를 들어, 아이템 상세 페이지로 이동
-      //                             _searchController.text = _searchedItems[index].title!;
-      //                           },
-      //                           child: ListTile(
-      //                             title: Text(
-      //                               item.title!,
-      //                               style: const TextStyle(fontSize: 17),
-      //                             ),
-      //
-      //                           ),
-      //                         ),
-      //                       ),
-      //                     ),
-      //                   ],
-      //                 ),
-      //               );
-      //             },
-      //           ),
-      //         ),
-      //       )
-      //   ],
-      // ),
+
     );
   }
 }

@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:yiu_aisl_adizzi_app/screens/container/create_container_screen.dart';
+import 'package:yiu_aisl_adizzi_app/screens/main/main_screen.dart';
 import 'package:yiu_aisl_adizzi_app/service/container_service.dart';
 import 'package:yiu_aisl_adizzi_app/utils/model.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/custom_search_bar.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/floating_add_button.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/time_sort_seletor.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/container_list_view.dart';
+import '../main/main_item_tab_view.dart';
 import 'edit_container_screen.dart';
 
 class ContainerScreen extends StatefulWidget {
   final String roomName; // 방 이름을 저장하는 변수
   final int roomId;
+
+
 
   const ContainerScreen({super.key, required this.roomName, required this.roomId});
 
@@ -51,7 +55,7 @@ class _ContainerScreenState extends State<ContainerScreen> {
           IconButton(
             icon: const Icon(Icons.grid_view),
             onPressed: () {
-              // main item 페이지로 이동
+
             },
           ),
         ],
