@@ -56,8 +56,9 @@ class _CameraCropWidgetState extends State<CameraCropWidget> {
         uiSettings: [
           AndroidUiSettings(
             toolbarTitle: '이미지 크롭',
-            toolbarColor: Colors.blue,
+            toolbarColor: Color(0xFF5DDA6F),
             toolbarWidgetColor: Colors.white,
+            // square만 넣을지?
             aspectRatioPresets: [
               CropAspectRatioPreset.original,
               CropAspectRatioPreset.square,
@@ -68,10 +69,10 @@ class _CameraCropWidgetState extends State<CameraCropWidget> {
             initAspectRatio: CropAspectRatioPreset.original,
             lockAspectRatio: false,
           ),
-          IOSUiSettings(
-            title: '이미지 크롭',
-            aspectRatioLockEnabled: false,
-          ),
+          // IOSUiSettings(
+          //   title: '이미지 크롭',
+          //   aspectRatioLockEnabled: false,
+          // ),
         ],
       );
       if (cropped != null) {
