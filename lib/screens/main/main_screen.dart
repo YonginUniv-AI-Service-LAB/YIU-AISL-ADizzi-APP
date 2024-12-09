@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:yiu_aisl_adizzi_app/screens/item/add_item_screen.dart';
 import 'package:yiu_aisl_adizzi_app/screens/item/create_item_screen.dart';
 import 'package:yiu_aisl_adizzi_app/screens/main/main_item_tab_view.dart';
 import 'package:yiu_aisl_adizzi_app/screens/main/main_room_tab_view.dart';
@@ -104,22 +103,27 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
       ),
       floatingActionButton: FloatingAddButton(
         onPressed: () {
-          if ( _tabController.index == 0 ) {
+          if (_tabController.index == 0) {
+            // Room을 추가하는 로직
             showDialog(
               context: context,
               barrierDismissible: false,
-              builder: (BuildContext context) => AddDialog(isEdit: false,),
+              builder: (BuildContext context) => AddDialog(isEdit: false),
             ).then((_) {
               _loadRoomData();
             });
           }
-          if ( _tabController.index == 1) {
+          if (_tabController.index == 1) {
+            // 아이템을 추가하는 로직
+            final selectedSlotId = _items?.first.slotId ?? 0;  // 아이템이 없으면 기본값 0을 사용
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => CreateItemScreen(), // 수정할 아이템을 넘겨줌
+                builder: (context) => CreateItemScreen(slotId: selectedSlotId),
               ),
-            ).then((_) {_loadItemData();});
+            ).then((_) {
+              _loadItemData();
+            });
           }
         },
       ),

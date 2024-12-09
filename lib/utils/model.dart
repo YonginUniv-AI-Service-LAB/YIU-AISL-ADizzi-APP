@@ -100,6 +100,8 @@ class ItemModel {
   final int itemId;
   final String? title;
   final String? detail;
+  final String? mainCategory; // 대분류
+  final String? subCategory; // 소분류
   final int? slotId;
   final int? category;
   final String? imageUrl;
@@ -112,6 +114,8 @@ class ItemModel {
     required this.itemId,
     this.title,
     this.detail,
+    this.mainCategory,
+    this.subCategory,
     this.category,
     this.slotId,
     this.imageUrl,
@@ -126,6 +130,8 @@ class ItemModel {
       itemId: json['itemId'],
       title: json['title'],
       detail: json['detail'],
+      mainCategory: json['mainCategory'],
+      subCategory: json['subCategory'],
       slotId: json['slotId'],
       category: json['category'],
       createdAt: json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
