@@ -22,6 +22,14 @@ class SearchResultsScreen extends StatefulWidget {
 }
 
 class _SearchResultsScreenState extends State<SearchResultsScreen> {
+  late List<ItemModel> searchResults;
+
+  @override
+  void initState() {
+    super.initState();
+    searchResults = widget.searchResults;
+    print('결과 $searchResults');
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +52,14 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
       ),
       body: Container(
         color: Colors.white,
-        child: ListView(
+        child: widget.searchResults.isEmpty
+            ? const Center(
+          child: Text(
+            "검색 결과가 없습니다",
+            style: TextStyle(fontSize: 18, color: Colors.black54),
+          ),
+        )
+            : ListView(
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
