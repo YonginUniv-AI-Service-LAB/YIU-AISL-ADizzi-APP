@@ -103,18 +103,18 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
       ),
       floatingActionButton: FloatingAddButton(
         onPressed: () {
-          if ( _tabController.index == 0 ) {
+          if (_tabController.index == 0) {
+            // Room을 추가하는 로직
             showDialog(
               context: context,
               barrierDismissible: false,
-              builder: (BuildContext context) => AddDialog(isEdit: false,),
+              builder: (BuildContext context) => AddDialog(isEdit: false),
             ).then((_) {
               _loadRoomData();
             });
           }
-          if ( _tabController.index == 1) {
-            // `slotId`를 선택해서 CreateItemScreen으로 전달
-
+          if (_tabController.index == 1) {
+            // 아이템을 추가하는 로직
             final selectedSlotId = _items?.first.slotId ?? 0;  // 아이템이 없으면 기본값 0을 사용
             Navigator.push(
               context,
