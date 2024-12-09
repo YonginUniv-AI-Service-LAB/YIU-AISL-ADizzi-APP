@@ -30,7 +30,7 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
     _loadRoomData();
     _loadItemData();
     // TreeProvider에서 트리 데이터 로드
