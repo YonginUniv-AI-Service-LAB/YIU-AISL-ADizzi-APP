@@ -44,7 +44,7 @@ class RoomCustomSearchBar extends StatelessWidget {
                 onPressed: () {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => SearchScreen(slot: SlotModel(slotId: 6, title: "임시"))),
+                    MaterialPageRoute(builder: (context) => SearchScreen()),
                   );
                 },
                 icon: const Icon(Icons.search),
