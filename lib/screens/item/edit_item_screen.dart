@@ -7,17 +7,18 @@ import '../../widgets/main_button.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/category_selector.dart';
 import 'package:yiu_aisl_adizzi_app/data/categories.dart';
 
-class AddItemScreen extends StatefulWidget {
-  final ItemModel? item; // 기존 아이템을 받기 위해서
-  AddItemScreen({this.item});
+class EditItemScreen extends StatefulWidget {
+  final ItemModel item;
+
+  EditItemScreen({required this.item});
 
   @override
-  _AddItemScreenState createState() => _AddItemScreenState();
+  _EditItemScreenState createState() => _EditItemScreenState();
 }
 
-class _AddItemScreenState extends State<AddItemScreen> {
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _memoController = TextEditingController();
+class _EditItemScreenState extends State<EditItemScreen> {
+  late TextEditingController _nameController;
+  late TextEditingController _memoController;
   String? _selectedMainCategory;
   String? _selectedSubCategory;
   int? _selectedCategoryCode;
@@ -26,15 +27,13 @@ class _AddItemScreenState extends State<AddItemScreen> {
   @override
   void initState() {
     super.initState();
-    if (widget.item != null) {
-      _nameController.text = widget.item!.title!;
-      _memoController.text = widget.item!.detail ?? '';
-      _selectedMainCategory = widget.item!.mainCategory;
-      _selectedSubCategory = widget.item!.subCategory;
-      _selectedCategoryCode = widget.item!.category;
-      if (widget.item!.imageUrl != null) {
-        _selectedImage = File(widget.item!.imageUrl!);
-      }
+    _nameController = TextEditingController(text: widget.item.title);
+    _memoController = TextEditingController(text: widget.item.detail);
+    _selectedMainCategory = widget.item.mainCategory;
+    _selectedSubCategory = widget.item.subCategory;
+    _selectedCategoryCode = widget.item.category;
+    if (widget.item.imageUrl != null) {
+      _selectedImage = File(widget.item.imageUrl!);
     }
   }
 
@@ -71,18 +70,6 @@ class _AddItemScreenState extends State<AddItemScreen> {
 
     final subCategories = categories[_selectedMainCategory!]!;
 
-    if (subCategories.isEmpty) {
-      // 소분류가 없는 경우
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("선택 가능한 소분류가 없습니다.")),
-      );
-      setState(() {
-        _selectedSubCategory = _selectedMainCategory;
-        _selectedCategoryCode = categories[_selectedMainCategory]?.values.first;
-      });
-      return;
-    }
-
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -108,13 +95,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          '아이템 추가',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
+        title: const Text('아이템 수정'),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -132,54 +113,33 @@ class _AddItemScreenState extends State<AddItemScreen> {
                 initialImage: _selectedImage,
               ),
               const SizedBox(height: 18),
-              const Text(
-                '아이템 이름',
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
+              const Text('아이템 이름', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
               const SizedBox(height: 10),
               CustomTextField(controller: _nameController),
               const SizedBox(height: 18),
-              // 대분류 선택
               CategorySelector(
                 label: '대분류',
                 selectedCategory: _selectedMainCategory,
                 onPressed: _showMainCategoryBottomSheet,
               ),
               const SizedBox(height: 18),
-
-              // 소분류 선택
               CategorySelector(
                 label: '소분류',
                 selectedCategory: _selectedSubCategory,
                 onPressed: _showSubCategoryBottomSheet,
               ),
               const SizedBox(height: 18),
-              const Text(
-                '메모',
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
+              const Text('메모', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
               const SizedBox(height: 10),
               Container(
-                constraints: const BoxConstraints(
-                  minHeight: 80,
-                  maxHeight: 200,
-                ),
-                child: CustomTextField(
-                  controller: _memoController,
-                  maxLines: 2,
-                ),
+                constraints: const BoxConstraints(minHeight: 80, maxHeight: 200),
+                child: CustomTextField(controller: _memoController, maxLines: 2),
               ),
               const SizedBox(height: 25),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: MainButton(
-                  label: '저장',
+                  label: '수정 완료',
                   onPressed: () {
                     if (_nameController.text.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -202,17 +162,17 @@ class _AddItemScreenState extends State<AddItemScreen> {
                       return;
                     }
 
-                    final newItem = ItemModel(
-                      itemId: 1,
+                    final updatedItem = ItemModel(
+                      itemId: widget.item.itemId,
                       title: _nameController.text,
                       mainCategory: _selectedMainCategory!,
-                      subCategory: _selectedSubCategory ?? null,
+                      subCategory: _selectedSubCategory,
                       category: _selectedCategoryCode!,
                       detail: _memoController.text.isEmpty ? '메모 없음' : _memoController.text,
                       imageUrl: _selectedImage?.path,
                     );
 
-                    Navigator.pop(context, newItem);
+                    Navigator.pop(context, updatedItem);
                   },
                 ),
               ),

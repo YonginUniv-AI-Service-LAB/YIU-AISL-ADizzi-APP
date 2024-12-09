@@ -4,38 +4,37 @@ import 'package:provider/provider.dart';
 import 'package:yiu_aisl_adizzi_app/provider/tree_provider.dart';
 import 'package:yiu_aisl_adizzi_app/service/container_service.dart';
 import 'package:yiu_aisl_adizzi_app/service/image_service.dart';
+import 'package:yiu_aisl_adizzi_app/service/slot_service.dart';
 import 'package:yiu_aisl_adizzi_app/utils/model.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/camera_widget.dart';
 import '../../widgets/custom_textfield.dart';
 import '../../widgets/main_button.dart';
 
-class CreateContainerScreen extends StatefulWidget {
-  final int roomId;
+class CreateSlotScreen extends StatefulWidget {
+  final ContainerModel container;
 
-  const CreateContainerScreen({required this.roomId, Key? key})
+  const CreateSlotScreen({required this.container, Key? key})
       : super(key: key);
 
   @override
-  _CreateContainerScreenState createState() => _CreateContainerScreenState();
+  _CreateSlotScreenState createState() => _CreateSlotScreenState();
 }
 
-class _CreateContainerScreenState extends State<CreateContainerScreen> {
+class _CreateSlotScreenState extends State<CreateSlotScreen> {
   final TextEditingController _controller = TextEditingController();
   File? _selectedImage;  //선택한 이미지
 
   @override
   void initState() {
     super.initState();
-    Provider.of<TreeProvider>(context, listen: false).fetchTree(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    final room = Provider.of<TreeProvider>(context).getRoomById(widget.roomId);
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          room?.title! ?? '방 이름 조회 오류',
+          widget.container.title!,
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
@@ -56,10 +55,11 @@ class _CreateContainerScreenState extends State<CreateContainerScreen> {
                   });
                 },
                 initialImage: _selectedImage,
+                imageUrl: widget.container.imageUrl,
               ),
               const SizedBox(height: 30),
               const Text(
-                '수납장 이름',
+                '수납칸 이름',
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
@@ -75,7 +75,7 @@ class _CreateContainerScreenState extends State<CreateContainerScreen> {
                   onPressed: () async{
                     if (_controller.text.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text("수납장 이름을 입력해주세요.")),
+                        const SnackBar(content: Text("수납칸 이름을 입력해주세요.")),
                       );
                       return;
                     }
@@ -88,7 +88,7 @@ class _CreateContainerScreenState extends State<CreateContainerScreen> {
 
                     int? imageId = await uploadImage(_selectedImage!.path);
 
-                    await createContainer(context, roomId: widget.roomId,
+                    await createSlot(context, containerId: widget.container.containerId,
                       title: _controller.text,
                       imageId: imageId,
                     );

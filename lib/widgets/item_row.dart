@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:yiu_aisl_adizzi_app/utils/model.dart';
 // import 'package:yiu_aisl_adizzi_app/models/item_model.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/custom_popup_menu.dart';
+import 'package:yiu_aisl_adizzi_app/widgets/item_popup_menu.dart';
 
 class ItemRow extends StatelessWidget {
   final ItemModel item;
@@ -46,12 +47,18 @@ class ItemRow extends StatelessWidget {
             // 이미지
             ClipRRect(
               borderRadius: BorderRadius.circular(2),
-              child: Image.file(
-                File(item.imageUrl!),
+              child: Image.network(
+                item.imageUrl!,
                 width: 75,
                 height: 75,
                 fit: BoxFit.cover,
               ),
+              // Image.file(
+              //   File(item.imageUrl!),
+              //   width: 75,
+              //   height: 75,
+              //   fit: BoxFit.cover,
+              // ),
             ),
             const SizedBox(width: 16), // 간격
             // 제목
@@ -66,7 +73,7 @@ class ItemRow extends StatelessWidget {
               ),
             ),
             // 팝업 메뉴
-            CustomPopupMenu(
+            ItemPopupMenu(
               onSelected: (value) {
                 onPopupMenuAction(index, value);
               },

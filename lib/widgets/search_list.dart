@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 
 class SearchList extends StatelessWidget {
   final List<String> searchData;
+  final Function(String) onRemove;
+  final TextEditingController controller;
 
-  const SearchList({super.key, required this.searchData});
+  const SearchList({super.key, required this.searchData, required this.onRemove, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -13,28 +15,39 @@ class SearchList extends StatelessWidget {
       child: ListView.builder(
         itemCount: searchData.length,
         itemBuilder: (context, index) {
-          return Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 4.0),
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Icon(Icons.restore,size: 20,),
-                const SizedBox(width: 25.0),
-                Expanded(
-                  child: Text(
-                    searchData[index],
-                    style: const TextStyle(color: Colors.black, fontSize: 15),
+                // Material로 감싼 InkWell을 추가
+                Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: () {
+                      // 클릭 시 페이지 이동 등
+                      controller.text = searchData[index];
+                    },
+                    child: Row(
+                      children: [
+                        const Icon(Icons.restore, size: 20), // 아이콘
+                        const SizedBox(width: 10.0), // 아이콘과 텍스트 간 간격
+                        Text(
+                          searchData[index], // 텍스트
+                          style: const TextStyle(color: Colors.black, fontSize: 15),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 SizedBox(
                   width: 40.0,
                   height: 40.0,
                   child: IconButton(
-                    icon: const Icon(Icons.clear,size: 17,),
+                    icon: const Icon(Icons.clear, size: 17),
                     onPressed: () {
-
+                      onRemove(searchData[index]);
                     },
-                    padding: EdgeInsets.zero,
                   ),
                 ),
               ],

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yiu_aisl_adizzi_app/provider/tree_provider.dart';
 import 'package:yiu_aisl_adizzi_app/service/container_service.dart';
+import 'package:yiu_aisl_adizzi_app/service/image_service.dart';
 import 'package:yiu_aisl_adizzi_app/utils/model.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/camera_widget.dart';
 import '../../widgets/custom_textfield.dart';
@@ -20,14 +21,13 @@ class EditContainerScreen extends StatefulWidget {
 
 class _EditContainerScreenState extends State<EditContainerScreen> {
   final TextEditingController _controller = TextEditingController();
-  late int _selectedImage;  //선택한 이미지
-  late File _selectedImageFile; // 이미지 파일을 저장할 변수
+  File? _selectedImage;  //선택한 이미지
 
   @override
   void initState() {
     super.initState();
     _controller.text = widget.container.title!;
-    _selectedImage = 1;
+    Provider.of<TreeProvider>(context, listen: false).fetchTree(context);
   }
 
   @override
@@ -54,10 +54,11 @@ class _EditContainerScreenState extends State<EditContainerScreen> {
               CameraWidget(
                 onImageSelected: (image) {
                   setState(() {
-                    _selectedImageFile = image as File;
+                    _selectedImage = image;
                   });
                 },
-               // initialImage: _selectedImage,
+                initialImage: _selectedImage,
+                imageUrl: widget.container.imageUrl,
               ),
               const SizedBox(height: 30),
               const Text(
@@ -81,7 +82,12 @@ class _EditContainerScreenState extends State<EditContainerScreen> {
                       );
                       return;
                     }
-                    await editContainer(context, containerId: widget.container.containerId, title: _controller.text, imageId: _selectedImage);
+                    int? imageId = _selectedImage == null ? null : await uploadImage(_selectedImage!.path);
+
+                    await editContainer(context, containerId: widget.container.containerId,
+                      title: _controller.text == widget.container.title ? null : _controller.text,
+                      imageId: imageId,
+                    );
 
                     Navigator.pop(context);
                   },
