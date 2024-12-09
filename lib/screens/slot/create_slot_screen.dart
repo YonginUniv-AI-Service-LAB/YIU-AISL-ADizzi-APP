@@ -54,8 +54,8 @@ class _CreateSlotScreenState extends State<CreateSlotScreen> {
                     _selectedImage = image;
                   });
                 },
-                initialImage: _selectedImage,
-                imageUrl: widget.container.imageUrl,
+                // initialImage: _selectedImage,
+                // imageUrl: widget.container.imageUrl,
               ),
               const SizedBox(height: 30),
               const Text(

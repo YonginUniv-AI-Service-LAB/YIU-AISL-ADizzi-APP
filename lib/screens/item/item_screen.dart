@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yiu_aisl_adizzi_app/provider/tree_provider.dart';
-import 'package:yiu_aisl_adizzi_app/screens/item/create_item_screen.dart';
-import 'package:yiu_aisl_adizzi_app/screens/item/edit_item_screen.dart';
+import 'package:yiu_aisl_adizzi_app/screens/item/add_item_screen.dart';
 import 'package:yiu_aisl_adizzi_app/service/item_service.dart';
 import 'package:yiu_aisl_adizzi_app/utils/model.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/time_sort_seletor.dart';
@@ -30,7 +29,7 @@ class _ItemScreenState extends State<ItemScreen> {
     Provider.of<TreeProvider>(context, listen: false).fetchTree(context);
   }
 
-  Future<void> _loadData() async {
+  Future<void> _loadData() async{
     // sortBy 매핑
     String sortBy = isLatestSelected ? 'recent' : 'old';
     items = await getItems(context, slotId: widget.slot.slotId, sortBy: sortBy);
@@ -52,9 +51,9 @@ class _ItemScreenState extends State<ItemScreen> {
   }
 
   // 선택 삭제 처리
-  void _deleteSelectedItems() async {
+  void _deleteSelectedItems() async{
     for (var item in items!) {
-      if (item.isChecked) {
+      if(item.isChecked) {
         await deleteItem(context, itemId: item.itemId);
       }
     }
@@ -125,14 +124,10 @@ class _ItemScreenState extends State<ItemScreen> {
                   : ItemListView(
                 items: items!,
                 onItemTap: (index) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => EditItemScreen(item: items![index]),
-                    ),
-                  ).then((_) {
-                    _loadData();
+                  setState(() {
+                    selectedItem = items![index]; // 선택된 아이템을 selectedItem에 저장
                   });
+                  print('아이템 ${items![index].title} 클릭됨'); // 클릭 이벤트 처리
                 },
                 onCheckboxChanged: (index, isChecked) {
                   setState(() {
@@ -153,11 +148,9 @@ class _ItemScreenState extends State<ItemScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => CreateItemScreen(slotId: widget.slot.slotId),
+              builder: (context) => AddItemScreen(slotId: widget.slot.slotId,), // 수정할 아이템을 넘겨줌
             ),
-          ).then((_) {
-            _loadData();
-          });
+          ).then((_) {_loadData();});
         },
       ),
     );

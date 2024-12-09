@@ -75,15 +75,6 @@ class _CameraWidgetState extends State<CameraWidget> {
               : null,
         ),
         child: _buildCameraModule()
-        // _selectedImage == null
-        //     ? const Center(
-        //         child: Icon(
-        //           Icons.camera_alt,
-        //           size: 30,
-        //           color: Colors.white,
-        //         ),
-        //       )
-        //     : null,
       ),
     );
   }

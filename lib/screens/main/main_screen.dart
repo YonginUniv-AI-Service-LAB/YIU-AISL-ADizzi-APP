@@ -119,7 +119,7 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => CreateItemScreen(slotId: selectedSlotId),
+                builder: (context) => CreateItemScreen(), // 수정할 아이템을 넘겨줌
               ),
             ).then((_) {
               _loadItemData();

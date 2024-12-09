@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yiu_aisl_adizzi_app/provider/tree_provider.dart';
-import 'package:yiu_aisl_adizzi_app/screens/item/create_item_screen.dart';
+import 'package:yiu_aisl_adizzi_app/screens/item/add_item_screen.dart';
 import 'package:yiu_aisl_adizzi_app/screens/slot/create_slot_screen.dart';
 import 'package:yiu_aisl_adizzi_app/service/slot_service.dart';
 import 'package:yiu_aisl_adizzi_app/utils/model.dart';
@@ -11,6 +11,7 @@ import 'package:yiu_aisl_adizzi_app/widgets/temp_slot_list_view.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/time_sort_seletor.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/slot_add_button.dart'; // SlotAddButton 임포트
 import 'package:yiu_aisl_adizzi_app/widgets/slot_add_dialog.dart';
+
 
 class SlotScreen extends StatefulWidget {
   final ContainerModel container; // 필드 이름 소문자로 변경
@@ -68,7 +69,7 @@ class _SlotScreenState extends State<SlotScreen> {
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => CreateItemScreen(slotId: widget.container.slotId!,),
+          builder: (context) => AddItemScreen(slotId: widget.container.slotId!,),
         )).then((_) {_loadData();});
   }
 
