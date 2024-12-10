@@ -49,6 +49,7 @@ class _CreateSlotScreenState extends State<CreateSlotScreen> {
                     _selectedImage = image; // 선택한 이미지를 저장
                   });
                 },
+                imageUrl: widget.container.imageUrl,
               ),
               const SizedBox(height: 30),
               const Text(

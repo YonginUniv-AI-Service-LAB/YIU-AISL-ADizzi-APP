@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
+import 'package:yiu_aisl_adizzi_app/service/image_service.dart';
 
 class CameraCropWidget extends StatefulWidget {
   final Function(File?) onImageSelected; // 부모로 선택된 이미지를 전달하는 콜백 함수
@@ -36,6 +37,7 @@ class _CameraCropWidgetState extends State<CameraCropWidget> {
       final XFile? pickedFile = await _picker.pickImage(source: ImageSource.camera);
       if (pickedFile != null) {
         final croppedFile = await _cropImage(File(pickedFile.path));
+        // final croppedFile = await _cropImageUrl());
         if (croppedFile != null) {
           setState(() {
             _selectedImage = croppedFile;
@@ -45,6 +47,17 @@ class _CameraCropWidgetState extends State<CameraCropWidget> {
       }
     } catch (e) {
       debugPrint("Error picking or cropping image: $e");
+    }
+  }
+
+  // 이미지 크롭
+  Future<File?> _cropImageUrl({required String imageUrl}) async {
+    try {
+      File imageFile = await downloadImage(imageUrl);
+      return _cropImage(imageFile);
+    } catch (e) {
+      debugPrint("Error during image download: $e");
+      return null;
     }
   }
 
