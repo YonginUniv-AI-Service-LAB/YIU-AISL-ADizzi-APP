@@ -20,8 +20,6 @@ class CreateItemScreen extends StatefulWidget {
 class _CreateItemScreenState extends State<CreateItemScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _memoController = TextEditingController();
-  String? _selectedMainCategory;
-  String? _selectedSubCategory;
   int? _selectedCategoryCode;
   File? _selectedImage;
 
@@ -32,12 +30,24 @@ class _CreateItemScreenState extends State<CreateItemScreen> {
 
   // 카테고리 선택 모달 시트
   void _showCategoryBottomSheet() {
-    // TODO: 아래의 카테고리 선택 시트의 이용경험이 더 좋음 다른 화면에 적용 필요
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
         return ListView(
           children: categories.keys.map((mainCategory) {
+
+            if(categories[mainCategory] != null && categories[mainCategory]!.length == 1) {
+              return ListTile(
+                title: Text(mainCategory),
+                onTap: () {
+                  setState(() {
+                    _selectedCategoryCode = categories[mainCategory]![mainCategory];
+                  });
+                  Navigator.pop(context);
+                },
+              );
+            }
+
             return ExpansionTile(
               title: Text(mainCategory),
               children: categories[mainCategory]!.keys.map((subCategory) {
@@ -45,8 +55,6 @@ class _CreateItemScreenState extends State<CreateItemScreen> {
                   title: Text(subCategory),
                   onTap: () {
                     setState(() {
-                      _selectedMainCategory = mainCategory;
-                      _selectedSubCategory = subCategory;
                       _selectedCategoryCode = categories[mainCategory]![subCategory];
                     });
                     Navigator.pop(context);
@@ -150,14 +158,9 @@ class _CreateItemScreenState extends State<CreateItemScreen> {
               ),
               const SizedBox(height: 10),
               CustomTextField(controller: _nameController),
-              const SizedBox(height: 18),
-              const Text(
-                '카테고리',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-              ),
               const SizedBox(height: 10),
               CategorySelector(
-                selectedCategory: _selectedSubCategory ?? '카테고리를 선택하세요',
+                selectedCategory: _selectedCategoryCode == null ? '카테고리를 선택하세요' : getCategoryName(_selectedCategoryCode),
                 label: '카테고리',
                 onPressed: _showCategoryBottomSheet,
               ),
