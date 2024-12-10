@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:yiu_aisl_adizzi_app/service/user_service.dart';
-import '../../service/user/login.dart';
 import '../../widgets/link_label.dart';
 import '../../widgets/logo_image.dart';
 import '../../widgets/login_button.dart';

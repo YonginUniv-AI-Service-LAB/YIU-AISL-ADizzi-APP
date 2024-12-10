@@ -5,7 +5,6 @@ import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:yiu_aisl_adizzi_app/service/room_service.dart';
 import 'package:yiu_aisl_adizzi_app/utils/model.dart';
-import '../service/main/room_post.dart';
 
 class AddDialog extends StatefulWidget {
   final String? initialTitle;

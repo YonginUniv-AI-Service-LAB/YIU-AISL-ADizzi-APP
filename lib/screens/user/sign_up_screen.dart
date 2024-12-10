@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yiu_aisl_adizzi_app/service/user_service.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/mail_button.dart';
-import '../../service/user/signUp.dart';
 import '../../service/service.dart';
 import '../../widgets/main_button.dart';
 import '../../widgets/main_text_input.dart';
