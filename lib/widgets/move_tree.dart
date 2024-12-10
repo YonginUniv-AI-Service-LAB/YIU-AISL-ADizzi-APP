@@ -16,7 +16,7 @@ class MoveTree extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("아이템 이동")
+        title: Text("물건 이동")
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

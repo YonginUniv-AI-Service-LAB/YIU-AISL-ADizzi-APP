@@ -100,7 +100,7 @@ class _TempStartScreenState extends State<TempStartScreen>
                   MaterialPageRoute(builder: (context) => CreateSlotScreen(container: ContainerModel(containerId: 3, title: "수납장장", imageUrl: "https://yiu-aisl-bucket.s3.ap-northeast-2.amazonaws.com/01df3780-f19358bc7c414ad5e7.jpg", slotId: 5),)),
                 );
               },
-              child: Text('수납칸 생성 페이지'),
+              child: Text('수납칸 등록 페이지'),
             ),
             ElevatedButton(
               onPressed: () {

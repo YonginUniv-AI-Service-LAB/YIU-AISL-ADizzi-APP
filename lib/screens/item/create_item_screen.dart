@@ -78,7 +78,7 @@ class _CreateItemScreenState extends State<CreateItemScreen> {
   // 저장 버튼 동작
   void _handleSave() {
     if (_nameController.text.isEmpty) {
-      _showErrorSnackBar("아이템 이름을 입력해주세요.");
+      _showErrorSnackBar("물건 이름을 입력해주세요.");
       return;
     }
 
@@ -113,11 +113,11 @@ class _CreateItemScreenState extends State<CreateItemScreen> {
               );
 
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('아이템이 생성되었습니다.')),
+                SnackBar(content: Text('물건이 등록되었습니다.')),
               );
               Navigator.pop(context); // MoveTree로부터 Pop
             } catch (e) {
-              _showErrorSnackBar('아이템 생성 실패: $e');
+              _showErrorSnackBar('물건 등록 실패: $e');
             }
           },
         ),

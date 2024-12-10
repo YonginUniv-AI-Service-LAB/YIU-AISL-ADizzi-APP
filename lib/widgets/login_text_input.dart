@@ -43,6 +43,7 @@ class LoginTextInput extends StatelessWidget {
                   fontSize: 15,
                 ),
                 maxLines: 1,
+                obscureText: label == '비밀번호' ? true : false,
               ),
             ),
           ),

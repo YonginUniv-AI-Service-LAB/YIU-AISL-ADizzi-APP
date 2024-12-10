@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yiu_aisl_adizzi_app/screens/user/login_screen.dart';
+import 'package:yiu_aisl_adizzi_app/service/service.dart';
+import 'package:yiu_aisl_adizzi_app/service/user_service.dart';
 import '../../widgets/delete_confirmation_dialog.dart';
 import 'change_pwd_screen.dart';
 
@@ -34,7 +36,7 @@ class MyPageScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // 프로필 섹션
-            const Row(
+             Row(
               children: [
                 CircleAvatar(
                   radius: 40,
@@ -46,14 +48,26 @@ class MyPageScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: 25),
-                Text(
-                  '아이디',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF595959),
-                  ),
-                ),
+                // FutureBuilder로 이메일을 비동기적으로 가져오기
+                FutureBuilder<String>(
+                  future: getUserEmail(),
+                  builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Text('로딩 중...');
+                    } else if (snapshot.hasError) {
+                      return const Text('이메일 조회 오류');
+                    } else {
+                      return Text(
+                        snapshot.data ?? '이메일 없음',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFF595959),
+                        ),
+                      );
+                    }
+                  },
+                )
               ],
             ),
             const SizedBox(height: 20),
@@ -91,6 +105,7 @@ class MyPageScreen extends StatelessWidget {
               leading: const Icon(Icons.logout),
               title: const Text('로그아웃',style: TextStyle(fontSize: 15),),
               onTap: () {
+                logout();
                 Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) =>  LoginScreen(),
                 ));
               },

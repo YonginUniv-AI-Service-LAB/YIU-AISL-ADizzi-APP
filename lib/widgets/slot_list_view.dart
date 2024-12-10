@@ -32,7 +32,7 @@ class _SlotListViewState extends State<SlotListView> {
     if (widget.slots.isEmpty) {
       return const Center(
         child: Text(
-          '추가된 수납칸이 없습니다.',
+          '등록된 수납칸이 없습니다.',
           style: TextStyle(color: Colors.grey),
         ),
       );

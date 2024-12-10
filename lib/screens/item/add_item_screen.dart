@@ -141,7 +141,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                   onPressed: () async {
                     if (_nameController.text.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text("아이템 이름을 입력해주세요.")),
+                        const SnackBar(content: Text("물건 이름을 입력해주세요.")),
                       );
                       return;
                     }

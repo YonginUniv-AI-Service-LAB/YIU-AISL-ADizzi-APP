@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:yiu_aisl_adizzi_app/screens/user/login_screen.dart';
+import 'package:yiu_aisl_adizzi_app/service/user_service.dart';
 import 'package:yiu_aisl_adizzi_app/utils/model.dart';
 
 // API URL을 하나의 변수로 저장
@@ -12,11 +13,19 @@ final storage = FlutterSecureStorage(); // FlutterSecureStorage 인스턴스 생
 
 // 로그인 여부 확인
 Future<bool> isAccessToken() async{
-  String? accessToken = await FlutterSecureStorage().read(key: "accessToken");
+  String? accessToken = await storage.read(key: "accessToken");
   if ( accessToken == null ){
     return false;
   }
   return true;
+}
+
+Future<String> getUserEmail() async{
+  String? email = await storage.read(key: "email");
+  if ( email == null ){
+    return '이메일 조회 오류';
+  }
+  return email;
 }
 
 // 액세스 토큰 재발급
@@ -49,6 +58,7 @@ Future<String?> refreshAccessToken(BuildContext context) async {
       // accessToken 만료 시 처리
       if (errorResponse['code'] == "E104") {
         // 로그아웃
+        logout();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('토큰이 만료되어 로그아웃됩니다.')),
         );

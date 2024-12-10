@@ -15,6 +15,14 @@ class MainItemTabView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (items.isEmpty) {
+      return const Center(
+        child: Text(
+          '등록된 물건이 없습니다.',
+          style: TextStyle(color: Colors.grey),
+        ),
+      );
+    }
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3, // 한 줄에 3개의 이미지

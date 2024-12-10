@@ -76,8 +76,8 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
               indicatorColor: const Color(0xFF5DDA6F),
               indicatorSize: TabBarIndicatorSize.tab,
               tabs: const [
-                Tab(text: 'Room'),
-                Tab(text: 'Item'),
+                Tab(text: '공간'),
+                Tab(text: '물건'),
               ],
               labelColor: const Color(0xFF5DDA6F),
               unselectedLabelColor: Colors.black87,

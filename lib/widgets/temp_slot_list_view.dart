@@ -64,12 +64,12 @@ class _TempSlotListViewState extends State<TempSlotListView> {
                     try {
                       await moveItem(context, itemId: widget.items[index].itemId, slotId: slotId);
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('아이템이 이동되었습니다.')),
+                        SnackBar(content: Text('물건이 이동되었습니다.')),
                       );
                       Navigator.pop(context);
                     } catch (e) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('아이템 이동 실패: $e')),
+                        SnackBar(content: Text('물건 이동 실패: $e')),
                       );
                     }
                   }
@@ -89,7 +89,7 @@ class _TempSlotListViewState extends State<TempSlotListView> {
     if (widget.items.isEmpty && widget.slots.isEmpty) {
       return const Center(
         child: Text(
-          '추가된 물건 또는 수납칸이 없습니다.',
+          '등록된 물건 또는 수납칸이 없습니다.',
           style: TextStyle(color: Colors.grey),
         ),
       );

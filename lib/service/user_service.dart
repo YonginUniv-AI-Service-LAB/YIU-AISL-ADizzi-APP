@@ -17,16 +17,8 @@ Future<void> _saveLoginResponse(String responseBody) async {
   print('로그인 응답 저장 완료');
 }
 
-Future<bool> isAccessToken() async{
-  String? accessToken = await storage.read(key: "accessToken");
-  if ( accessToken == null ){
-    return false;
-  }
-  return true;
-}
-
 // 로그아웃 사용자 데이터 삭제
-Future<void> _logout() async {
+Future<void> logout() async {
   await storage.deleteAll(); // 모든 데이터 삭제
   print('로그아웃 : 로그인 사용자 데이터 삭제');
 }
@@ -87,7 +79,7 @@ Future<void> deleteUser(BuildContext context) async {
     if (response.statusCode == 200) {
       print('회원탈퇴 성공: ${utf8.decode(response.bodyBytes)}');
       // 응답 데이터를 저장하는 함수 호출
-      await _logout();
+      await logout();
       return;
     } else {
       final errorResponse = jsonDecode(utf8.decode(response.bodyBytes));

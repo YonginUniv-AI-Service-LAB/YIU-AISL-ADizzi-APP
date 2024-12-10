@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:yiu_aisl_adizzi_app/screens/user/login_screen.dart';
+import 'package:yiu_aisl_adizzi_app/service/service.dart';
 import 'package:yiu_aisl_adizzi_app/service/user_service.dart';
 
 class DeleteConfirmationDialog extends StatelessWidget {
@@ -32,6 +34,12 @@ class DeleteConfirmationDialog extends StatelessWidget {
                 return;
               }
               await deleteUser(context);
+              logout();
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => LoginScreen()),
+                    (Route<dynamic> route) => false, // 모든 이전 화면을 제거
+              );
             }catch(e){
               throw Exception('서버와의 연결에 실패했습니다.');
             }
