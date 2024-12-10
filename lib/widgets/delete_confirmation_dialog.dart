@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:yiu_aisl_adizzi_app/utils/token.dart';
-import '../service/user/delete_account.dart';
+import 'package:yiu_aisl_adizzi_app/service/user_service.dart';
 
 class DeleteConfirmationDialog extends StatelessWidget {
   const DeleteConfirmationDialog({super.key});
@@ -26,14 +25,13 @@ class DeleteConfirmationDialog extends StatelessWidget {
           ),
           onPressed: () async {
             try{
-              final token = await getToken();
-              if (token == null) {
+              if (!await isAccessToken()) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('로그인이 필요합니다.')),
                 );
                 return;
               }
-              await deleteAccount(context, token);
+              await deleteUser(context);
             }catch(e){
               throw Exception('서버와의 연결에 실패했습니다.');
             }

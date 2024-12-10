@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:yiu_aisl_adizzi_app/data/categories.dart';
+import 'package:yiu_aisl_adizzi_app/utils/categories.dart';
 import 'package:yiu_aisl_adizzi_app/service/image_service.dart';
 import 'package:yiu_aisl_adizzi_app/service/item_service.dart';
 import 'package:yiu_aisl_adizzi_app/utils/model.dart';
@@ -8,7 +8,7 @@ import '../../widgets/camera_widget.dart';
 import '../../widgets/custom_textfield.dart';
 import '../../widgets/main_button.dart';
 import '../../widgets/category_selector.dart';
-import '../../data/categories.dart'; // 카테고리 목록을 가져옵니다.
+import '../../utils/categories.dart'; // 카테고리 목록을 가져옵니다.
 
 class EditItemScreen extends StatefulWidget {
   final ItemModel item; // 기존 아이템을 받기 위해서

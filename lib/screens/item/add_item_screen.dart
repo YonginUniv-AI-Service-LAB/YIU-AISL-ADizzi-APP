@@ -7,7 +7,7 @@ import '../../widgets/camera_widget.dart';
 import '../../widgets/custom_textfield.dart';
 import '../../widgets/main_button.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/category_selector.dart';
-import 'package:yiu_aisl_adizzi_app/data/categories.dart';
+import 'package:yiu_aisl_adizzi_app/utils/categories.dart';
 
 class AddItemScreen extends StatefulWidget {
   final int slotId;

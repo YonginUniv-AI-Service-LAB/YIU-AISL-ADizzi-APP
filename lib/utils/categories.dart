@@ -106,3 +106,30 @@ final Map<String, Map<String, int>> categories = {
     '식품': 20000,
   },
 };
+
+String getCategoryName(int? category) {
+  if (category == null) {
+    return "카테고리 없음";
+  }
+
+  // 카테고리 이름을 저장할 변수
+  String categoryName = '';
+
+  // 최상위 카테고리 탐색
+  for (var mainCategory in categories.entries) {
+    // 하위 카테고리 탐색
+    for (var subCategory in mainCategory.value.entries) {
+      if (subCategory.value == category) {
+        // 카테고리가 일치하는 경우
+        categoryName = '${mainCategory.key} > ${subCategory.key}';
+        if (mainCategory.key == subCategory.key){
+          categoryName = '${mainCategory.key}';
+        }
+        return categoryName; // 찾으면 즉시 반환
+      }
+    }
+  }
+
+  // 카테고리를 찾지 못한 경우
+  return "카테고리 없음";
+}

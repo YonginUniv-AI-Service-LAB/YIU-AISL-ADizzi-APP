@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:yiu_aisl_adizzi_app/data/categories.dart';
+import 'package:yiu_aisl_adizzi_app/utils/categories.dart';
 import 'package:yiu_aisl_adizzi_app/service/image_service.dart';
 import 'package:yiu_aisl_adizzi_app/service/item_service.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/move_tree.dart';
@@ -8,7 +8,7 @@ import '../../widgets/camera_widget.dart';
 import '../../widgets/custom_textfield.dart';
 import '../../widgets/main_button.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/category_selector.dart';
-import 'package:yiu_aisl_adizzi_app/data/categories.dart';
+import 'package:yiu_aisl_adizzi_app/utils/categories.dart';
 
 class CreateItemScreen extends StatefulWidget {
   CreateItemScreen();

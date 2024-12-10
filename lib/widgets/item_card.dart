@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yiu_aisl_adizzi_app/provider/tree_provider.dart';
+import 'package:yiu_aisl_adizzi_app/utils/categories.dart';
 import 'package:yiu_aisl_adizzi_app/utils/model.dart';
 
 class ItemCard extends StatefulWidget {
@@ -83,7 +84,6 @@ class _ItemCardState extends State<ItemCard> {
                   const SizedBox(height: 8),
                   // 카테고리 표시
                   Text(
-                    // TODO: 충돌 해결 후 카테고리 대분류 + 소분류로 표현할 수 있도록 수정할 것
                     getCategoryName(widget.item.category),
                     // item.category.toString(),
                     style: TextStyle(color: Colors.grey, fontSize: 14),

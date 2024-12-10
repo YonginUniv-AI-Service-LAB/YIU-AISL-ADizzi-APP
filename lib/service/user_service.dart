@@ -16,6 +16,15 @@ Future<void> _saveLoginResponse(String responseBody) async {
 
   print('로그인 응답 저장 완료');
 }
+
+Future<bool> isAccessToken() async{
+  String? accessToken = await storage.read(key: "accessToken");
+  if ( accessToken == null ){
+    return false;
+  }
+  return true;
+}
+
 // 로그아웃 사용자 데이터 삭제
 Future<void> _logout() async {
   await storage.deleteAll(); // 모든 데이터 삭제
