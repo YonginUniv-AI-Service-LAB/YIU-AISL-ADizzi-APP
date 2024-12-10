@@ -153,7 +153,7 @@ class _CreateItemScreenState extends State<CreateItemScreen> {
               ),
               const SizedBox(height: 18),
               const Text(
-                '아이템 이름',
+                '물건 이름',
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
               ),
               const SizedBox(height: 10),

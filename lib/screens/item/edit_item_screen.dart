@@ -102,7 +102,7 @@ class _EditItemScreenState extends State<EditItemScreen> {
               ),
               const SizedBox(height: 18),
               const Text(
-                '아이템 이름',
+                '물건 이름',
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w600,

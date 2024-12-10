@@ -44,7 +44,7 @@ class _CameraWidgetState extends State<CameraWidget> {
         child: Icon(
           Icons.camera_alt,
           size: 30,
-          color: Colors.white,
+          color: Colors.grey,
         ),
       );
     }
@@ -65,13 +65,17 @@ class _CameraWidgetState extends State<CameraWidget> {
         width: double.infinity,
         height: 300,
         decoration: BoxDecoration(
-          color: Colors.grey[300],
+          // color: Colors.grey[300],
           borderRadius: BorderRadius.circular(15),
+          border: Border.all(
+            color: Color(0x8049454F), // 기본 테두리 색
+            width: 1,
+          ),
           image: _selectedImage != null
               ? DecorationImage(
-            image: FileImage(_selectedImage!),
-            fit: BoxFit.cover,
-          )
+                  image: FileImage(_selectedImage!),
+                  fit: BoxFit.contain,
+                )
               : null,
         ),
         child: _buildCameraModule()

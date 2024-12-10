@@ -76,7 +76,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          '아이템 추가/수정',
+          '물건 추가/수정',
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
@@ -100,7 +100,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
               ),
               const SizedBox(height: 18),
               const Text(
-                '아이템 이름',
+                '물건 이름',
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
