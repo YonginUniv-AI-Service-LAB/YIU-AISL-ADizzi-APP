@@ -4,15 +4,15 @@ import 'package:yiu_aisl_adizzi_app/data/categories.dart';
 import 'package:yiu_aisl_adizzi_app/service/image_service.dart';
 import 'package:yiu_aisl_adizzi_app/service/item_service.dart';
 import 'package:yiu_aisl_adizzi_app/utils/model.dart';
-// import 'package:yiu_aisl_adizzi_app/models/item_model.dart';
 import '../../widgets/camera_widget.dart';
 import '../../widgets/custom_textfield.dart';
 import '../../widgets/main_button.dart';
-import 'package:yiu_aisl_adizzi_app/widgets/category_selector.dart';
+import '../../widgets/category_selector.dart';
+import '../../data/categories.dart'; // 카테고리 목록을 가져옵니다.
 
 class EditItemScreen extends StatefulWidget {
   final ItemModel item; // 기존 아이템을 받기 위해서
-  // 생성자에서 아이템을 받을 수 있도록
+
   EditItemScreen({required this.item});
 
   @override
@@ -114,6 +114,18 @@ class _EditItemScreenState extends State<EditItemScreen> {
     );
   }
 
+  Future<int?> _getCategoryId(String? category) async {
+    if (category == null) return null;
+
+    // 선택된 대분류 카테고리에서 첫 번째 소분류 카테고리의 ID를 반환
+    for (var mainCategory in categories.keys) {
+      if (mainCategory == category) {
+        return categories[mainCategory]?.values.first; // 첫 번째 소분류 카테고리 ID
+      }
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -190,7 +202,7 @@ class _EditItemScreenState extends State<EditItemScreen> {
                 alignment: Alignment.bottomCenter,
                 child: MainButton(
                   label: '저장',
-                  onPressed: () async{
+                  onPressed: () async {
                     if (_nameController.text.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text("아이템 이름을 입력해주세요.")),
@@ -205,7 +217,9 @@ class _EditItemScreenState extends State<EditItemScreen> {
                     }
                     int? imageId = _selectedImage == null ? null : await uploadImage(_selectedImage!.path);
 
-                    await editItem(context, itemId: widget.item.itemId,
+                    await editItem(
+                      context,
+                      itemId: widget.item.itemId,
                       title: _nameController.text == widget.item.title ? null : _nameController.text,
                       category: _selectedCategoryCode == widget.item.category ? null : _selectedCategoryCode,
                       detail: _memoController.text == widget.item.detail ? null : _memoController.text,

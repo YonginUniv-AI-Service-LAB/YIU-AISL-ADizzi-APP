@@ -15,6 +15,7 @@ class AddItemScreen extends StatefulWidget {
   // 생성자에서 아이템을 받을 수 있도록
   AddItemScreen({required this.slotId});
 
+
   @override
   _AddItemScreenState createState() => _AddItemScreenState();
 }
@@ -103,7 +104,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          '물건 등록',
+          '아이템 추가/수정',
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
@@ -136,6 +137,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
               const SizedBox(height: 10),
               CustomTextField(controller: _nameController),
               const SizedBox(height: 18),
+
               // 대분류 선택
               CategorySelector(
                 label: '대분류',
@@ -174,7 +176,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                 alignment: Alignment.bottomCenter,
                 child: MainButton(
                   label: '저장',
-                  onPressed: () async{
+                  onPressed: () async {
                     if (_nameController.text.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text("아이템 이름을 입력해주세요.")),
@@ -188,6 +190,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                       );
                       return;
                     }
+
                     if (_selectedCategoryCode == null) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text("카테고리를 선택해주세요.")),
@@ -203,6 +206,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                       detail: _memoController.text ?? '설명 없음',
                       imageId: imageId,
                     );
+
 
                     Navigator.pop(context);
                   },

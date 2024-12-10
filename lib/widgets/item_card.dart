@@ -14,7 +14,6 @@ class ItemCard extends StatefulWidget {
 }
 
 class _ItemCardState extends State<ItemCard> {
-
   @override
   void initState() {
     super.initState();
@@ -38,17 +37,17 @@ class _ItemCardState extends State<ItemCard> {
               // 이름
               Text(
                 widget.item.title!,
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 4),
+              const SizedBox(height: 4),
               // 경로
               Text(
                 path,
-                style: TextStyle(fontSize: 12, color: Colors.grey),
+                style: const TextStyle(fontSize: 12, color: Colors.grey),
               ),
             ],
           ),
-          SizedBox(height: 10), // 카드와 이름/경로 간 간격
+          const SizedBox(height: 10), // 카드와 이름/경로 간 간격
           // 카드 내용
           Card(
             shape: RoundedRectangleBorder(
@@ -70,12 +69,8 @@ class _ItemCardState extends State<ItemCard> {
                         height: MediaQuery.of(context).size.width * 0.5, // 정방형 크기
                         child: Image.network(
                           widget.item.imageUrl!,
-                          fit: BoxFit.cover
+                          fit: BoxFit.cover,
                         ),
-                        // Image.file(
-                        //   File(item.imageUrl!),
-                        //   fit: BoxFit.cover,
-                        // ),
                       ),
                     )
                   else
@@ -83,9 +78,10 @@ class _ItemCardState extends State<ItemCard> {
                       width: double.infinity,
                       height: MediaQuery.of(context).size.width * 0.5,
                       color: Colors.grey[200],
-                      child: Icon(Icons.image, color: Colors.grey, size: 50),
+                      child: const Icon(Icons.image, color: Colors.grey, size: 50),
                     ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
+                  // 카테고리 표시
                   Text(
                     // TODO: 충돌 해결 후 카테고리 대분류 + 소분류로 표현할 수 있도록 수정할 것
                     getCategoryName(widget.item.category),
@@ -97,7 +93,7 @@ class _ItemCardState extends State<ItemCard> {
                     // 상세 내용
                     Text(
                       widget.item.detail!,
-                      style: TextStyle(fontSize: 14),
+                      style: const TextStyle(fontSize: 14),
                     ),
                   ],
                 ],

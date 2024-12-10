@@ -11,7 +11,7 @@ import 'package:yiu_aisl_adizzi_app/widgets/temp_slot_list_view.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/time_sort_seletor.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/slot_add_button.dart'; // SlotAddButton 임포트
 import 'package:yiu_aisl_adizzi_app/widgets/slot_add_dialog.dart';
-// import 'package:yiu_aisl_adizzi_app/models/container.dart';
+
 
 class SlotScreen extends StatefulWidget {
   final ContainerModel container; // 필드 이름 소문자로 변경
@@ -69,8 +69,8 @@ class _SlotScreenState extends State<SlotScreen> {
     Navigator.push(
         context,
         MaterialPageRoute(
-        builder: (context) => AddItemScreen(slotId: widget.container.slotId!,),
-    )).then((_) {_loadData();});
+          builder: (context) => AddItemScreen(slotId: widget.container.slotId!,),
+        )).then((_) {_loadData();});
   }
 
   // 전체 선택 상태 계산

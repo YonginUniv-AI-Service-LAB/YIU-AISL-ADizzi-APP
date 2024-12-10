@@ -122,23 +122,23 @@ class _ItemScreenState extends State<ItemScreen> {
               child: items == null
                   ? Center(child: CircularProgressIndicator())
                   : ItemListView(
-                      items: items!,
-                      onItemTap: (index) {
-                        setState(() {
-                          selectedItem = items![index]; // 선택된 아이템을 selectedItem에 저장
-                        });
-                        print('아이템 ${items![index].title} 클릭됨'); // 클릭 이벤트 처리
-                      },
-                      onCheckboxChanged: (index, isChecked) {
-                        setState(() {
-                          items![index].isChecked = isChecked;
-                        });
-                      },
-                      isAllChecked: isAllChecked, // 전체 선택 상태 전달
-                      onSelectAllChanged: _toggleSelectAll, // 전체 선택/해제 처리
-                      onDeleteSelected: _deleteSelectedItems, // 선택 삭제 처리
-                      loadData: _loadData,
-                    ),
+                items: items!,
+                onItemTap: (index) {
+                  setState(() {
+                    selectedItem = items![index]; // 선택된 아이템을 selectedItem에 저장
+                  });
+                  print('아이템 ${items![index].title} 클릭됨'); // 클릭 이벤트 처리
+                },
+                onCheckboxChanged: (index, isChecked) {
+                  setState(() {
+                    items![index].isChecked = isChecked;
+                  });
+                },
+                isAllChecked: isAllChecked, // 전체 선택 상태 전달
+                onSelectAllChanged: _toggleSelectAll, // 전체 선택/해제 처리
+                onDeleteSelected: _deleteSelectedItems, // 선택 삭제 처리
+                loadData: _loadData,
+              ),
             ),
           ),
         ],
