@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:yiu_aisl_adizzi_app/data/categories.dart';
 import 'package:yiu_aisl_adizzi_app/service/image_service.dart';
 import 'package:yiu_aisl_adizzi_app/service/item_service.dart';
 import 'package:yiu_aisl_adizzi_app/utils/model.dart';
@@ -21,7 +22,9 @@ class CreateItemScreen extends StatefulWidget {
 class _CreateItemScreenState extends State<CreateItemScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _memoController = TextEditingController();
-  String? _selectedCategory;
+  String? _selectedMainCategory;
+  String? _selectedSubCategory;
+  int? _selectedCategoryCode;
   File? _selectedImage;
 
   @override
@@ -38,23 +41,66 @@ class _CreateItemScreenState extends State<CreateItemScreen> {
     '카테고리 5',
   ];
 
-  void _showCategoryBottomSheet() {
+  void _showMainCategoryBottomSheet() {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return ListView.builder(
-          itemCount: _categories.length,
-          itemBuilder: (context, index) {
+        return ListView(
+          children: categories.keys.map((mainCategory) {
             return ListTile(
-              title: Text(_categories[index]),
+              title: Text(mainCategory),
               onTap: () {
                 setState(() {
-                  _selectedCategory = _categories[index];
+                  _selectedMainCategory = mainCategory;
+                  _selectedSubCategory = null;
+                  _selectedCategoryCode = categories[mainCategory]?.values.first;
                 });
-                Navigator.pop(context); // 바텀 시트 닫기
+                Navigator.pop(context);
               },
             );
-          },
+          }).toList(),
+        );
+      },
+    );
+  }
+  void _showSubCategoryBottomSheet() {
+    if (_selectedMainCategory == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("먼저 대분류를 선택해주세요.")),
+      );
+      return;
+    }
+
+    final subCategories = categories[_selectedMainCategory!]!;
+
+    if (subCategories.isEmpty) {
+      // 소분류가 없는 경우
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("선택 가능한 소분류가 없습니다.")),
+      );
+      setState(() {
+        _selectedSubCategory = _selectedMainCategory;
+        _selectedCategoryCode = categories[_selectedMainCategory]?.values.first;
+      });
+      return;
+    }
+
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return ListView(
+          children: subCategories.keys.map((subCategory) {
+            return ListTile(
+              title: Text(subCategory),
+              onTap: () {
+                setState(() {
+                  _selectedSubCategory = subCategory;
+                  _selectedCategoryCode = subCategories[subCategory];
+                });
+                Navigator.pop(context);
+              },
+            );
+          }).toList(),
         );
       },
     );
@@ -98,18 +144,19 @@ class _CreateItemScreenState extends State<CreateItemScreen> {
               const SizedBox(height: 10),
               CustomTextField(controller: _nameController),
               const SizedBox(height: 18),
-              const Text(
-                '카테고리',
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(height: 10),
-              // 분리된 CategorySelector 위젯 사용
+              // 대분류 선택
               CategorySelector(
-                selectedCategory: _selectedCategory,
-                onPressed: _showCategoryBottomSheet,
+                label: '대분류',
+                selectedCategory: _selectedMainCategory,
+                onPressed: _showMainCategoryBottomSheet,
+              ),
+              const SizedBox(height: 18),
+
+              // 소분류 선택
+              CategorySelector(
+                label: '소분류',
+                selectedCategory: _selectedSubCategory,
+                onPressed: _showSubCategoryBottomSheet,
               ),
               const SizedBox(height: 18),
               const Text(
@@ -149,9 +196,16 @@ class _CreateItemScreenState extends State<CreateItemScreen> {
                       );
                       return;
                     }
+                    if (_selectedCategoryCode == null) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text("카테고리를 선택해주세요.")),
+                      );
+                      return;
+                    }
 
                     print("네비게이터 전");
 
+                    // 저장 위치 선택하는 화면
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -164,8 +218,7 @@ class _CreateItemScreenState extends State<CreateItemScreen> {
 
                                   await createItem(context, slotId: slotId,
                                     title: _nameController.text,
-                                    // TODO: 카테고리 작업 필요
-                                    category: 1,
+                                    category: _selectedCategoryCode,
                                     detail: _memoController.text ?? '설명 없음',
                                     imageId: imageId,
                                   );

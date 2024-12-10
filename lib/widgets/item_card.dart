@@ -86,8 +86,8 @@ class _ItemCardState extends State<ItemCard> {
                       child: Icon(Icons.image, color: Colors.grey, size: 50),
                     ),
                   SizedBox(height: 8),
-                  // 카테고리
                   Text(
+                    // TODO: 충돌 해결 후 카테고리 대분류 + 소분류로 표현할 수 있도록 수정할 것
                     getCategoryName(widget.item.category),
                     // item.category.toString(),
                     style: TextStyle(color: Colors.grey, fontSize: 14),

@@ -101,6 +101,8 @@ class ItemModel {
   final String? title;
   final String? detail;
   final int? slotId;
+  final String? mainCategory; // 대분류
+  final String? subCategory; // 소분류
   final int? category;
   final String? imageUrl;
   final DateTime? createdAt;
@@ -112,6 +114,8 @@ class ItemModel {
     required this.itemId,
     this.title,
     this.detail,
+    this.mainCategory,
+    this.subCategory,
     this.category,
     this.slotId,
     this.imageUrl,
