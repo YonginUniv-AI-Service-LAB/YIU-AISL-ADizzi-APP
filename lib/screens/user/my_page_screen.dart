@@ -106,8 +106,11 @@ class MyPageScreen extends StatelessWidget {
               title: const Text('로그아웃',style: TextStyle(fontSize: 15),),
               onTap: () {
                 logout();
-                Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) =>  LoginScreen(),
-                ));
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                      (Route<dynamic> route) => false, // 모든 이전 화면을 제거
+                );
               },
             ),
             ListTile(

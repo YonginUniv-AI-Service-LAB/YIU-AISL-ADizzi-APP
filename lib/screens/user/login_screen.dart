@@ -132,6 +132,8 @@ class _LoginScreenState extends State<LoginScreen> {
     return LoginTextInput(
       label: '이메일',
       controller: _emailController,
+      textInputType: TextInputType.emailAddress,
+      textInputAction: TextInputAction.next,
     );
   }
 
@@ -140,6 +142,8 @@ class _LoginScreenState extends State<LoginScreen> {
     return LoginTextInput(
       label: '비밀번호',
       controller: _passwordController,
+      textInputAction: TextInputAction.done,
+      onSummit: (string) {_login();},
     );
   }
 
