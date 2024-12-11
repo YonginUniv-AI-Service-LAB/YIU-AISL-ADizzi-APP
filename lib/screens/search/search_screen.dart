@@ -195,6 +195,24 @@ class _SearchScreenState extends State<SearchScreen> {
                                 item.title!,
                                 style: const TextStyle(fontSize: 17),
                               ),
+                              leading: item.imageUrl != null
+                                  ? Image.network(
+                                item.imageUrl!,
+                                loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                                  if (loadingProgress == null) {
+                                    // 이미지가 완전히 로드되었으면 이미지를 표시
+                                    return child;
+                                  } else {
+                                    // 이미지가 로드 중일 때 회색 배경 컨테이너 표시
+                                    return Container(
+                                      color: Colors.black12, // 회색 배경
+                                      width: 40,
+                                      height: 50,
+                                    );
+                                  }
+                                },
+                              )
+                              : null,
 
                             ),
                           ),
