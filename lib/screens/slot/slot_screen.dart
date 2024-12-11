@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yiu_aisl_adizzi_app/provider/tree_provider.dart';
 import 'package:yiu_aisl_adizzi_app/screens/item/add_item_screen.dart';
+import 'package:yiu_aisl_adizzi_app/screens/main/main_screen.dart';
 import 'package:yiu_aisl_adizzi_app/screens/slot/create_slot_screen.dart';
 import 'package:yiu_aisl_adizzi_app/service/slot_service.dart';
 import 'package:yiu_aisl_adizzi_app/utils/model.dart';
@@ -116,6 +117,13 @@ class _SlotScreenState extends State<SlotScreen> {
             icon: const Icon(Icons.grid_view),
             onPressed: () {
               // main item 페이지로 이동
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MainScreen(), // 수정할 아이템을 넘겨줌
+                ),
+                    (Route<dynamic> route) => false, // 모든 이전 화면을 제거
+              );
             },
           )
         ],

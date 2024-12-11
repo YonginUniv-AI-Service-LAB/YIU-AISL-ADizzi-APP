@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yiu_aisl_adizzi_app/provider/tree_provider.dart';
 import 'package:yiu_aisl_adizzi_app/screens/item/add_item_screen.dart';
+import 'package:yiu_aisl_adizzi_app/screens/main/main_screen.dart';
 import 'package:yiu_aisl_adizzi_app/service/item_service.dart';
 import 'package:yiu_aisl_adizzi_app/utils/model.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/time_sort_seletor.dart';
@@ -84,6 +85,13 @@ class _ItemScreenState extends State<ItemScreen> {
             icon: Icon(Icons.grid_view),
             onPressed: () {
               // 그리드 아이콘 동작 추가
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MainScreen(), // 수정할 아이템을 넘겨줌
+                ),
+                    (Route<dynamic> route) => false, // 모든 이전 화면을 제거
+              );
             },
           ),
         ],

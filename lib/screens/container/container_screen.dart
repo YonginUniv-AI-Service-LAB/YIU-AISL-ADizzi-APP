@@ -55,7 +55,13 @@ class _ContainerScreenState extends State<ContainerScreen> {
           IconButton(
             icon: const Icon(Icons.grid_view),
             onPressed: () {
-
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MainScreen(), // 수정할 아이템을 넘겨줌
+                ),
+                    (Route<dynamic> route) => false, // 모든 이전 화면을 제거
+              );
             },
           ),
         ],
