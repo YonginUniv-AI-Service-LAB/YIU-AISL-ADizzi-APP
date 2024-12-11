@@ -235,6 +235,13 @@ class _SearchScreenState extends State<SearchScreen> {
               });
             }
           },
+          onSubmitted: (query) { //키보드 완료 버튼 누를 시 동작 하는 속성
+            if (query.isNotEmpty) {
+              _addRecentSearch(query); // 검색어 추가
+              _searchItems(query); // 검색어로 검색
+              _navigateToSearchResults(); // 결과 페이지로 이동
+            }
+          },
         ),
         titleSpacing: 0,
         actions: [
