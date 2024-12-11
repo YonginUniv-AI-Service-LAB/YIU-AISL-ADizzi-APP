@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:yiu_aisl_adizzi_app/provider/tree_provider.dart';
 import 'package:yiu_aisl_adizzi_app/service/container_service.dart';
@@ -7,6 +9,7 @@ import 'package:yiu_aisl_adizzi_app/service/image_service.dart';
 import 'package:yiu_aisl_adizzi_app/service/slot_service.dart';
 import 'package:yiu_aisl_adizzi_app/utils/model.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/camera_crop_widget.dart';
+import 'package:yiu_aisl_adizzi_app/widgets/create_slot_dialog.dart';
 import '../../widgets/custom_textfield.dart';
 import '../../widgets/main_button.dart';
 
@@ -34,6 +37,46 @@ class _EditSlotScreenState extends State<EditSlotScreen> {
   Widget build(BuildContext context) {
     final container = Provider.of<TreeProvider>(context).getContainerBySlotId(widget.slot.slotId);
 
+    // 카메라에서 이미지 선택
+    Future<File?> _pickImageFromCamera() async {
+      final ImagePicker picker = ImagePicker();
+      final XFile? pickedFile = await picker.pickImage(source: ImageSource.camera);
+      return pickedFile != null ? File(pickedFile.path) : null;
+    }
+
+    // 이미지 크롭
+    Future<File?> _cropImage(File imageFile) async {
+      final CroppedFile? cropped = await ImageCropper().cropImage(
+        sourcePath: imageFile.path,
+        uiSettings: [
+          AndroidUiSettings(
+            toolbarTitle: '이미지 수정',
+            toolbarColor: const Color(0xFF5DDA6F),
+            toolbarWidgetColor: Colors.white,
+            lockAspectRatio: false,
+          ),
+        ],
+      );
+      return cropped != null ? File(cropped.path) : null;
+    }
+
+    // 다이얼로그 호출
+    void _showCreateContainerDialog() {
+      showCreateSlotrDialog(
+        context: context,
+        imageUrl: container?.imageUrl,
+        onCropImage: (File image) async {
+          final croppedImage = await _cropImage(image);
+          if (croppedImage != null) {
+            setState(() {
+              _selectedImage = croppedImage;
+            });
+          }
+        },
+        onPickFromCamera: _pickImageFromCamera,
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -50,16 +93,31 @@ class _EditSlotScreenState extends State<EditSlotScreen> {
           padding: const EdgeInsets.all(15.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CameraCropWidget(
-                onImageSelected: (image) {
-                  setState(() {
-                    _selectedImage = image; // 선택된 이미지를 저장
-                  });
-                },
-                initialImage: _selectedImage, // 초기 선택된 이미지
-                imageUrl: widget.slot.imageUrl, // 기존 슬롯 이미지 URL
+            children: [GestureDetector(
+              onTap: _showCreateContainerDialog,
+              child: Container(
+                width: double.infinity,
+                height: 300,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.grey,
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.circular(15),
+                  image: _selectedImage != null
+                      ? DecorationImage(
+                    image: FileImage(_selectedImage!),
+                    fit: BoxFit.contain,
+                  )
+                      : widget.slot.imageUrl != null
+                      ? DecorationImage(
+                    image: NetworkImage(widget.slot.imageUrl!),
+                    fit: BoxFit.contain,
+                  )
+                      : null,
+                ),
               ),
+            ),
               const SizedBox(height: 30),
               const Text(
                 '수납칸 이름',

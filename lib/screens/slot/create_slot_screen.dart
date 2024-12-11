@@ -11,7 +11,7 @@ import '../../widgets/custom_textfield.dart';
 import '../../widgets/main_button.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
-import 'package:yiu_aisl_adizzi_app/widgets/create_container_dialog.dart';
+import 'package:yiu_aisl_adizzi_app/widgets/create_slot_dialog.dart';
 
 class CreateSlotScreen extends StatefulWidget {
   final ContainerModel container;
@@ -52,7 +52,7 @@ class _CreateSlotScreenState extends State<CreateSlotScreen> {
 
   // 다이얼로그 호출
   void _showCreateContainerDialog() {
-    showCreateContainerDialog(
+    showCreateSlotrDialog(
       context: context,
       imageUrl: widget.container.imageUrl,
       onCropImage: (File image) async {
@@ -102,14 +102,9 @@ class _CreateSlotScreenState extends State<CreateSlotScreen> {
                       image: FileImage(_selectedImage!),
                       fit: BoxFit.contain,
                     )
-                        : widget.container.imageUrl != null
-                        ? DecorationImage(
-                      image: NetworkImage(widget.container.imageUrl!),
-                      fit: BoxFit.contain,
-                    )
                         : null,
                   ),
-                  child: _selectedImage == null && widget.container.imageUrl == null
+                  child: _selectedImage == null
                       ? const Center(
                     child: Icon(
                       Icons.camera_alt,
