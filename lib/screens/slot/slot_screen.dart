@@ -6,7 +6,7 @@ import 'package:yiu_aisl_adizzi_app/screens/slot/create_slot_screen.dart';
 import 'package:yiu_aisl_adizzi_app/service/slot_service.dart';
 import 'package:yiu_aisl_adizzi_app/utils/model.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/custom_search_bar.dart';
-import 'package:yiu_aisl_adizzi_app/widgets/slot_list_view.dart';
+// import 'package:yiu_aisl_adizzi_app/widgets/slot_list_view.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/temp_slot_list_view.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/time_sort_seletor.dart';
 import 'package:yiu_aisl_adizzi_app/widgets/slot_add_button.dart'; // SlotAddButton 임포트

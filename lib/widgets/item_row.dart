@@ -49,9 +49,30 @@ class ItemRow extends StatelessWidget {
               borderRadius: BorderRadius.circular(2),
               child: Image.network(
                 item.imageUrl!,
-                width: 75,
-                height: 75,
+                width: 80,
+                height: 80,
                 fit: BoxFit.cover,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) {
+                    // 로딩 완료 시 이미지 표시
+                    return child;
+                  } else {
+                    // 로딩 중 회색 박스 표시
+                    return Container(
+                      width: 80,
+                      height: 80,
+                      color: Colors.grey[300],
+                    );
+                  }
+                },
+                errorBuilder: (context, error, stackTrace) {
+                  // 로딩 실패 시 대체 UI
+                  return Container(
+                    width: 80,
+                    height: 80,
+                    color: Colors.grey[300],
+                  );
+                },
               ),
               // Image.file(
               //   File(item.imageUrl!),
