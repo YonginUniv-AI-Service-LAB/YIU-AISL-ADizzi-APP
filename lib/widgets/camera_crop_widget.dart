@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
-import 'package:yiu_aisl_adizzi_app/service/image_service.dart';
+import 'package:yiu_aisl_adizzi_app/service/image_service.dart'; // 다운로드 함수 포함
 
 class CameraCropWidget extends StatefulWidget {
   final Function(File?) onImageSelected; // 부모로 선택된 이미지를 전달하는 콜백 함수
@@ -29,6 +29,23 @@ class _CameraCropWidgetState extends State<CameraCropWidget> {
     super.initState();
     // 초기 이미지 설정
     _selectedImage = widget.initialImage;
+
+    // 이미지 URL이 제공되면 다운로드 후 초기화
+    if (widget.imageUrl != null) {
+      _loadImageFromUrl(widget.imageUrl!);
+    }
+  }
+
+  // URL에서 이미지 다운로드
+  Future<void> _loadImageFromUrl(String url) async {
+    try {
+      final File downloadedImage = await downloadImage(url);
+      setState(() {
+        _selectedImage = downloadedImage;
+      });
+    } catch (e) {
+      debugPrint("이미지 다운로드 실패: $e");
+    }
   }
 
   // 카메라 열기
@@ -37,7 +54,6 @@ class _CameraCropWidgetState extends State<CameraCropWidget> {
       final XFile? pickedFile = await _picker.pickImage(source: ImageSource.camera);
       if (pickedFile != null) {
         final croppedFile = await _cropImage(File(pickedFile.path));
-        // final croppedFile = await _cropImageUrl());
         if (croppedFile != null) {
           setState(() {
             _selectedImage = croppedFile;
@@ -51,17 +67,6 @@ class _CameraCropWidgetState extends State<CameraCropWidget> {
   }
 
   // 이미지 크롭
-  Future<File?> _cropImageUrl({required String imageUrl}) async {
-    try {
-      File imageFile = await downloadImage(imageUrl);
-      return _cropImage(imageFile);
-    } catch (e) {
-      debugPrint("Error during image download: $e");
-      return null;
-    }
-  }
-
-  // 이미지 크롭
   Future<File?> _cropImage(File imageFile) async {
     try {
       final CroppedFile? cropped = await ImageCropper().cropImage(
@@ -71,7 +76,6 @@ class _CameraCropWidgetState extends State<CameraCropWidget> {
             toolbarTitle: '이미지 크롭',
             toolbarColor: Color(0xFF5DDA6F),
             toolbarWidgetColor: Colors.white,
-            // square만 넣을지?
             aspectRatioPresets: [
               CropAspectRatioPreset.original,
               CropAspectRatioPreset.square,
@@ -82,10 +86,6 @@ class _CameraCropWidgetState extends State<CameraCropWidget> {
             initAspectRatio: CropAspectRatioPreset.original,
             lockAspectRatio: false,
           ),
-          // IOSUiSettings(
-          //   title: '이미지 크롭',
-          //   aspectRatioLockEnabled: false,
-          // ),
         ],
       );
       if (cropped != null) {
@@ -99,46 +99,50 @@ class _CameraCropWidgetState extends State<CameraCropWidget> {
     }
   }
 
-  // 카메라 모듈 UI 빌드
+  // UI 빌드
   Widget _buildCameraModule() {
-    if (_selectedImage != null) {
-      return Image.file(_selectedImage!); // 선택된 이미지 표시
-    } else if (widget.imageUrl != null) {
-      return Image.network(widget.imageUrl!); // 기존 이미지 URL 표시
-    } else {
-      return const Center(
-        child: Icon(
-          Icons.camera_alt,
-          size: 30,
-          color: Colors.grey,
+    return Stack(
+      children: [
+        Container(
+          width: double.infinity,
+          height: 300,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            border: Border.all(
+              color: Color(0x8049454F), // 기본 테두리 색
+              width: 1,
+            ),
+            image: _selectedImage != null
+                ? DecorationImage(
+              image: FileImage(_selectedImage!),
+              fit: BoxFit.contain,
+            )
+                : widget.imageUrl != null
+                ? DecorationImage(
+              image: NetworkImage(widget.imageUrl!),
+              fit: BoxFit.contain,
+            )
+                : null,
+          ),
+          child: _selectedImage == null && widget.imageUrl == null
+              ? const Center(
+            child: Icon(
+              Icons.camera_alt,
+              size: 30,
+              color: Colors.grey,
+            ),
+          )
+              : null,
         ),
-      );
-    }
+        // if (_selectedImage != null)
+      ],
+    );
   }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: _openCamera, // 카메라 여는 함수
-      child: Container(
-        width: double.infinity,
-        height: 300,
-        decoration: BoxDecoration(
-          // color: Colors.grey[300],
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(
-            color: Color(0x8049454F), // 기본 테두리 색
-            width: 1,
-          ),
-          image: _selectedImage != null
-              ? DecorationImage(
-            image: FileImage(_selectedImage!),
-            fit: BoxFit.contain,
-          )
-              : null,
-        ),
-        child: _buildCameraModule(),
-      ),
+      child: _buildCameraModule(),
     );
   }
 }
