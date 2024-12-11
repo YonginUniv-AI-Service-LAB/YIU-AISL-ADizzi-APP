@@ -28,8 +28,9 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
   void initState() {
     super.initState();
     searchResults = widget.searchResults;
-    print('결과 $searchResults');
+    print('결과: $searchResults');
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,94 +53,98 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
       ),
       body: Container(
         color: Colors.white,
-        child: widget.searchResults.isEmpty
+        child: searchResults.isEmpty
             ? const Center(
           child: Text(
             "검색 결과가 없습니다",
             style: TextStyle(fontSize: 18, color: Colors.black54),
           ),
         )
-            : ListView(
+            :Column(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 10),
-                  const Text(
-                    "검색 결과",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+              padding: const EdgeInsets.all(10.0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "#결과",
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
                   ),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 3, bottom: 10),
-                    child: Divider(
-                      height: 1,
-                      color: Color(0xFF48464C),
-                    ),
-                  ),
-                  // 검색 결과 리스트 표시
-                  for (var item in widget.searchResults)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: ListTile(
-                        title: Text(
-                          item.title!,
-                          style: const TextStyle(fontSize: 17, color: Colors.black),
-                        ),
-                        subtitle: Text(
-                          Provider.of<TreeProvider>(
-                            context,
-                            listen: true,
-                          ).getPathBySlotId(item.slotId!),
-                        ),
-                        leading: item.imageUrl != null
-                            ? Image.network(
-                          item.imageUrl!,
-                          width: 40,
-                          height: 50,
-                          fit: BoxFit.cover,
-                          loadingBuilder: (context, child, loadingProgress) {
-                            if (loadingProgress == null) {
-                              return child;
-                            } else {
-                              return Container(
-                                color: Colors.black12,
-                                width: 40,
-                                height: 50,
-                              );
-                            }
-                          },
-                        )
-                            : Container(
-                          width: 40,
-                          height: 50,
-                          color: Colors.black12,
-                          child: const Icon(Icons.image_not_supported),
-                        ),
-                        onTap: () {
-                          // 아이템 클릭 시 팝업 창 띄우기
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return Dialog(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: ItemCard(item: item),
-                                ),
-                              );
-                            },
-                          );
-                        },
+                ),
+              ),
+            ),
+            const Divider(
+              thickness: 1,
+              color: Colors.black12,
+              indent: 10,
+              endIndent: 10,
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: searchResults.length,
+                itemBuilder: (context, index) {
+
+                  final item = searchResults[index];
+                  print('Slot ID: ${item.slotId}');
+
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: ListTile(
+                      title: Text(
+                        item.title!,
+                        style: const TextStyle(fontSize: 17,
+                            color: Colors.black),
                       ),
+                      subtitle: Text(
+                        Provider.of<TreeProvider>(context, listen: true).getPathBySlotId(item.slotId!),
+                      ),
+                      leading: item.imageUrl != null
+                          ? Image.network(
+                        item.imageUrl!,
+                        width: 40,
+                        height: 50,
+                        fit: BoxFit.cover,
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) {
+                            return child;
+                          } else {
+                            return Container(
+                              color: Colors.black12,
+                              width: 40,
+                              height: 50,
+                            );
+                          }
+                        },
+                      )
+                          : Container(
+                        width: 40,
+                        height: 50,
+                        color: Colors.black12,
+                        child: const Icon(Icons.image_not_supported),
+                      ),
+                      onTap: () {
+                        // 아이템 클릭 시 팝업 창 띄우기
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: ItemCard(item: item),
+                              ),
+                            );
+                          },
+                        );
+                      },
                     ),
-                ],
+                  );
+                },
               ),
             ),
           ],
