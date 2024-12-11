@@ -14,7 +14,6 @@ class SearchScreen extends StatefulWidget {
   @override
   State<SearchScreen> createState() => _SearchScreenState();
 }
-
 class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController _searchController = TextEditingController();
   List<ItemModel>? items;
@@ -38,8 +37,7 @@ class _SearchScreenState extends State<SearchScreen> {
   void _loadRecentSearches() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      recentSearches =
-          prefs.getStringList('recent_searches') ?? [];
+      recentSearches = prefs.getStringList('recent_searches') ?? [];
     });
   }
 
@@ -47,19 +45,17 @@ class _SearchScreenState extends State<SearchScreen> {
   void _saveRecentSearches() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setStringList('recent_searches', recentSearches);
-    print('최근 검색어 $recentSearches');
   }
 
   // 검색어를 입력하면 getSearch 호출
-  void _searchItems(String query) async {
+  Future<void> _searchItems(String query) async { // 반환 타입을 Future<void>로 변경
     setState(() {
       _isLoading = true;
       _searchedItems = [];
     });
 
     try {
-      List<ItemModel> items = await getSearch(
-          context, query: query);
+      List<ItemModel> items = await getSearch(context, query: query);
 
       // 아이템들 중에서 title에 query가 포함된 항목만 필터링
       List<ItemModel> searchResults = items.where((item) {
@@ -100,15 +96,19 @@ class _SearchScreenState extends State<SearchScreen> {
     }
   }
 
-  // 검색 결과 페이지로 네비게이션
-  void _navigateToSearchResults() {
-    Navigator.push(
+  // 검색 결과 페이지로 네비게이션 (async로 변경)
+  Future<void> _navigateToSearchResults() async {
+    await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) =>
-            SearchResultsScreen(searchResults: _searchedItems, query:  _searchController.text,) ,
+            SearchResultsScreen(searchResults: _searchedItems, query: _searchController.text),
       ),
     );
+    // SearchResultsScreen에서 돌아온 후 검색 필드 비우기
+    setState(() {
+      _searchController.clear();
+    });
   }
 
   Widget _buildSearchArea() {
@@ -125,8 +125,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   itemCount: recentSearches.length,
                   itemBuilder: (context, index) {
                     return Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20.0, vertical: 10.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
                       child: Material(
                         color: Colors.transparent,
                         child: Row(
@@ -135,8 +134,16 @@ class _SearchScreenState extends State<SearchScreen> {
                           children: [
                             // InkWell로 restore 아이콘과 텍스트에만 적용
                             InkWell(
-                              onTap: () {
-                                _searchController.text = recentSearches[index];
+                              onTap: () async {
+                                String selectedQuery = recentSearches[index];
+                                _searchController.text = selectedQuery;
+
+                                // 최근 검색어를 다시 상단으로 이동 (선택한 검색어를 최신으로 갱신)
+                                _addRecentSearch(selectedQuery);
+
+                                // 검색 수행 및 결과 페이지로 이동
+                                await _searchItems(selectedQuery);
+                                await _navigateToSearchResults(); // await 추가
                               },
                               child: Row(
                                 children: [
@@ -171,10 +178,11 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
         ],
       );
-    }
-    else if (_isLoading){
+    } else if (_isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
+
+    // 기존의 검색 결과 UI
     return Column(
       children: [
         Expanded(
@@ -193,27 +201,23 @@ class _SearchScreenState extends State<SearchScreen> {
                           color: Colors.transparent,
                           child: InkWell(
                             onTap: () {
-                              // 항목 클릭 시 동작
-                              // 예를 들어, 아이템 상세 페이지로 이동
                               _searchController.text = _searchedItems[index].title!;
+                              _navigateToSearchResults();
                             },
                             child: ListTile(
                               title: Text(
                                 item.title!,
                                 style: const TextStyle(fontSize: 17),
                               ),
-
                               leading: item.imageUrl != null
                                   ? Image.network(
                                 item.imageUrl!,
                                 loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
                                   if (loadingProgress == null) {
-                                    // 이미지가 완전히 로드되었으면 이미지를 표시
                                     return child;
                                   } else {
-                                    // 이미지가 로드 중일 때 회색 배경 컨테이너 표시
                                     return Container(
-                                      color: Colors.black12, // 회색 배경
+                                      color: Colors.black12,
                                       width: 40,
                                       height: 50,
                                     );
@@ -221,13 +225,11 @@ class _SearchScreenState extends State<SearchScreen> {
                                 },
                               )
                                   : null,
-                              onTap: () {
-                                _navigateToSearchResults();
-                              },
-                            ),
+                              // ListTile의 onTap 제거
                             ),
                           ),
                         ),
+                      ),
                     ],
                   ),
                 );
@@ -242,56 +244,55 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          scrolledUnderElevation: 0,
-          backgroundColor: Colors.white,
-          title: TextField(
-            controller: _searchController,
-            autofocus: true,
-            decoration: const InputDecoration(
-              hintText: '검색어를 입력해주세요',
-              border: InputBorder.none,
-              hintStyle: TextStyle(color: Colors.black54, fontSize: 17),
-            ),
-            style: const TextStyle(color: Colors.black87),
-            onChanged: (query) {
-              if (query.isNotEmpty) {
-                _searchItems(query); // 검색어로 검색
-              } else {
-                setState(() {
-                  _searchedItems = []; // 검색어가 없으면 검색결과 초기화
-                });
-              }
-            },
-            onSubmitted: (query) {
-              if (query.isNotEmpty) {
-                _addRecentSearch(query); // 검색어 추가
-                _searchItems(query); // 검색어로 검색
-                _navigateToSearchResults(); // 결과 페이지로 이동
+      appBar: AppBar(
+        scrolledUnderElevation: 0,
+        backgroundColor: Colors.white,
+        title: TextField(
+          controller: _searchController,
+          autofocus: true,
+          decoration: const InputDecoration(
+            hintText: '검색어를 입력해주세요',
+            border: InputBorder.none,
+            hintStyle: TextStyle(color: Colors.black54, fontSize: 17),
+          ),
+          style: const TextStyle(color: Colors.black87),
+          onChanged: (query) {
+            if (query.isNotEmpty) {
+              _searchItems(query); // 검색어로 검색
+            } else {
+              setState(() {
+                _searchedItems = []; // 검색어가 없으면 검색결과 초기화
+              });
+            }
+          },
+          onSubmitted: (query) {
+            if (query.isNotEmpty) {
+              _addRecentSearch(query); // 검색어 추가
+              _searchItems(query); // 검색어로 검색
+              _navigateToSearchResults(); // 결과 페이지로 이동
+            }
+          },
+        ),
+        titleSpacing: 0,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () async { // async로 변경
+              if (_searchController.text.isNotEmpty) {
+                _addRecentSearch(_searchController.text); // 검색어 추가
+                await _searchItems(_searchController.text); // 검색어로 검색
+                await _navigateToSearchResults(); // 결과 페이지로 이동
               }
             },
           ),
-          titleSpacing: 0,
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.search),
-              onPressed: () {
-                if (_searchController.text.isNotEmpty) {
-                  _addRecentSearch(_searchController.text); // 검색어 추가
-                  _searchItems(_searchController.text); // 검색어로 검색
-                  _navigateToSearchResults(); // 결과 페이지로 이동
-                }
-              },
-            ),
-          ],
-          shape: const Border(
-            bottom: BorderSide(
-              color: Color(0xFF5DDA6F),
-            ),
+        ],
+        shape: const Border(
+          bottom: BorderSide(
+            color: Color(0xFF5DDA6F),
           ),
         ),
-        body: _buildSearchArea()
-
+      ),
+      body: _buildSearchArea(),
     );
   }
 }
