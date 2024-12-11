@@ -23,8 +23,8 @@ class ItemRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => onItemTap(index),
+    return InkWell(
+      onTap: () => onItemTap(index), // 아이템 클릭 이벤트
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 3.0),
         child: Row(
@@ -74,12 +74,6 @@ class ItemRow extends StatelessWidget {
                   );
                 },
               ),
-              // Image.file(
-              //   File(item.imageUrl!),
-              //   width: 75,
-              //   height: 75,
-              //   fit: BoxFit.cover,
-              // ),
             ),
             const SizedBox(width: 16), // 간격
             // 제목

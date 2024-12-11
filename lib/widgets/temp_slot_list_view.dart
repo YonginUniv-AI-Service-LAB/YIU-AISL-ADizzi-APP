@@ -154,7 +154,7 @@ class _TempSlotListViewState extends State<TempSlotListView> {
                   // slots 배열의 경우
                   final slotIndex = index - widget.items.length - 1; // slots의 인덱스
                   final slot = widget.slots[slotIndex];
-                  return GestureDetector(
+                  return InkWell(
                     onTap: () {
                       Navigator.push(
                         context,
@@ -165,7 +165,7 @@ class _TempSlotListViewState extends State<TempSlotListView> {
                         ),
                       );
                     },
-                    child: Padding(
+                    child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 5.0),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -180,23 +180,20 @@ class _TempSlotListViewState extends State<TempSlotListView> {
                               fit: BoxFit.cover,
                               loadingBuilder: (context, child, loadingProgress) {
                                 if (loadingProgress == null) {
-                                  // 로딩 완료 시 이미지 표시
-                                  return child;
+                                  return child; // 로딩 완료 시 이미지 표시
                                 } else {
-                                  // 로딩 중 회색 박스 표시
                                   return Container(
                                     width: 80,
                                     height: 80,
-                                    color: Colors.grey[300],
+                                    color: Colors.grey[300], // 로딩 중 회색 박스
                                   );
                                 }
                               },
                               errorBuilder: (context, error, stackTrace) {
-                                // 로딩 실패 시 대체 UI
                                 return Container(
                                   width: 80,
                                   height: 80,
-                                  color: Colors.grey[300],
+                                  color: Colors.grey[300], // 로딩 실패 시 회색 박스
                                 );
                               },
                             ),
@@ -212,15 +209,17 @@ class _TempSlotListViewState extends State<TempSlotListView> {
                             ),
                           ),
                           CustomPopupMenu(
-                            onSelected: (int result) async{
+                            onSelected: (int result) async {
                               if (result == 0) {
                                 // 수정
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => EditSlotScreen(slot: slot,),
+                                    builder: (context) => EditSlotScreen(slot: slot),
                                   ),
-                                ).then((_) {widget.loadData();});
+                                ).then((_) {
+                                  widget.loadData();
+                                });
                               } else if (result == 1) {
                                 // 삭제
                                 await deleteSlot(context, slotId: slot.slotId); // 삭제 기능 호출

@@ -41,9 +41,9 @@ class _ContainerListViewState extends State<ContainerListView> {
       itemCount: widget.containers.length,
       itemBuilder: (context, index) {
         final container = widget.containers[index];
-        return GestureDetector(
+        return InkWell(
           onTap: () {
-            // SlotScreen으로 이동 시 roomName도 전달
+            // SlotScreen으로 이동
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -59,8 +59,6 @@ class _ContainerListViewState extends State<ContainerListView> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(width: 16.0),
-                // item.imageId != null
-                // 이미지 표시 (로딩 중 회색 박스)
                 ClipRRect(
                   borderRadius: BorderRadius.circular(2),
                   child: Image.network(
@@ -70,10 +68,8 @@ class _ContainerListViewState extends State<ContainerListView> {
                     fit: BoxFit.cover,
                     loadingBuilder: (context, child, loadingProgress) {
                       if (loadingProgress == null) {
-                        // 로딩 완료 시 이미지 표시
                         return child;
                       } else {
-                        // 로딩 중 회색 박스 표시
                         return Container(
                           width: 80,
                           height: 80,
@@ -82,7 +78,6 @@ class _ContainerListViewState extends State<ContainerListView> {
                       }
                     },
                     errorBuilder: (context, error, stackTrace) {
-                      // 로딩 실패 시 대체 UI
                       return Container(
                         width: 80,
                         height: 80,
@@ -90,14 +85,7 @@ class _ContainerListViewState extends State<ContainerListView> {
                       );
                     },
                   ),
-                  // child: Image.file(
-                  //   item.imageId! as File,
-                  //   width: 80,
-                  //   height: 80,
-                  //   fit: BoxFit.cover,
-                  // ),
                 ),
-
                 const SizedBox(width: 16.0),
                 Expanded(
                   child: Text(
@@ -108,7 +96,6 @@ class _ContainerListViewState extends State<ContainerListView> {
                     ),
                   ),
                 ),
-
                 CustomPopupMenu(
                   onSelected: (int result) {
                     if (result == 0) {
@@ -116,12 +103,14 @@ class _ContainerListViewState extends State<ContainerListView> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => EditContainerScreen(container: container,),
+                          builder: (context) => EditContainerScreen(container: container),
                         ),
-                      ).then((_) {widget.loadData();});
+                      ).then((_) {
+                        widget.loadData();
+                      });
                     } else if (result == 1) {
                       // 삭제
-                      _deleteItem(index); // 삭제 기능 호출
+                      _deleteItem(index);
                       widget.loadData();
                     }
                   },
