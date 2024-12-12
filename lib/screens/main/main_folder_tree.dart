@@ -14,7 +14,9 @@ class MainFolderTree extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
       ),
+      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Consumer<TreeProvider>( // TreeProvider를 Consumer로 감싸서 상태 관리
@@ -62,10 +64,11 @@ class RoomNode extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
+      shape:const Border(),
       initiallyExpanded: true,
       showTrailingIcon: children.length == 0 ? false : true,
-      leading: const Icon(Icons.folder),
-      title: Text(title),
+      leading: const Icon(Icons.folder_open_rounded),
+      title: Text(title, style: TextStyle(fontSize: 14.5, fontWeight: FontWeight.w500)),
       children: children, // 자식 항목들을 하위로 표시
     );
   }
@@ -81,12 +84,13 @@ class ContainerNode extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
+      shape:const Border(),
       showTrailingIcon: children.length == 0 ? false : true,
       title: Row(
         children: [
-          IconButton(icon: Icon(Icons.insert_drive_file), onPressed: (){
+          IconButton(icon: Icon(Icons.insert_drive_file_outlined), onPressed: (){
             Navigator.pop(
-              context
+                context
             );
             Navigator.push(
               context,
@@ -98,6 +102,7 @@ class ContainerNode extends StatelessWidget {
             child: Text(
               container.title!,
               textAlign: TextAlign.left, // 텍스트 정렬
+              style: TextStyle(color: Colors.black87),
             ),
           ), onPressed: (){
             Navigator.pop(
@@ -123,11 +128,12 @@ class SlotNode extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
+      shape:const Border(),
       showTrailingIcon: false,
       title: Row(
         children: [
           SizedBox(width: 15,),
-          IconButton(icon: Icon(Icons.article), onPressed: (){
+          IconButton(icon: Icon(Icons.article_outlined, color: Colors.black54,), onPressed: (){
             Navigator.pop(
                 context
             );
@@ -141,6 +147,7 @@ class SlotNode extends StatelessWidget {
             child: Text(
               slot.title!,
               textAlign: TextAlign.left, // 텍스트 정렬
+              style: TextStyle(color: Colors.black87),
             ),
           ), onPressed: (){
             Navigator.pop(
