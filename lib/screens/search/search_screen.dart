@@ -132,35 +132,39 @@ class _SearchScreenState extends State<SearchScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            // InkWell로 restore 아이콘과 텍스트에만 적용
-                            InkWell(
-                              onTap: () async {
-                                String selectedQuery = recentSearches[index];
-                                _searchController.text = selectedQuery;
 
-                                // 최근 검색어를 다시 상단으로 이동 (선택한 검색어를 최신으로 갱신)
-                                _addRecentSearch(selectedQuery);
+                            Expanded(
+                              child: InkWell(
+                                onTap: () async {
+                                  String selectedQuery = recentSearches[index];
+                                  _searchController.text = selectedQuery;
 
-                                // 검색 수행 및 결과 페이지로 이동
-                                await _searchItems(selectedQuery);
-                                await _navigateToSearchResults(); // await 추가
-                              },
-                              child: Row(
-                                children: [
-                                  const Icon(Icons.restore, size: 22),
-                                  const SizedBox(width: 20),
-                                  Text(
-                                    recentSearches[index],
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 17,
+
+                                  _addRecentSearch(selectedQuery);
+
+                                  await _searchItems(selectedQuery);
+                                  await _navigateToSearchResults();
+                                },
+                                child: Row(
+                                  children: [
+                                    const Icon(Icons.restore, size: 22),
+                                    const SizedBox(width: 20),
+                                    Expanded(
+                                      child: Text(
+                                        recentSearches[index],
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 17,
+                                        ),
+                                        textAlign: TextAlign.left,
+                                        overflow: TextOverflow.ellipsis, // 긴 텍스트 처리
+                                      ),
                                     ),
-                                    textAlign: TextAlign.left,
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
-                            // clear 아이콘은 InkWell 밖으로 배치
+                            // clear 아이콘은 InkWell 외부에 배치
                             IconButton(
                               icon: const Icon(Icons.clear, size: 20),
                               onPressed: () {
@@ -178,11 +182,10 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
         ],
       );
-    } else if (_isLoading) {
+    }
+ else if (_isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
-
-    // 기존의 검색 결과 UI
     return Column(
       children: [
         Expanded(

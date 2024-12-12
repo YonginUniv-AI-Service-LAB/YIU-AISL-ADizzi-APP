@@ -106,7 +106,7 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
           child: Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              "#결과",
+              "결과",
               style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
