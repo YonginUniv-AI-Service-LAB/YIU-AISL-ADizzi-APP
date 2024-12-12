@@ -3,11 +3,17 @@ import 'package:flutter/material.dart';
 class LoginTextInput extends StatelessWidget {
   final String label;
   final TextEditingController controller;
+  final Function(String)? onSummit;
+  final TextInputAction? textInputAction;
+  final TextInputType? textInputType;
 
   const LoginTextInput({
     super.key,
     required this.label,
     required this.controller,
+    this.onSummit,
+    this.textInputAction,
+    this.textInputType,
   });
 
   @override
@@ -44,6 +50,9 @@ class LoginTextInput extends StatelessWidget {
                 ),
                 maxLines: 1,
                 obscureText: label == '비밀번호' ? true : false,
+                onSubmitted: onSummit,
+                keyboardType: textInputType,
+                textInputAction:  textInputAction,
               ),
             ),
           ),
