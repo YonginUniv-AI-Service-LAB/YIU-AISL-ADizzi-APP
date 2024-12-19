@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yiu_aisl_adizzi_app/screens/search/search_screen.dart';
+import 'package:yiu_aisl_adizzi_app/service/search_service.dart';
 
 import '../../provider/tree_provider.dart';
 import '../../utils/model.dart';
@@ -29,13 +30,15 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
   @override
   void initState() {
     super.initState();
-    searchResults = widget.searchResults;
+    // searchResults = widget.searchResults;
+    Provider.of<TreeProvider>(context, listen: false).fetchTree(context);
     _loadData();
   }
 
   Future<void> _loadData() async {
     try {
-      await Provider.of<TreeProvider>(context, listen: false).fetchTree(context);
+      searchResults = await getSearch(context, query: widget.query);
+      // await Provider.of<TreeProvider>(context, listen: false).fetchTree(context);
     } catch (e) {
       setState(() {
         _error = e.toString();
